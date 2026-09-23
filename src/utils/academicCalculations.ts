@@ -182,14 +182,19 @@ export function calculateOverallMilestoneHealth(
   const interventionsClosedPct = totalInterventions ? Math.round((interventionsClosedCount / totalInterventions) * 100) : 0;
   const fmsCompletionPct = totalFmsSteps ? Math.round((fmsCompletedSteps / totalFmsSteps) * 100) : 0;
 
-  // Composite institutional health score
-  const healthScore = Math.round(
-    0.30 * targetProgress +
-    0.25 * studentsOnTrackPct +
-    0.20 * targetAchievementPct +
-    0.15 * interventionsClosedPct +
-    0.10 * fmsCompletionPct
-  );
+  // Composite health score. Components with no underlying records (no interventions logged,
+  // no FMS workflow) are left out and the remaining weights rescaled, rather than scoring 0.
+  const components = [
+    { weight: 0.3, value: targetProgress, available: summary.totalStudents > 0 },
+    { weight: 0.25, value: studentsOnTrackPct, available: summary.totalStudents > 0 },
+    { weight: 0.2, value: targetAchievementPct, available: summary.totalStudents > 0 },
+    { weight: 0.15, value: interventionsClosedPct, available: totalInterventions > 0 },
+    { weight: 0.1, value: fmsCompletionPct, available: totalFmsSteps > 0 },
+  ].filter((c) => c.available);
+  const totalWeight = components.reduce((sum, c) => sum + c.weight, 0);
+  const healthScore = totalWeight
+    ? Math.round(components.reduce((sum, c) => sum + c.weight * c.value, 0) / totalWeight)
+    : 0;
 
   return {
     healthScore,

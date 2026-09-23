@@ -1,6 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Settings, Save, Check, RotateCcw, Database, Sliders, AlertCircle } from 'lucide-react';
+import { Settings, Save, RotateCcw, Database, Sliders, AlertCircle } from 'lucide-react';
+import PageHeader, { headerActionClass } from '@/components/ui/PageHeader';
+import { useToast } from '@/components/ui/Toast';
 import {
   DEFAULT_THRESHOLDS,
   StatusThresholds,
@@ -31,8 +33,7 @@ const FIELDS: { key: keyof StatusThresholds; label: string; hint: string }[] = [
 
 export default function SettingsPage() {
   const [values, setValues] = useState<StatusThresholds>(DEFAULT_THRESHOLDS);
-  const [saved, setSaved] = useState(false);
-  const [dataReset, setDataReset] = useState(false);
+  const { showToast } = useToast();
 
   // Thresholds live in localStorage, so read them after mount
   useEffect(() => {
@@ -42,20 +43,18 @@ export default function SettingsPage() {
   const error = validateThresholds(values);
 
   const updateField = (key: keyof StatusThresholds, raw: string) => {
-    setSaved(false);
     setValues((prev) => ({ ...prev, [key]: raw === '' ? NaN : Number(raw) }));
   };
 
   const handleSave = () => {
     if (error) return;
     saveStatusThresholds(values);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    showToast('Settings saved. Dashboards now use the new cutoffs.');
   };
 
   const handleResetThresholds = () => {
     setValues(resetStatusThresholds());
-    setSaved(false);
+    showToast('Cutoffs restored to their defaults');
   };
 
   const handleResetData = () => {
@@ -64,36 +63,26 @@ export default function SettingsPage() {
     );
     if (!confirmed) return;
     schoolMilestoneApi.resetLocalData();
-    setDataReset(true);
-    setTimeout(() => setDataReset(false), 2500);
+    showToast('Local changes discarded. Original data restored.');
   };
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
-            <Settings className="w-5 h-5" />
-          </div>
-          <div>
-            <h1 className="text-lg font-bold text-slate-900 tracking-tight">
-              Academic Milestone Configuration
-            </h1>
-            <p className="text-xs text-slate-500">
-              Status cutoffs used by every dashboard, filter, report and export
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={handleSave}
-          disabled={!!error}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-xl text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors self-start sm:self-auto"
-        >
-          {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
-          <span>{saved ? 'Saved' : 'Save Settings'}</span>
-        </button>
-      </div>
+      <PageHeader
+        icon={Settings}
+        title="Settings"
+        description="Status cutoffs used by every dashboard, filter, report and export"
+        actions={
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!!error}
+            className={`${headerActionClass.primary} disabled:bg-slate-300 disabled:cursor-not-allowed`}
+          >
+            <Save className="w-4 h-4" aria-hidden="true" /> Save Settings
+          </button>
+        }
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
@@ -124,7 +113,7 @@ export default function SettingsPage() {
                   onChange={(e) => updateField(field.key, e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                 />
-                <span className="text-[11px] text-slate-500">
+                <span className="text-xs text-slate-500">
                   {field.hint} (default {DEFAULT_THRESHOLDS[field.key]}%)
                 </span>
               </div>
@@ -138,7 +127,7 @@ export default function SettingsPage() {
             </div>
           )}
 
-          <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
+          <p className="text-xs text-slate-500 border-t border-slate-100 pt-3">
             A student who reaches their own target is always counted as Target Met, whatever the cutoffs.
           </p>
         </div>
@@ -151,7 +140,7 @@ export default function SettingsPage() {
           <div className="space-y-3 text-xs text-slate-600">
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
               <span className="font-bold text-slate-800 block">Master FMS Excel</span>
-              <span className="text-[11px] text-slate-500 block mt-0.5">
+              <span className="text-xs text-slate-500 block mt-0.5">
                 New Class IX FMS CCWS 26-27.xlsx • 160 records bundled with the app
               </span>
             </div>
@@ -159,7 +148,7 @@ export default function SettingsPage() {
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
               <div>
                 <span className="font-bold text-slate-800 block">Changes saved in this browser</span>
-                <span className="text-[11px] text-slate-500 block mt-0.5">
+                <span className="text-xs text-slate-500 block mt-0.5">
                   Intervention moves, workflow updates and these settings are stored on this device only.
                 </span>
               </div>
@@ -167,7 +156,7 @@ export default function SettingsPage() {
                 onClick={handleResetData}
                 className="px-3 py-1.5 rounded-lg border border-rose-200 bg-white text-rose-700 hover:bg-rose-50 font-semibold whitespace-nowrap"
               >
-                {dataReset ? 'Restored' : 'Reset data'}
+                Reset data
               </button>
             </div>
           </div>

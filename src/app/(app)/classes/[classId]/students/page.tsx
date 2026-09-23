@@ -1,280 +1,273 @@
 'use client';
-import React, { useState } from 'react';
-import { useApiData } from '@/hooks/useApiData';
-import { ErrorState, LoadingState, SampleDataBadge } from '@/components/ui/PageStatus';
-import { useParams } from 'next/navigation';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useApiData } from '@/hooks/useApiData';
+import { useClassId } from '@/hooks/useClassId';
+import { useQueryParams } from '@/hooks/useQueryParams';
+import { ErrorState, LoadingState, SampleDataBadge } from '@/components/ui/PageStatus';
+import PageHeader, { headerActionClass } from '@/components/ui/PageHeader';
+import DataTable, { Column, SortDirection } from '@/components/ui/DataTable';
+import StatusBadge from '@/components/ui/StatusBadge';
+import { useToast } from '@/components/ui/Toast';
+import StudentProfileDrawer from '@/components/dashboard/StudentProfileDrawer';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
 import { downloadCsv } from '@/utils/csv';
-import { StudentRecord, ClassSummary } from '@/types/academic';
 import {
-  Users,
-  Search,
-  Download,
-  ArrowLeft,
-  ArrowUpDown,
-  ChevronRight,
-  Loader2,
-} from 'lucide-react';
-import StudentProfileDrawer from '@/components/dashboard/StudentProfileDrawer';
-import { getStudentTarget } from '@/utils/statusEngine';
+  StatusFilterValue,
+  extractNumericValue,
+  getStudentScore,
+  getStudentStatus,
+  getStudentTarget,
+  matchesStatusFilter,
+} from '@/utils/statusEngine';
+import { StudentRecord } from '@/types/academic';
+import { Users, Search, Download, ChevronRight } from 'lucide-react';
 
-type SortField = 'name' | 'section' | 'midTerm' | 'target' | 'gap';
+const SUBJECT_COLUMNS = [
+  { key: 'english', short: 'ENG', label: 'English' },
+  { key: 'secondLanguage', short: 'LANG', label: '2nd Language' },
+  { key: 'maths', short: 'MATH', label: 'Mathematics' },
+  { key: 'science', short: 'SCI', label: 'Science' },
+  { key: 'socialScience', short: 'SST', label: 'Social Science' },
+  { key: 'it', short: 'IT', label: 'Computer / IT' },
+] as const;
 
-export default function DynamicClassStudentsPage() {
-  const params = useParams();
-  const classId = ((params?.classId as string) || 'IX').toUpperCase();
+const STATUS_FILTERS: { id: StatusFilterValue; label: string }[] = [
+  { id: 'ALL', label: 'All' },
+  { id: 'ACHIEVED', label: 'Target Met' },
+  { id: 'ON_TRACK', label: 'On Track' },
+  { id: 'WATCH', label: 'At Risk' },
+  { id: 'CRITICAL', label: 'Critical' },
+];
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedSection, setSelectedSection] = useState<string>('ALL');
+const subjectScore = (s: StudentRecord, key: (typeof SUBJECT_COLUMNS)[number]['key']) =>
+  extractNumericValue(s.currentPerformance?.subjects?.[key]);
+
+const gapOf = (s: StudentRecord) => Math.round((getStudentScore(s) - getStudentTarget(s)) * 10) / 10;
+
+export default function ClassStudentsPage() {
+  const classId = useClassId();
+  const { showToast } = useToast();
+  const [query, setQuery] = useQueryParams({ q: '', section: 'ALL', status: 'ALL', sort: 'name', dir: 'asc' });
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [sortField, setSortField] = useState<SortField>('name');
-  const [sortAsc, setSortAsc] = useState(true);
 
   const { data, isLoading, error, reload } = useApiData(
-    () =>
-      Promise.all([
-        schoolMilestoneApi.getClassSummary(classId),
-        schoolMilestoneApi.getStudentsByClass(classId),
-      ]),
+    () => Promise.all([schoolMilestoneApi.getClassSummary(classId), schoolMilestoneApi.getStudentsByClass(classId)]),
     [classId]
   );
   const [classInfo, students] = data ?? [null, []];
 
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortAsc(!sortAsc);
-    } else {
-      setSortField(field);
-      setSortAsc(true);
-    }
-  };
-
-  const filtered = students
-    .filter((s) => {
+  const filtered = useMemo(() => {
+    const q = query.q.trim().toLowerCase();
+    return students.filter((s) => {
       const sec = s.section || s.group;
-      if (selectedSection !== 'ALL' && sec !== selectedSection) return false;
-      if (!searchQuery) return true;
-      const q = searchQuery.toLowerCase();
+      if (query.section !== 'ALL' && sec !== query.section) return false;
+      if (!matchesStatusFilter(s, query.status as StatusFilterValue)) return false;
+      if (!q) return true;
       return (
         s.name.toLowerCase().includes(q) ||
         (s.enrollmentNumber || '').toLowerCase().includes(q) ||
-        (sec || '').toLowerCase().includes(q)
+        sec.toLowerCase().includes(q)
       );
-    })
-    .sort((a, b) => {
-      let cmp = 0;
-      const aVal = a.currentPerformance?.overall?.value ?? 0;
-      const bVal = b.currentPerformance?.overall?.value ?? 0;
-      const aTgt = getStudentTarget(a);
-      const bTgt = getStudentTarget(b);
-
-      if (sortField === 'name') cmp = a.name.localeCompare(b.name);
-      else if (sortField === 'section') cmp = (a.section || a.group || '').localeCompare(b.section || b.group || '');
-      else if (sortField === 'midTerm') cmp = aVal - bVal;
-      else if (sortField === 'target') cmp = aTgt - bTgt;
-      else if (sortField === 'gap') cmp = (aVal - aTgt) - (bVal - bTgt);
-
-      return sortAsc ? cmp : -cmp;
     });
+  }, [students, query.q, query.section, query.status]);
 
-  const exportCSV = () => {
-    const headers = ['Roll No', 'Name', 'Section', 'Mid-Term %', 'Target %', 'Gap %'];
+  const columns: Column<StudentRecord>[] = [
+    {
+      key: 'name',
+      header: 'Student',
+      sortValue: (s) => s.name,
+      render: (s) => (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedStudent(s);
+          }}
+          className="text-left"
+        >
+          <span className="block font-bold text-slate-900 group-hover:text-blue-700">{s.name}</span>
+          <span className="block text-xs text-slate-500 font-mono">{s.enrollmentNumber || s.studentId}</span>
+        </button>
+      ),
+    },
+    {
+      key: 'section',
+      header: 'Section',
+      sortValue: (s) => s.section || s.group,
+      render: (s) => (
+        <span className="px-2 py-0.5 rounded bg-slate-100 font-semibold text-slate-700 whitespace-nowrap">
+          {s.section || s.group}
+        </span>
+      ),
+    },
+    ...SUBJECT_COLUMNS.map<Column<StudentRecord>>((subj) => ({
+      key: subj.key,
+      header: <abbr title={subj.label} className="no-underline">{subj.short}</abbr>,
+      align: 'center',
+      responsiveClassName: 'hidden lg:table-cell',
+      className: 'font-mono text-slate-700',
+      sortValue: (s) => subjectScore(s, subj.key) ?? -1,
+      render: (s) => subjectScore(s, subj.key) ?? '–',
+    })),
+    {
+      key: 'score',
+      header: 'Score',
+      align: 'right',
+      className: 'font-mono font-bold text-slate-900',
+      sortValue: getStudentScore,
+      render: (s) => `${getStudentScore(s)}%`,
+    },
+    {
+      key: 'target',
+      header: 'Target',
+      align: 'right',
+      responsiveClassName: 'hidden sm:table-cell',
+      className: 'font-mono text-slate-600',
+      sortValue: getStudentTarget,
+      render: (s) => `${getStudentTarget(s)}%`,
+    },
+    {
+      key: 'gap',
+      header: 'Gap',
+      align: 'right',
+      responsiveClassName: 'hidden sm:table-cell',
+      sortValue: gapOf,
+      render: (s) => {
+        const gap = gapOf(s);
+        return (
+          <span className={`font-mono font-bold ${gap >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
+            {gap > 0 ? `+${gap}` : gap}
+          </span>
+        );
+      },
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      sortValue: (s) => ['CRITICAL', 'WATCH', 'ON_TRACK', 'ACHIEVED'].indexOf(getStudentStatus(s).status),
+      render: (s) => <StatusBadge status={getStudentStatus(s).status} />,
+    },
+    {
+      key: 'profile',
+      header: <span className="sr-only">Profile</span>,
+      align: 'right',
+      render: (s) => (
+        <Link
+          href={`/classes/${classId}/students/${encodeURIComponent(s.studentId)}`}
+          onClick={(e) => e.stopPropagation()}
+          aria-label={`Open full profile for ${s.name}`}
+          className="inline-flex p-1 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50"
+        >
+          <ChevronRight className="w-4 h-4" aria-hidden="true" />
+        </Link>
+      ),
+    },
+  ];
+
+  if (error) return <ErrorState onRetry={reload} />;
+  if (isLoading) return <LoadingState message={`Loading Class ${classId} directory...`} />;
+  if (!classInfo) return <ErrorState title={`Class ${classId} not found`} message="Choose a class from the sidebar." />;
+
+  const exportCsv = () => {
+    const headers = ['Roll / Enrollment', 'Name', 'Section', ...SUBJECT_COLUMNS.map((c) => c.label), 'Score %', 'Target %', 'Gap', 'Status'];
     const rows = filtered.map((s) => [
       s.enrollmentNumber || s.studentId,
       s.name,
-      s.section || s.group,
-      s.currentPerformance?.overall?.value ?? '',
-      s.schoolTarget?.overall?.value ?? '',
-      Math.round(((s.currentPerformance?.overall?.value ?? 0) - (getStudentTarget(s))) * 10) / 10,
+      `${classId} ${s.section || s.group}`,
+      ...SUBJECT_COLUMNS.map((c) => subjectScore(s, c.key) ?? ''),
+      getStudentScore(s),
+      getStudentTarget(s),
+      gapOf(s),
+      getStudentStatus(s).label,
     ]);
-
     downloadCsv(`Class_${classId}_Roster_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows);
+    showToast(`Exported ${rows.length} students to CSV`);
   };
 
-  if (error) return <ErrorState onRetry={reload} />;
-  if (isLoading) return <LoadingState message={`Loading ${classId} Student Directory...`} />;
-  if (!classInfo) {
-    return (
-      <ErrorState
-        title={`Class ${classId} not found`}
-        message="There is no grade with this code. Choose a class from the sidebar."
-      />
-    );
-  }
+  const sectionOptions = ['ALL', ...classInfo.sections];
+  const chipClass = (active: boolean) =>
+    `px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
+      active ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+    }`;
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-        <div className="flex items-center gap-3">
-          <Link
-            href={`/classes/${classId}`}
-            className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </Link>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold text-slate-900 tracking-tight">
-                {classInfo?.label || `Class ${classId}`} Student Directory
-              </h1>
-              {classInfo.dataSource === 'sample' && <SampleDataBadge />}
-            </div>
-            <p className="text-xs text-slate-500">
-              {filtered.length} of {students.length} Scholars Enrolled
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <div className="relative w-64">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search scholar..."
-              className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
-            />
-          </div>
-
-          <button
-            onClick={exportCSV}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-colors active:scale-95"
-          >
-            <Download className="w-4 h-4" />
-            <span>Export CSV</span>
+      <PageHeader
+        icon={Users}
+        title={`${classInfo.label} Student Directory`}
+        description={`${filtered.length} of ${students.length} students shown`}
+        badges={classInfo.dataSource === 'sample' ? <SampleDataBadge /> : undefined}
+        actions={
+          <button type="button" onClick={exportCsv} className={headerActionClass.primary}>
+            <Download className="w-4 h-4" aria-hidden="true" /> Export CSV
           </button>
+        }
+      />
+
+      <div className="bg-white p-3 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
+        <div className="relative">
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+          <label htmlFor="roster-search" className="sr-only">
+            Search students
+          </label>
+          <input
+            id="roster-search"
+            type="search"
+            value={query.q}
+            onChange={(e) => setQuery({ q: e.target.value })}
+            placeholder="Search by name, roll number or section"
+            className="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+          />
+        </div>
+        <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:justify-between">
+          <div role="group" aria-label="Filter by section" className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
+            <span className="text-xs font-semibold text-slate-500 mr-1">Section</span>
+            {sectionOptions.map((sec) => (
+              <button
+                key={sec}
+                type="button"
+                aria-pressed={query.section === sec}
+                onClick={() => setQuery({ section: sec })}
+                className={chipClass(query.section === sec)}
+              >
+                {sec === 'ALL' ? 'All' : sec}
+              </button>
+            ))}
+          </div>
+          <div role="group" aria-label="Filter by status" className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
+            <span className="text-xs font-semibold text-slate-500 mr-1">Status</span>
+            {STATUS_FILTERS.map((st) => (
+              <button
+                key={st.id}
+                type="button"
+                aria-pressed={query.status === st.id}
+                onClick={() => setQuery({ status: st.id })}
+                className={chipClass(query.status === st.id)}
+              >
+                {st.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Roster Table */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50/90 text-slate-500 font-semibold border-b border-slate-200">
-              <tr>
-                <th
-                  onClick={() => handleSort('name')}
-                  className="py-3 px-4 cursor-pointer hover:text-blue-600 select-none"
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>Student & ID</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
-                  </div>
-                </th>
-                <th
-                  onClick={() => handleSort('section')}
-                  className="py-3 px-3 cursor-pointer hover:text-blue-600 select-none"
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>Section</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
-                  </div>
-                </th>
-                <th
-                  onClick={() => handleSort('midTerm')}
-                  className="py-3 px-3 cursor-pointer hover:text-blue-600 select-none"
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>Mid-Term Score</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
-                  </div>
-                </th>
-                <th
-                  onClick={() => handleSort('target')}
-                  className="py-3 px-3 cursor-pointer hover:text-blue-600 select-none"
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>School Target</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
-                  </div>
-                </th>
-                <th
-                  onClick={() => handleSort('gap')}
-                  className="py-3 px-3 cursor-pointer hover:text-blue-600 select-none"
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>Gap Benchmark</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
-                  </div>
-                </th>
-                <th className="py-3 px-4 text-right">360° Profile</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {filtered.map((s) => {
-                const current = s.currentPerformance?.overall?.value ?? 0;
-                const target = getStudentTarget(s);
-                const gap = Math.round((current - target) * 10) / 10;
-                const isAhead = gap >= 0;
-
-                return (
-                  <tr
-                    key={s.studentId}
-                    onClick={() => {
-                      setSelectedStudent(s);
-                      setDrawerOpen(true);
-                    }}
-                    className="hover:bg-blue-50/40 cursor-pointer transition-colors group"
-                  >
-                    <td className="py-3 px-4 font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      {s.name}
-                      <span className="block text-[10px] text-slate-400 font-mono font-normal">
-                        {s.enrollmentNumber || s.studentId}
-                      </span>
-                    </td>
-
-                    <td className="py-3 px-3 font-semibold text-slate-700">
-                      <span className="px-2 py-0.5 rounded bg-slate-100 text-[10px]">
-                        {s.section || s.group}
-                      </span>
-                    </td>
-
-                    <td className="py-3 px-3 font-bold font-mono text-slate-900">
-                      {current}%
-                    </td>
-
-                    <td className="py-3 px-3 font-mono text-slate-500">
-                      {target}%
-                    </td>
-
-                    <td className="py-3 px-3">
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                          isAhead ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
-                        }`}
-                      >
-                        {isAhead ? `+${gap}%` : `${gap}%`}
-                      </span>
-                    </td>
-
-                    <td className="py-3 px-4 text-right">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedStudent(s);
-                          setDrawerOpen(true);
-                        }}
-                        className="p-1 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        caption={`${classInfo.label} students`}
+        rows={filtered}
+        columns={columns}
+        getRowKey={(s) => s.studentId}
+        sortKey={query.sort}
+        sortDirection={query.dir as SortDirection}
+        onSortChange={(sort, dir) => setQuery({ sort, dir })}
+        onRowClick={setSelectedStudent}
+        emptyMessage="No students match these filters."
+      />
 
       <StudentProfileDrawer
         student={selectedStudent}
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        isOpen={!!selectedStudent}
+        onClose={() => setSelectedStudent(null)}
       />
     </div>
   );

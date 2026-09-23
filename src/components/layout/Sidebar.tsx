@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -14,125 +14,115 @@ import {
   ChevronLeft,
   ChevronRight,
   GraduationCap,
-  Sparkles,
-  ShieldCheck,
-  Layers,
+  X,
+  type LucideIcon,
 } from 'lucide-react';
 
-const CLASSES = ['VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+export const CLASSES = ['VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
 
-export default function Sidebar() {
-  const pathname = usePathname();
+interface NavItem {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+  /** Exact match only (for index routes like /classes/IX) */
+  exact?: boolean;
+}
+
+const SCHOOL_NAV: NavItem[] = [
+  { href: '/overview', label: 'Whole-School Cockpit', icon: Building, exact: true },
+  { href: '/reports/consolidated', label: 'Consolidated Report', icon: FileText, exact: true },
+];
+
+const classNav = (classId: string): NavItem[] => [
+  { href: `/classes/${classId}`, label: 'Overview', icon: LayoutDashboard, exact: true },
+  { href: `/classes/${classId}/students`, label: 'Student Directory', icon: Users },
+  { href: `/classes/${classId}/reports`, label: 'Class Report', icon: FileText },
+  { href: `/classes/${classId}/milestones`, label: 'Milestone Journey', icon: Compass },
+  { href: `/classes/${classId}/interventions`, label: 'Interventions', icon: LifeBuoy },
+  { href: `/classes/${classId}/workflow`, label: 'Exam Workflow', icon: GitMerge },
+];
+
+const SYSTEM_NAV: NavItem[] = [{ href: '/settings', label: 'Settings', icon: Settings, exact: true }];
+
+interface SidebarProps {
+  /** Mobile drawer state, owned by the app shell */
+  mobileOpen: boolean;
+  onMobileClose: () => void;
+}
+
+export default function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
+  const pathname = usePathname() || '';
   const [collapsed, setCollapsed] = useState(false);
 
-  // Extract active class from pathname if applicable
-  const classMatch = pathname?.match(/\/classes\/([A-Za-z0-9]+)/);
+  const classMatch = pathname.match(/^\/classes\/([A-Za-z0-9]+)/);
   const activeClass = classMatch ? classMatch[1].toUpperCase() : 'IX';
 
-  return (
-    <aside
-      className={`sticky top-0 h-screen bg-slate-900 text-slate-200 border-r border-slate-800 transition-all duration-300 z-30 flex flex-col ${
-        collapsed ? 'w-20' : 'w-64'
-      }`}
-    >
-      {/* Brand Header */}
-      <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800">
-        {!collapsed && (
-          <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 flex-shrink-0">
-              <GraduationCap className="w-5 h-5" />
-            </div>
-            <div className="truncate">
-              <h1 className="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
-                Milestone <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              </h1>
-              <p className="text-[11px] text-slate-400 font-medium truncate">Central Public School</p>
-            </div>
-          </div>
-        )}
+  // Close the mobile drawer after navigating, and on Escape
+  useEffect(() => {
+    onMobileClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onMobileClose();
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [mobileOpen, onMobileClose]);
 
-        {collapsed && (
-          <div className="mx-auto w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md">
-            <GraduationCap className="w-5 h-5" />
-          </div>
-        )}
+  const isActive = (item: NavItem) =>
+    item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className={`p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors ${
-            collapsed ? 'hidden' : 'block'
-          }`}
-          title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+  // The mobile drawer always shows labels; only the desktop rail collapses
+  const renderNav = (showLabels: boolean) => {
+    const renderItem = (item: NavItem) => {
+      const active = isActive(item);
+      const Icon = item.icon;
+      return (
+        <Link
+          key={item.href}
+          href={item.href}
+          aria-current={active ? 'page' : undefined}
+          title={showLabels ? undefined : item.label}
+          className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+            active
+              ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
+              : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
+          } ${showLabels ? '' : 'justify-center'}`}
         >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-      </div>
+          <Icon className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+          {showLabels ? <span className="truncate">{item.label}</span> : <span className="sr-only">{item.label}</span>}
+        </Link>
+      );
+    };
 
-      {/* Nav List */}
-      <nav className="flex-1 p-3 space-y-4 overflow-y-auto">
-        {/* Section 1: Executive Cockpit */}
+    const sectionTitle = (text: string) =>
+      showLabels ? (
+        <p className="px-3 pb-1.5 text-xs font-bold uppercase tracking-wider text-slate-400">{text}</p>
+      ) : null;
+
+    return (
+      <nav aria-label="Main" className="flex-1 p-3 space-y-5 overflow-y-auto">
         <div>
-          {!collapsed && (
-            <p className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              School Executive
-            </p>
-          )}
-          <div className="space-y-1">
-            <Link
-              href="/overview"
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname === '/overview'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'Whole-School Overview' : undefined}
-            >
-              <Building className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Whole-School Cockpit</span>}
-              {!collapsed && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300">
-                  All
-                </span>
-              )}
-            </Link>
-
-            <Link
-              href="/reports/consolidated"
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname === '/reports/consolidated'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'Consolidated Report' : undefined}
-            >
-              <FileText className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Consolidated Report</span>}
-            </Link>
-          </div>
+          {sectionTitle('School')}
+          <div className="space-y-1">{SCHOOL_NAV.map(renderItem)}</div>
         </div>
 
-        {/* Section 2: Grade Cohorts */}
         <div>
-          {!collapsed && (
-            <div className="px-3 pb-1.5 flex items-center justify-between">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Grade Cohorts
-              </p>
-              <span className="text-[10px] text-slate-400 font-mono">VI–XII</span>
-            </div>
-          )}
-          {!collapsed ? (
+          {sectionTitle('Grades')}
+          {showLabels ? (
             <div className="grid grid-cols-4 gap-1.5 px-1">
               {CLASSES.map((cls) => {
-                const isClsActive = activeClass === cls && (pathname?.startsWith(`/classes/${cls}`) || (cls === 'IX' && pathname?.startsWith('/student-milestone')));
+                const active = activeClass === cls && pathname.startsWith(`/classes/${cls}`);
                 return (
                   <Link
                     key={cls}
                     href={`/classes/${cls}`}
-                    className={`py-1.5 text-center rounded-lg text-xs font-bold transition-all ${
-                      isClsActive
-                        ? 'bg-indigo-600 text-white shadow-sm ring-1 ring-indigo-400'
-                        : 'bg-slate-800/60 text-slate-300 hover:bg-slate-800 hover:text-white'
+                    aria-current={active ? 'page' : undefined}
+                    aria-label={`Class ${cls}`}
+                    className={`py-1.5 text-center rounded-lg text-xs font-bold transition-colors ${
+                      active
+                        ? 'bg-indigo-600 text-white ring-1 ring-indigo-400'
+                        : 'bg-slate-800/70 text-slate-200 hover:bg-slate-700 hover:text-white'
                     }`}
                   >
                     {cls}
@@ -141,157 +131,110 @@ export default function Sidebar() {
               })}
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-1.5">
-              <Link
-                href={`/classes/${activeClass}`}
-                className="w-9 h-9 rounded-xl bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 flex items-center justify-center text-xs font-bold"
-                title={`Active: Class ${activeClass}`}
-              >
-                {activeClass}
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Section 3: Active Class Tools */}
-        <div>
-          {!collapsed && (
-            <p className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Class {activeClass} Tools
-            </p>
-          )}
-          <div className="space-y-1">
             <Link
               href={`/classes/${activeClass}`}
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname === `/classes/${activeClass}` || pathname === '/student-milestone/dashboard'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? `Class ${activeClass} Overview` : undefined}
+              title={`Class ${activeClass}`}
+              className="mx-auto w-10 h-10 rounded-xl bg-indigo-600/30 text-indigo-200 border border-indigo-500/40 flex items-center justify-center text-xs font-bold"
             >
-              <LayoutDashboard className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Overview</span>}
+              {activeClass}
             </Link>
+          )}
+        </div>
 
-            <Link
-              href={`/classes/${activeClass}/students`}
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname?.includes('/students')
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'Class Directory' : undefined}
-            >
-              <Users className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Class Directory</span>}
-              {!collapsed && activeClass === 'IX' && (
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
-                  160
-                </span>
-              )}
-            </Link>
+        <div>
+          {sectionTitle(`Class ${activeClass}`)}
+          <div className="space-y-1">{classNav(activeClass).map(renderItem)}</div>
+        </div>
 
-            <Link
-              href={`/classes/${activeClass}/reports`}
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname?.includes(`/classes/${activeClass}/reports`)
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'Class Report' : undefined}
-            >
-              <FileText className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Class Report</span>}
-            </Link>
-
-            <Link
-              href="/student-milestone/milestones"
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname === '/student-milestone/milestones'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'Milestones' : undefined}
-            >
-              <Compass className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Milestone Journey</span>}
-            </Link>
-
-            <Link
-              href="/student-milestone/interventions"
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname === '/student-milestone/interventions'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'Interventions' : undefined}
-            >
-              <LifeBuoy className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Interventions</span>}
-            </Link>
-
-            <Link
-              href="/student-milestone/workflow"
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname === '/student-milestone/workflow'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'FMS Workflow' : undefined}
-            >
-              <GitMerge className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">FMS Workflow</span>}
-            </Link>
-
-            <Link
-              href="/student-milestone/settings"
-              className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all group relative ${
-                pathname === '/student-milestone/settings'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-              title={collapsed ? 'Settings' : undefined}
-            >
-              <Settings className="w-4 h-4 flex-shrink-0" />
-              {!collapsed && <span className="truncate flex-1">Settings</span>}
-            </Link>
-          </div>
+        <div>
+          {sectionTitle('System')}
+          <div className="space-y-1">{SYSTEM_NAV.map(renderItem)}</div>
         </div>
       </nav>
+    );
+  };
 
-      {/* Collapse button on collapsed view */}
-      {collapsed && (
-        <div className="p-3 border-t border-slate-800 flex justify-center">
-          <button
-            onClick={() => setCollapsed(false)}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-            title="Expand sidebar"
+  const brand = (showLabels: boolean) => (
+    <div className="flex items-center gap-3 overflow-hidden">
+      <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 flex-shrink-0">
+        <GraduationCap className="w-5 h-5" aria-hidden="true" />
+      </div>
+      {showLabels && (
+        <div className="truncate">
+          <p className="text-sm font-bold tracking-tight text-white">Milestone</p>
+          <p className="text-xs text-slate-400 font-medium truncate">Central Public School</p>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop rail */}
+      <aside
+        className={`hidden lg:flex sticky top-0 h-screen bg-slate-900 text-slate-200 border-r border-slate-800 transition-[width] duration-300 z-30 flex-col print:hidden ${
+          collapsed ? 'w-20' : 'w-64'
+        }`}
+      >
+        <div className={`h-16 px-4 flex items-center border-b border-slate-800 ${collapsed ? 'justify-center' : 'justify-between'}`}>
+          {brand(!collapsed)}
+          {!collapsed && (
+            <button
+              type="button"
+              onClick={() => setCollapsed(true)}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+              aria-label="Collapse sidebar"
+            >
+              <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+            </button>
+          )}
+        </div>
+        {renderNav(!collapsed)}
+        {collapsed && (
+          <div className="p-3 border-t border-slate-800 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setCollapsed(false)}
+              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+              aria-label="Expand sidebar"
+            >
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
+            </button>
+          </div>
+        )}
+        {!collapsed && (
+          <p className="m-3 p-3 rounded-xl bg-slate-800/60 border border-slate-700/50 text-xs text-slate-400">
+            Grades VI–XII • AY 2026–27
+          </p>
+        )}
+      </aside>
+
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 print:hidden">
+          <div className="absolute inset-0 bg-slate-950/50 backdrop-blur-sm" onClick={onMobileClose} aria-hidden="true" />
+          <aside
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation"
+            className="absolute inset-y-0 left-0 w-72 max-w-[85vw] bg-slate-900 text-slate-200 flex flex-col shadow-2xl"
           >
-            <ChevronRight className="w-4 h-4" />
-          </button>
+            <div className="h-16 px-4 flex items-center justify-between border-b border-slate-800">
+              {brand(true)}
+              <button
+                type="button"
+                onClick={onMobileClose}
+                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+                aria-label="Close navigation"
+                autoFocus
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
+              </button>
+            </div>
+            {renderNav(true)}
+          </aside>
         </div>
       )}
-
-      {/* Database sync status pill */}
-      {!collapsed && (
-        <div className="p-3 m-3 rounded-xl bg-slate-800/60 border border-slate-700/50">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-[11px] font-semibold text-emerald-400">Live Academic Ledger</span>
-          </div>
-          <p className="text-[11px] text-slate-400 mt-1">1,170 Scholars • Grades VI–XII</p>
-          <div className="mt-2 pt-2 border-t border-slate-700/40 flex items-center justify-between text-[10px] text-slate-400">
-            <span className="flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3 text-blue-400" /> CBSE Compliant
-            </span>
-            <span>AY 26–27</span>
-          </div>
-        </div>
-      )}
-    </aside>
+    </>
   );
 }

@@ -102,7 +102,7 @@ export default function SchoolPulseCards({ overview }: SchoolPulseCardsProps) {
           >
             <div className="flex items-start justify-between">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   {c.title}
                 </span>
                 <div className="flex items-baseline gap-2 mt-1">
@@ -123,7 +123,7 @@ export default function SchoolPulseCards({ overview }: SchoolPulseCardsProps) {
               />
             </div>
 
-            <div className="mt-2.5 flex items-center justify-between text-[11px]">
+            <div className="mt-2.5 flex items-center justify-between text-xs">
               <span className="text-slate-500 truncate">{c.subtext}</span>
               <span
                 className={`font-semibold ${

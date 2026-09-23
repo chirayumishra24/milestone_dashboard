@@ -167,6 +167,8 @@ export interface ClassSummary {
   milestoneStatus: string;
   /** 'official' rosters come from school records; 'sample' rosters are generated placeholders */
   dataSource: 'official' | 'sample';
+  /** Whether the grade runs the milestone journey and FMS exam workflow */
+  hasMilestoneProgramme: boolean;
 }
 
 export interface SchoolOverviewMetrics {

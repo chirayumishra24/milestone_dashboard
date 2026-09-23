@@ -33,6 +33,8 @@ export interface ClassProfile {
   coordinator: string;
   milestoneStatus: string;
   dataSource: 'official' | 'sample';
+  /** Whether the grade runs the milestone journey and FMS exam workflow (Class IX only so far) */
+  hasMilestoneProgramme: boolean;
   sample?: SampleRosterProfile;
 }
 
@@ -45,6 +47,7 @@ export const CLASS_PROFILES: ClassProfile[] = [
     coordinator: 'Mrs. Rekha Joshi',
     milestoneStatus: 'Half-Yearly Consolidated',
     dataSource: 'sample',
+    hasMilestoneProgramme: false,
     sample: { totalStudents: 180, classAverage: 84.2, targetAvg: 80.0, atRiskCount: 26, criticalCount: 6 },
   },
   {
@@ -55,6 +58,7 @@ export const CLASS_PROFILES: ClassProfile[] = [
     coordinator: 'Mr. Arvind Gupta',
     milestoneStatus: 'Periodic Test 2 Conducted',
     dataSource: 'sample',
+    hasMilestoneProgramme: false,
     sample: { totalStudents: 195, classAverage: 81.0, targetAvg: 80.0, atRiskCount: 35, criticalCount: 8 },
   },
   {
@@ -65,6 +69,7 @@ export const CLASS_PROFILES: ClassProfile[] = [
     coordinator: 'Mrs. Priya Nair',
     milestoneStatus: 'Remedial Review Active',
     dataSource: 'sample',
+    hasMilestoneProgramme: false,
     sample: { totalStudents: 210, classAverage: 77.5, targetAvg: 80.0, atRiskCount: 48, criticalCount: 13 },
   },
   {
@@ -75,6 +80,7 @@ export const CLASS_PROFILES: ClassProfile[] = [
     coordinator: 'Mr. Rajesh K. Sharma',
     milestoneStatus: 'Mid-Term Examination Prep (Gate 4)',
     dataSource: 'official',
+    hasMilestoneProgramme: true,
   },
   {
     classId: 'X',
@@ -84,6 +90,7 @@ export const CLASS_PROFILES: ClassProfile[] = [
     coordinator: 'Dr. Sunita Sen',
     milestoneStatus: 'Pre-Board Blueprint Vetted',
     dataSource: 'sample',
+    hasMilestoneProgramme: false,
     sample: { totalStudents: 155, classAverage: 83.5, targetAvg: 85.0, atRiskCount: 25, criticalCount: 6 },
   },
   {
@@ -94,6 +101,7 @@ export const CLASS_PROFILES: ClassProfile[] = [
     coordinator: 'Mr. V. Ramanathan',
     milestoneStatus: 'Term 1 Marks Reconciled',
     dataSource: 'sample',
+    hasMilestoneProgramme: false,
     sample: { totalStudents: 140, classAverage: 76.8, targetAvg: 78.0, atRiskCount: 30, criticalCount: 8 },
   },
   {
@@ -104,6 +112,7 @@ export const CLASS_PROFILES: ClassProfile[] = [
     coordinator: 'Mrs. Ananya Mukherji',
     milestoneStatus: 'Pre-Board Mock Series 1',
     dataSource: 'sample',
+    hasMilestoneProgramme: false,
     sample: { totalStudents: 130, classAverage: 85.1, targetAvg: 86.0, atRiskCount: 16, criticalCount: 5 },
   },
 ];

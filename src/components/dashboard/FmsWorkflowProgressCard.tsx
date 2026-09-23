@@ -36,14 +36,14 @@ export default function FmsWorkflowProgressCard({
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-800">FMS Exam Lifecycle Governance</h3>
-              <p className="text-[11px] text-slate-400">Class IX Mid-Term Operational Milestones</p>
+              <p className="text-xs text-slate-500">Class IX Mid-Term Operational Milestones</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-slate-700 font-mono">
               {completedCount} / {steps.length} Steps
             </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
               {completionPct}%
             </span>
           </div>
@@ -76,11 +76,11 @@ export default function FmsWorkflowProgressCard({
                     <h4 className="text-xs font-bold text-slate-800">
                       {step.stepName}
                     </h4>
-                    <p className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-2">
+                    <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-2">
                       <span>Target: {step.date}</span>
                       <span>•</span>
                       <span className="text-slate-600 font-medium flex items-center gap-1">
-                        <UserCheck className="w-3 h-3 text-slate-400" />
+                        <UserCheck className="w-3 h-3 text-slate-500" />
                         Owner: {step.owner}
                       </span>
                     </p>
@@ -89,14 +89,14 @@ export default function FmsWorkflowProgressCard({
 
                 <div className="flex items-center gap-2 self-start sm:self-center ml-9 sm:ml-0">
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${getStatusBadge(
+                    className={`text-xs font-bold px-2 py-0.5 rounded-full border ${getStatusBadge(
                       step.status
                     )}`}
                   >
                     {step.status}
                   </span>
                   {step.remarks && (
-                    <span className="text-[10px] text-slate-400 italic max-w-[140px] truncate hidden md:inline">
+                    <span className="text-xs text-slate-500 italic max-w-[140px] truncate hidden md:inline">
                       {step.remarks}
                     </span>
                   )}
@@ -107,7 +107,7 @@ export default function FmsWorkflowProgressCard({
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
         <span>ISO 9001 Academic Standard</span>
         <span className="text-blue-600 font-semibold cursor-pointer hover:underline">
           View Audit History →

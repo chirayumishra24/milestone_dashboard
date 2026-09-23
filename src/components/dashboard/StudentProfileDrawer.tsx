@@ -2,6 +2,8 @@
 import React from 'react';
 import { StudentRecord } from '@/types/academic';
 import { extractNumericValue, getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
+import { useModalDialog } from '@/hooks/useModalDialog';
+import StatusBadge from '@/components/ui/StatusBadge';
 import {
   X,
   User,
@@ -27,6 +29,7 @@ export default function StudentProfileDrawer({
   isOpen,
   onClose,
 }: StudentProfileDrawerProps) {
+  const panelRef = useModalDialog<HTMLDivElement>(isOpen && !!student, onClose);
   if (!isOpen || !student) return null;
 
   const currentOverall = student.currentPerformance?.overall?.value ?? 0;
@@ -62,18 +65,25 @@ export default function StudentProfileDrawer({
     .filter((exam): exam is NonNullable<typeof exam> => !!exam);
 
   const evaluation = getStudentStatus(student);
-  const status = { label: evaluation.label, bg: `${evaluation.badgeBg} ${evaluation.badgeColor}` };
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden flex justify-end">
       {/* Backdrop */}
       <div
         onClick={onClose}
+        aria-hidden="true"
         className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity duration-300"
       />
 
       {/* Slide-over panel */}
-      <div className="relative w-full max-w-lg bg-white h-full shadow-2xl z-10 flex flex-col overflow-y-auto animate-in slide-in-from-right duration-300">
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="student-drawer-title"
+        tabIndex={-1}
+        className="relative w-full max-w-lg bg-white h-full shadow-2xl z-10 flex flex-col overflow-y-auto animate-in slide-in-from-right duration-300 focus:outline-none"
+      >
         {/* Header */}
         <div className="p-6 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -82,10 +92,10 @@ export default function StudentProfileDrawer({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold tracking-tight text-white">{student.name}</h3>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${status.bg}`}>
-                  {status.label}
-                </span>
+                <h2 id="student-drawer-title" className="text-base font-bold tracking-tight text-white">
+                  {student.name}
+                </h2>
+                <StatusBadge status={evaluation.status} />
               </div>
               <p className="text-xs text-slate-300 mt-0.5">
                 Class {student.class} • Section <strong>{student.section || student.group}</strong> • Roll/ID: <span className="font-mono">{student.enrollmentNumber || student.studentId}</span>
@@ -94,8 +104,10 @@ export default function StudentProfileDrawer({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+            aria-label="Close profile"
+            className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -106,23 +118,23 @@ export default function StudentProfileDrawer({
           {/* Key Overall Stats Card */}
           <div className="grid grid-cols-3 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
             <div>
-              <span className="text-[11px] font-semibold text-slate-400 uppercase">Current Score</span>
+              <span className="text-xs font-semibold text-slate-500 uppercase">Current Score</span>
               <div className="text-2xl font-black text-slate-900 mt-0.5">{currentOverall}%</div>
-              <span className="text-[10px] text-slate-500">Mid-Term Actual</span>
+              <span className="text-xs text-slate-500">Mid-Term Actual</span>
             </div>
 
             <div>
-              <span className="text-[11px] font-semibold text-slate-400 uppercase">School Target</span>
+              <span className="text-xs font-semibold text-slate-500 uppercase">School Target</span>
               <div className="text-2xl font-black text-slate-700 mt-0.5">{targetOverall}%</div>
-              <span className="text-[10px] text-slate-500">CBSE Objective</span>
+              <span className="text-xs text-slate-500">CBSE Objective</span>
             </div>
 
             <div>
-              <span className="text-[11px] font-semibold text-slate-400 uppercase">Target Gap</span>
+              <span className="text-xs font-semibold text-slate-500 uppercase">Target Gap</span>
               <div className={`text-2xl font-black mt-0.5 ${isAhead ? 'text-emerald-600' : 'text-rose-600'}`}>
                 {isAhead ? `+${gap}%` : `${gap}%`}
               </div>
-              <span className="text-[10px] text-slate-500">{isAhead ? 'Ahead of Goal' : 'Deficit to Bridge'}</span>
+              <span className="text-xs text-slate-500">{isAhead ? 'Ahead of Goal' : 'Deficit to Bridge'}</span>
             </div>
           </div>
 
@@ -130,7 +142,7 @@ export default function StudentProfileDrawer({
           <div>
             <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center justify-between">
               <span>Subject Diagnostics</span>
-              <span className="text-[10px] text-slate-400 font-normal">Score / Target</span>
+              <span className="text-xs text-slate-500 font-normal">Score / Target</span>
             </h4>
 
             <div className="space-y-3">
@@ -144,9 +156,9 @@ export default function StudentProfileDrawer({
                       <span className="font-semibold text-slate-800">{s.name}</span>
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-slate-900">{s.actual}%</span>
-                        <span className="text-slate-400 text-[11px]">/ {s.target}%</span>
+                        <span className="text-slate-500 text-xs">/ {s.target}%</span>
                         <span
-                          className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
+                          className={`text-xs font-bold px-1.5 py-0.2 rounded ${
                             subAhead ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
                           }`}
                         >
@@ -184,7 +196,7 @@ export default function StudentProfileDrawer({
                         isLatest ? 'border-blue-300 bg-blue-50/60 ring-1 ring-blue-200' : 'border-slate-200 bg-slate-50'
                       }`}
                     >
-                      <span className={`text-[11px] font-semibold block ${isLatest ? 'text-blue-700' : 'text-slate-500'}`}>
+                      <span className={`text-xs font-semibold block ${isLatest ? 'text-blue-700' : 'text-slate-500'}`}>
                         {exam.label}
                       </span>
                       <span className={`text-sm font-bold block mt-1 ${isLatest ? 'text-blue-900' : 'text-slate-700'}`}>
@@ -195,7 +207,7 @@ export default function StudentProfileDrawer({
                 })}
               </div>
             ) : (
-              <p className="p-3 rounded-lg border border-slate-200 bg-slate-50 text-[11px] text-slate-500">
+              <p className="p-3 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-500">
                 Only the latest assessment ({currentOverall}%) is on record. Earlier exam results have not been imported yet.
               </p>
             )}
@@ -208,7 +220,7 @@ export default function StudentProfileDrawer({
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
                 <span>Recommended Focus</span>
               </div>
-              <p className="text-amber-800 text-[11px]">
+              <p className="text-amber-800 text-xs">
                 {weakestSubject.name} is {Math.abs(weakestSubject.gap)} points below target ({weakestSubject.score}% against{' '}
                 {weakestSubject.target}%). Consider targeted remedial support in this subject before the next assessment.
               </p>

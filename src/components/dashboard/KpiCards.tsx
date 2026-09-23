@@ -111,9 +111,19 @@ export default function KpiCards({
         return (
           <div
             key={c.title}
+            role={onSelectStatus ? 'button' : undefined}
+            tabIndex={onSelectStatus ? 0 : undefined}
+            aria-pressed={onSelectStatus ? isSelected : undefined}
+            aria-label={onSelectStatus ? `Show ${c.title.toLowerCase()}: ${c.value} students` : undefined}
             onClick={() => onSelectStatus && onSelectStatus(c.statusKey)}
+            onKeyDown={(e) => {
+              if (onSelectStatus && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                onSelectStatus(c.statusKey);
+              }
+            }}
             className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${c.cardBg} p-4 border transition-all duration-300 group ${
-              onSelectStatus ? 'cursor-pointer active:scale-[0.98]' : ''
+              onSelectStatus ? 'cursor-pointer active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500' : ''
             } ${
               isSelected
                 ? 'ring-2 ring-blue-600 border-blue-600 shadow-md scale-[1.02]'
@@ -123,14 +133,14 @@ export default function KpiCards({
             {/* Header info */}
             <div className="flex items-start justify-between">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   {c.title}
                 </span>
                 <div className="flex items-baseline gap-2 mt-1">
                   <span className="text-2xl font-extrabold text-slate-900 tracking-tight">
                     {c.value}
                   </span>
-                  <span className="text-[11px] font-semibold text-slate-500">
+                  <span className="text-xs font-semibold text-slate-500">
                     ({c.pct}%)
                   </span>
                 </div>
@@ -149,7 +159,7 @@ export default function KpiCards({
             </div>
 
             {/* Subtext */}
-            <div className="mt-2.5 text-[11px] text-slate-500 truncate">{c.subtext}</div>
+            <div className="mt-2.5 text-xs text-slate-500 truncate">{c.subtext}</div>
           </div>
         );
       })}

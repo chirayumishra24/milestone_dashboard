@@ -16,10 +16,12 @@ import { getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
 
 interface StudentsRequiringAttentionTableProps {
   students: StudentRecord[];
+  classId?: string;
 }
 
 export default function StudentsRequiringAttentionTable({
   students,
+  classId = 'IX',
 }: StudentsRequiringAttentionTableProps) {
   const [filterMode, setFilterMode] = useState<'ALL_ATTENTION' | 'CRITICAL' | 'LARGE_GAP'>('ALL_ATTENTION');
   const [searchQuery, setSearchQuery] = useState('');
@@ -68,11 +70,11 @@ export default function StudentsRequiringAttentionTable({
                 <h3 className="text-sm font-bold text-slate-800">
                   Priority Intervention Cohort
                 </h3>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">
                   {searched.length} Students
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-xs text-slate-500">
                 Action triage for students below 70% or with target deficit
               </p>
             </div>
@@ -116,7 +118,7 @@ export default function StudentsRequiringAttentionTable({
         {/* Search row inside table */}
         <div className="mb-3">
           <div className="relative">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
               value={searchQuery}
@@ -172,14 +174,14 @@ export default function StudentsRequiringAttentionTable({
                           <span className="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block" />
                         )}
                       </div>
-                      <span className="text-[10px] text-slate-400 font-mono">
+                      <span className="text-xs text-slate-500 font-mono">
                         {s.enrollmentNumber || s.studentId}
                       </span>
                     </td>
 
                     <td className="py-2.5 px-2 font-semibold text-slate-600">
-                      <span className="px-1.5 py-0.5 rounded bg-slate-100 text-[10px]">
-                        IX {s.section || s.group}
+                      <span className="px-1.5 py-0.5 rounded bg-slate-100 text-xs">
+                        {classId} {s.section || s.group}
                       </span>
                     </td>
 
@@ -193,7 +195,7 @@ export default function StudentsRequiringAttentionTable({
 
                     <td className="py-2.5 px-2">
                       <span
-                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                        className={`text-xs font-bold px-1.5 py-0.5 rounded ${
                           gap < -10
                             ? 'bg-rose-100 text-rose-800'
                             : 'bg-amber-100 text-amber-800'
@@ -213,7 +215,7 @@ export default function StudentsRequiringAttentionTable({
                           e.stopPropagation();
                           handleOpenStudent(s);
                         }}
-                        className="p-1 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        className="p-1 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                         title="Open 360 Profile"
                       >
                         <ChevronRight className="w-4 h-4" />
@@ -228,7 +230,7 @@ export default function StudentsRequiringAttentionTable({
       </div>
 
       {/* Footer */}
-      <div className="mt-3 pt-2 text-[11px] text-slate-400 flex items-center justify-between">
+      <div className="mt-3 pt-2 text-xs text-slate-500 flex items-center justify-between">
         <span>Showing top priority cases • Click any row for 360° Diagnostic</span>
         <button
           onClick={() => {

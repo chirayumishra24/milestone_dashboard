@@ -11,11 +11,9 @@ import {
 
 interface QuickActionsCardProps {
   classId?: string;
-  /** Switches the dashboard to its intervention board tab */
-  onOpenInterventions?: () => void;
 }
 
-export default function QuickActionsCard({ classId = 'IX', onOpenInterventions }: QuickActionsCardProps) {
+export default function QuickActionsCard({ classId = 'IX' }: QuickActionsCardProps) {
   const actionClass =
     'w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50 hover:bg-blue-50/50 transition-all text-left group';
 
@@ -36,6 +34,14 @@ export default function QuickActionsCard({ classId = 'IX', onOpenInterventions }
       title: `Class ${classId} Report Card`,
       subtitle: 'Printable audit and honour roll',
     },
+    {
+      key: 'interventions',
+      href: `/classes/${classId}/interventions`,
+      icon: LifeBuoy,
+      iconClass: 'bg-purple-100 text-purple-700',
+      title: 'Intervention Board',
+      subtitle: 'Track remedial actions for this class',
+    },
   ];
 
   return (
@@ -47,7 +53,7 @@ export default function QuickActionsCard({ classId = 'IX', onOpenInterventions }
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-800">Quick Actions</h3>
-            <p className="text-[11px] text-slate-400">Reports, exports & remediation</p>
+            <p className="text-xs text-slate-500">Reports, exports & remediation</p>
           </div>
         </div>
 
@@ -64,30 +70,14 @@ export default function QuickActionsCard({ classId = 'IX', onOpenInterventions }
                     <h4 className="text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
                       {a.title}
                     </h4>
-                    <p className="text-[11px] text-slate-400">{a.subtitle}</p>
+                    <p className="text-xs text-slate-500">{a.subtitle}</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-blue-600 transition-colors" />
               </Link>
             );
           })}
 
-          {onOpenInterventions && (
-            <button type="button" onClick={onOpenInterventions} className={actionClass}>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center">
-                  <LifeBuoy className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
-                    Intervention Board
-                  </h4>
-                  <p className="text-[11px] text-slate-400">Track remedial actions for this class</p>
-                </div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
-            </button>
-          )}
         </div>
       </div>
     </div>

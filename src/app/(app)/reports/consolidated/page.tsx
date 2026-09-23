@@ -92,13 +92,13 @@ export default function ConsolidatedReportPage() {
 
           <div className="text-right text-xs text-slate-500">
             <div className="font-bold text-slate-900">{report.academicSession}</div>
-            <div className="text-[11px] text-slate-400 mt-0.5">Issued: {report.generatedDate}</div>
+            <div className="text-xs text-slate-500 mt-0.5">Issued: {report.generatedDate}</div>
           </div>
         </div>
 
         {/* Executive Narrative Summary */}
         <div className="p-4 rounded-2xl bg-blue-50/60 border border-blue-100 text-xs space-y-1.5">
-          <div className="flex items-center gap-1.5 text-blue-900 font-bold uppercase tracking-wider text-[11px]">
+          <div className="flex items-center gap-1.5 text-blue-900 font-bold uppercase tracking-wider text-xs">
             <ShieldCheck className="w-4 h-4 text-blue-600" />
             <span>Academic Committee Executive Assessment</span>
           </div>
@@ -110,24 +110,24 @@ export default function ConsolidatedReportPage() {
         {/* Key Metrics Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center">
           <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase block">Total Scholars</span>
+            <span className="text-xs text-slate-500 font-semibold uppercase block">Total Scholars</span>
             <span className="text-2xl font-black text-slate-900 mt-1 block">{report.overview.totalSchoolStudents}</span>
-            <span className="text-[10px] text-slate-500">Grades VI – XII</span>
+            <span className="text-xs text-slate-500">Grades VI – XII</span>
           </div>
           <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase block">School Average</span>
+            <span className="text-xs text-slate-500 font-semibold uppercase block">School Average</span>
             <span className="text-2xl font-black text-slate-900 mt-1 block">{report.overview.overallSchoolAverage}%</span>
-            <span className="text-[10px] text-emerald-600 font-semibold">Tgt: {report.overview.schoolTargetAverage}%</span>
+            <span className="text-xs text-emerald-600 font-semibold">Tgt: {report.overview.schoolTargetAverage}%</span>
           </div>
           <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase block">On-Track Compliance</span>
+            <span className="text-xs text-slate-500 font-semibold uppercase block">On-Track Compliance</span>
             <span className="text-2xl font-black text-slate-900 mt-1 block">{report.overview.studentsOnTrackPct}%</span>
-            <span className="text-[10px] text-slate-500">{report.overview.studentsOnTrackCount} Students</span>
+            <span className="text-xs text-slate-500">{report.overview.studentsOnTrackCount} Students</span>
           </div>
           <div>
-            <span className="text-[11px] text-slate-400 font-semibold uppercase block">Composite Health</span>
+            <span className="text-xs text-slate-500 font-semibold uppercase block">Composite Health</span>
             <span className="text-2xl font-black text-blue-600 mt-1 block">{report.overview.schoolHealthIndex}</span>
-            <span className="text-[10px] text-slate-500">Out of 100</span>
+            <span className="text-xs text-slate-500">Out of 100</span>
           </div>
         </div>
 
@@ -135,7 +135,7 @@ export default function ConsolidatedReportPage() {
         <div className="space-y-3">
           <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center justify-between">
             <span>Grade-Wise Assessment Breakdown</span>
-            <span className="text-[11px] text-slate-400 font-normal">7 Grade Cohorts</span>
+            <span className="text-xs text-slate-500 font-normal">7 Grade Cohorts</span>
           </h3>
 
           <div className="overflow-x-auto rounded-xl border border-slate-200">
@@ -213,7 +213,7 @@ export default function ConsolidatedReportPage() {
                   <span className="font-mono font-bold text-rose-600">{p.gap}% Gap</span>
                 </div>
                 <div className="font-semibold text-amber-900">{p.subject}</div>
-                <p className="text-[11px] text-slate-600 leading-normal">{p.actionRequired}</p>
+                <p className="text-xs text-slate-600 leading-normal">{p.actionRequired}</p>
               </div>
             ))}
           </div>
@@ -224,17 +224,17 @@ export default function ConsolidatedReportPage() {
           <div>
             <div className="h-10 border-b border-dashed border-slate-300 mb-2"></div>
             <span className="font-bold text-slate-800 block">Head of Examination Committee</span>
-            <span className="text-[10px]">Academic Records Wing</span>
+            <span className="text-xs">Academic Records Wing</span>
           </div>
           <div>
             <div className="h-10 border-b border-dashed border-slate-300 mb-2"></div>
             <span className="font-bold text-slate-800 block">Vice Principal</span>
-            <span className="text-[10px]">Curriculum & Pedagogy</span>
+            <span className="text-xs">Curriculum & Pedagogy</span>
           </div>
           <div>
             <div className="h-10 border-b border-dashed border-slate-300 mb-2"></div>
             <span className="font-bold text-slate-800 block">Principal & Director</span>
-            <span className="text-[10px]">Central City International School</span>
+            <span className="text-xs">Central City International School</span>
           </div>
         </div>
       </div>

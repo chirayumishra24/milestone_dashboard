@@ -2,17 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { InterventionRecord } from '@/types/academic';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
-import {
-  LifeBuoy,
-  UserCheck,
-  Calendar,
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-  ArrowRight,
-  Filter,
-  Plus,
-} from 'lucide-react';
+import { useToast } from '@/components/ui/Toast';
+import { LifeBuoy, UserCheck, Calendar } from 'lucide-react';
 
 interface InterventionKanbanProps {
   classId?: string;
@@ -23,8 +14,8 @@ type InterventionStatus = InterventionRecord['status'];
 export default function InterventionKanban({ classId = 'IX' }: InterventionKanbanProps) {
   const [items, setItems] = useState<InterventionRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [selectedSection, setSelectedSection] = useState<'ALL' | 'AURA' | 'ZEN' | 'NEO'>('ALL');
+  const { showToast } = useToast();
+  const [selectedSection, setSelectedSection] = useState('ALL');
 
   useEffect(() => {
     let cancelled = false;
@@ -45,6 +36,8 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
   // Records without a classId predate multi-class support and belong to Class IX
   const classItems = items.filter((item) => (item.classId || 'IX') === classId);
 
+  const sectionOptions = ['ALL', ...Array.from(new Set(classItems.map((item) => item.section))).sort()];
+
   const filtered = classItems.filter((item) => {
     if (selectedSection === 'ALL') return true;
     return item.section === selectedSection;
@@ -63,13 +56,14 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
 
     // Optimistic update, rolled back if the save fails
     setItems((prev) => prev.map((item) => (item.id === id ? { ...item, status: newStatus } : item)));
-    setSaveError(null);
     try {
       await schoolMilestoneApi.saveIntervention({ ...target, status: newStatus });
+      const column = columns.find((c) => c.id === newStatus);
+      showToast(`${target.studentName} moved to ${column?.title ?? newStatus}`);
     } catch (err) {
       console.error('Failed saving intervention:', err);
       setItems(previous);
-      setSaveError(`Could not update ${target.studentName}. Please try again.`);
+      showToast(`Could not update ${target.studentName}. Please try again.`, 'error');
     }
   };
 
@@ -93,11 +87,13 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
 
         {/* Section filter */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400 font-medium">Cohort:</span>
-          <div className="flex items-center bg-slate-100 p-1 rounded-xl text-xs">
-            {(['ALL', 'AURA', 'ZEN', 'NEO'] as const).map((sec) => (
+          <span className="text-xs text-slate-500 font-medium">Section:</span>
+          <div role="group" aria-label="Filter by section" className="flex items-center bg-slate-100 p-1 rounded-xl text-xs overflow-x-auto">
+            {sectionOptions.map((sec) => (
               <button
                 key={sec}
+                type="button"
+                aria-pressed={selectedSection === sec}
                 onClick={() => setSelectedSection(sec)}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
                   selectedSection === sec
@@ -111,13 +107,6 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
           </div>
         </div>
       </div>
-
-      {saveError && (
-        <div role="alert" className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs font-medium text-rose-700 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 flex-shrink-0" />
-          {saveError}
-        </div>
-      )}
 
       {!isLoading && classItems.length === 0 && (
         <div className="mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500">
@@ -139,7 +128,7 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
                 <span className={`text-xs font-bold ${col.color}`}>
                   {col.title}
                 </span>
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-slate-700 shadow-2xs">
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-white text-slate-700 shadow-2xs">
                   {colItems.length}
                 </span>
               </div>
@@ -153,36 +142,38 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-slate-900">{item.studentName}</span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-semibold">
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-semibold">
                         {classId} {item.section}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between text-[11px]">
+                    <div className="flex items-center justify-between text-xs">
                       <span className="font-medium text-slate-700">{item.subject}</span>
                       <span className="font-bold text-rose-600 font-mono">
                         Gap: {item.gap}%
                       </span>
                     </div>
 
-                    <div className="p-2 rounded-lg bg-slate-50 border border-slate-100 text-[11px] space-y-1">
+                    <div className="p-2 rounded-lg bg-slate-50 border border-slate-100 text-xs space-y-1">
                       <p className="text-slate-600 italic">"{item.reason}"</p>
-                      <div className="flex items-center justify-between pt-1 text-[10px] text-slate-500">
+                      <div className="flex items-center justify-between pt-1 text-xs text-slate-500">
                         <span className="flex items-center gap-1">
                           <UserCheck className="w-3 h-3 text-blue-600" />
                           {item.assignedTeacher}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3 text-slate-400" />
+                          <Calendar className="w-3 h-3 text-slate-500" />
                           {item.reviewDate}
                         </span>
                       </div>
                     </div>
 
                     {/* Move buttons */}
-                    <div className="pt-1 flex items-center justify-between gap-1 border-t border-slate-100 text-[10px]">
+                    <div className="pt-1 flex items-center justify-between gap-1 border-t border-slate-100 text-xs">
                       {col.id !== 'Pending' && (
                         <button
+                          type="button"
+                          aria-label={`Move ${item.studentName} back to Pending`}
                           onClick={() => handleMoveStatus(item.id, 'Pending')}
                           className="text-slate-500 hover:text-slate-800"
                         >
@@ -191,6 +182,8 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
                       )}
                       {col.id !== 'In Progress' && (
                         <button
+                          type="button"
+                          aria-label={`Move ${item.studentName} to Active Remedial Tutoring`}
                           onClick={() => handleMoveStatus(item.id, 'In Progress')}
                           className="text-blue-600 hover:underline font-semibold ml-auto"
                         >
@@ -199,6 +192,8 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
                       )}
                       {col.id !== 'Completed' && (
                         <button
+                          type="button"
+                          aria-label={`Move ${item.studentName} to Target Deficit Closed`}
                           onClick={() => handleMoveStatus(item.id, 'Completed')}
                           className="text-emerald-600 hover:underline font-bold ml-auto"
                         >
@@ -210,7 +205,7 @@ export default function InterventionKanban({ classId = 'IX' }: InterventionKanba
                 ))}
 
                 {colItems.length === 0 && (
-                  <div className="text-center py-8 text-xs text-slate-400 italic">
+                  <div className="text-center py-8 text-xs text-slate-500 italic">
                     No active records
                   </div>
                 )}

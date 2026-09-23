@@ -35,7 +35,7 @@ export default function UpcomingMilestoneCard({
 
       <div>
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5 text-blue-400" /> Next Critical Gate
           </span>
           <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
@@ -62,7 +62,7 @@ export default function UpcomingMilestoneCard({
             <div className="flex items-center gap-1.5">
               <span className="font-bold text-white font-mono text-sm">{currentAvg}%</span>
               <span
-                className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
+                className={`text-xs font-bold px-1.5 py-0.2 rounded ${
                   isAhead ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'
                 }`}
               >

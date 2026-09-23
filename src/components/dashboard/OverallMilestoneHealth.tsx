@@ -5,10 +5,12 @@ import { Activity, ShieldCheck, CheckCircle2, TrendingUp, AlertCircle } from 'lu
 
 interface OverallMilestoneHealthProps {
   metrics: OverallHealthMetrics;
+  classId?: string;
 }
 
 export default function OverallMilestoneHealth({
   metrics,
+  classId = 'IX',
 }: OverallMilestoneHealthProps) {
   const score = metrics.healthScore || 78;
   const radius = 42;
@@ -34,10 +36,10 @@ export default function OverallMilestoneHealth({
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-800">Overall Milestone Health</h3>
-              <p className="text-[11px] text-slate-400">Class IX Composite Index</p>
+              <p className="text-xs text-slate-500">Class {classId} Composite Index</p>
             </div>
           </div>
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${status.bg}`}>
+          <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${status.bg}`}>
             {status.label}
           </span>
         </div>
@@ -74,7 +76,7 @@ export default function OverallMilestoneHealth({
               <span className="text-3xl font-extrabold text-slate-900 tracking-tight">
                 {score}
               </span>
-              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 out of 100
               </span>
             </div>

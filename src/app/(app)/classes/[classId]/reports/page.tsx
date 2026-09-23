@@ -146,7 +146,7 @@ export default function ClassReportPage() {
             <span className="inline-block px-3 py-1 bg-blue-50 text-blue-700 font-bold text-xs rounded-full border border-blue-200">
               OFFICIAL ACADEMIC AUDIT
             </span>
-            <p className="text-xs text-slate-400 mt-1 font-mono">Date: 23 Sep 2026</p>
+            <p className="text-xs text-slate-500 mt-1 font-mono">Date: 23 Sep 2026</p>
           </div>
         </div>
 
@@ -164,15 +164,15 @@ export default function ClassReportPage() {
           </div>
           <div className="flex items-center gap-6">
             <div>
-              <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider">Enrolled Scholars</span>
+              <span className="text-xs text-slate-500 block uppercase font-bold tracking-wider">Enrolled Scholars</span>
               <span className="text-2xl font-black text-slate-900 font-mono">{students.length}</span>
             </div>
             <div className="border-l border-slate-200 pl-6">
-              <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider">Class Average</span>
+              <span className="text-xs text-slate-500 block uppercase font-bold tracking-wider">Class Average</span>
               <span className="text-2xl font-black text-blue-600 font-mono">{summary.classAverage}%</span>
             </div>
             <div className="border-l border-slate-200 pl-6">
-              <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider">Target Benchmark</span>
+              <span className="text-xs text-slate-500 block uppercase font-bold tracking-wider">Target Benchmark</span>
               <span className="text-2xl font-black text-slate-700 font-mono">{classInfo?.targetAvg}%</span>
             </div>
           </div>
@@ -191,8 +191,8 @@ export default function ClassReportPage() {
                 <div className="mt-3 flex items-baseline justify-between">
                   <span className="text-2xl font-black text-slate-900 font-mono">{sec.average}%</span>
                   <div className="text-right">
-                    <span className="text-[11px] font-semibold text-emerald-600 block">{sec.onTrack} On Track</span>
-                    <span className="text-[11px] font-semibold text-rose-500 block">{sec.critical} Critical</span>
+                    <span className="text-xs font-semibold text-emerald-600 block">{sec.onTrack} On Track</span>
+                    <span className="text-xs font-semibold text-rose-500 block">{sec.critical} Critical</span>
                   </div>
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function ClassReportPage() {
                         {isPositive ? `+${variance}%` : `${variance}%`}
                       </td>
                       <td className="p-3 text-center">
-                        <span className={`inline-block px-2.5 py-0.5 rounded-full font-semibold text-[10px] ${
+                        <span className={`inline-block px-2.5 py-0.5 rounded-full font-semibold text-xs ${
                           isPositive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'
                         }`}>
                           {isPositive ? 'On Track' : 'Needs Reinforcement'}
@@ -254,7 +254,7 @@ export default function ClassReportPage() {
                   <div className="flex items-center gap-2">
                     <span className="font-bold font-mono text-emerald-700">#{idx + 1}</span>
                     <span className="font-semibold text-slate-800">{s.name}</span>
-                    <span className="text-[10px] text-slate-400 font-mono">({s.section || s.group})</span>
+                    <span className="text-xs text-slate-500 font-mono">({s.section || s.group})</span>
                   </div>
                   <span className="font-bold font-mono text-emerald-600">
                     {s.currentPerformance?.overall?.value}%
@@ -279,7 +279,7 @@ export default function ClassReportPage() {
                   <div key={s.studentId} className="flex items-center justify-between text-xs bg-white p-2.5 rounded-lg border border-rose-100">
                     <div>
                       <span className="font-semibold text-slate-800">{s.name}</span>
-                      <span className="text-[10px] text-slate-400 font-mono ml-2">({s.section || s.group})</span>
+                      <span className="text-xs text-slate-500 font-mono ml-2">({s.section || s.group})</span>
                     </div>
                     <span className="font-bold font-mono text-rose-600">
                       {s.currentPerformance?.overall?.value}%
@@ -297,14 +297,14 @@ export default function ClassReportPage() {
             <div className="w-36 border-b border-slate-300 pb-1 mb-1 font-semibold text-slate-700">
               {classInfo?.coordinator}
             </div>
-            <p className="text-[11px]">Academic Coordinator</p>
+            <p className="text-xs">Academic Coordinator</p>
           </div>
 
           <div className="text-center sm:text-right">
             <div className="w-36 border-b border-slate-300 pb-1 mb-1 font-semibold text-slate-700">
               Dr. R. K. Sharma
             </div>
-            <p className="text-[11px]">Principal & Head of School</p>
+            <p className="text-xs">Principal & Head of School</p>
           </div>
         </div>
       </div>

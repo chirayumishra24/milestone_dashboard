@@ -167,13 +167,15 @@ class SchoolMilestoneApiService {
       this.getFmsWorkflow(),
     ]);
     const classInterventions = interventions.filter((i) => (i.classId || 'IX') === classId);
+    // The FMS workflow belongs to the milestone programme; other grades are scored without it
+    const programmeSteps = this.getProfile(classId)?.hasMilestoneProgramme ? fmsSteps : [];
 
     return calculateOverallMilestoneHealth(
       students,
       classInterventions.filter((i) => i.status === 'Completed').length,
       classInterventions.length,
-      fmsSteps.filter((s) => s.status === 'Completed').length,
-      fmsSteps.length
+      programmeSteps.filter((s) => s.status === 'Completed').length,
+      programmeSteps.length
     );
   }
 
@@ -270,6 +272,7 @@ class SchoolMilestoneApiService {
       coordinator: profile.coordinator,
       milestoneStatus: profile.milestoneStatus,
       dataSource: profile.dataSource,
+      hasMilestoneProgramme: profile.hasMilestoneProgramme,
     };
   }
 

@@ -25,16 +25,16 @@ export default function TargetVsActualChart({ students }: TargetVsActualChartPro
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-800">Target vs Actual Delta</h3>
-              <p className="text-[11px] text-slate-400">Class Average vs School Benchmark</p>
+              <p className="text-xs text-slate-500">Class Average vs School Benchmark</p>
             </div>
           </div>
-          <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
+          <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
             Dumbbell Metric
           </span>
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-4 text-[11px] text-slate-500 my-3 pb-2 border-b border-slate-100">
+        <div className="flex items-center gap-4 text-xs text-slate-500 my-3 pb-2 border-b border-slate-100">
           <div className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded-sm bg-blue-600"></span>
             <span>Class Actual</span>
@@ -43,7 +43,7 @@ export default function TargetVsActualChart({ students }: TargetVsActualChartPro
             <span className="w-3 h-3 rounded-full border-2 border-amber-500 bg-white"></span>
             <span>Target Benchmark</span>
           </div>
-          <div className="flex items-center gap-1.5 ml-auto text-[10px] text-slate-400">
+          <div className="flex items-center gap-1.5 ml-auto text-xs text-slate-500">
             <span>Scale: 0 – 100%</span>
           </div>
         </div>
@@ -72,11 +72,11 @@ export default function TargetVsActualChart({ students }: TargetVsActualChartPro
                     />
                     {subj.name}
                   </span>
-                  <div className="flex items-center gap-2 font-mono text-[11px]">
+                  <div className="flex items-center gap-2 font-mono text-xs">
                     <span className="text-slate-600 font-semibold">{subj.average}%</span>
-                    <span className="text-slate-400 font-normal">/ {subj.targetAvg}%</span>
+                    <span className="text-slate-500 font-normal">/ {subj.targetAvg}%</span>
                     <span
-                      className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
+                      className={`text-xs font-bold px-1.5 py-0.2 rounded ${
                         isAhead
                           ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           : 'bg-rose-50 text-rose-700 border border-rose-200'
@@ -114,7 +114,7 @@ export default function TargetVsActualChart({ students }: TargetVsActualChartPro
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
+      <div className="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
         <span>{highest ? `Highest: ${highest.name} (${highest.average}%)` : 'No subject scores yet'}</span>
         {largestGap && largestGap.gap < 0 && (
           <span className="text-rose-600 font-semibold">

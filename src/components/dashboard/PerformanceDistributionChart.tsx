@@ -5,10 +5,12 @@ import { BarChart3, Users } from 'lucide-react';
 
 interface PerformanceDistributionChartProps {
   buckets: PerformanceBucket[];
+  classId?: string;
 }
 
 export default function PerformanceDistributionChart({
   buckets,
+  classId = 'IX',
 }: PerformanceDistributionChartProps) {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const maxCount = Math.max(...buckets.map((b) => b.count), 1);
@@ -23,10 +25,10 @@ export default function PerformanceDistributionChart({
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-800">Performance Distribution</h3>
-              <p className="text-[11px] text-slate-400">Class IX Grade Bands</p>
+              <p className="text-xs text-slate-500">Class {classId} Grade Bands</p>
             </div>
           </div>
-          <span className="text-[10px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
+          <span className="text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
             Normalized
           </span>
         </div>
@@ -46,13 +48,13 @@ export default function PerformanceDistributionChart({
               >
                 {/* Floating tooltip */}
                 {isHovered && (
-                  <div className="absolute -top-10 px-2 py-1 bg-slate-900 text-white text-[10px] font-semibold rounded-md shadow-lg z-20 whitespace-nowrap">
+                  <div className="absolute -top-10 px-2 py-1 bg-slate-900 text-white text-xs font-semibold rounded-md shadow-lg z-20 whitespace-nowrap">
                     {b.count} Students ({b.percentage}%)
                   </div>
                 )}
 
                 {/* Percentage label above bar */}
-                <span className="text-[10px] font-bold text-slate-600 mb-1 transition-transform group-hover:scale-110">
+                <span className="text-xs font-bold text-slate-600 mb-1 transition-transform group-hover:scale-110">
                   {b.count}
                 </span>
 
@@ -68,7 +70,7 @@ export default function PerformanceDistributionChart({
                 </div>
 
                 {/* Label under bar */}
-                <span className="text-[10px] font-semibold text-slate-500 mt-2 truncate w-full text-center">
+                <span className="text-xs font-semibold text-slate-500 mt-2 truncate w-full text-center">
                   {b.label}
                 </span>
               </div>
@@ -78,7 +80,7 @@ export default function PerformanceDistributionChart({
       </div>
 
       {/* Summary insights footer */}
-      <div className="mt-3 pt-2 text-[11px] text-slate-500 flex items-center justify-between">
+      <div className="mt-3 pt-2 text-xs text-slate-500 flex items-center justify-between">
         <span className="flex items-center gap-1">
           <Users className="w-3.5 h-3.5 text-blue-600" />
           Median Range: <strong className="text-slate-700">80–89%</strong>

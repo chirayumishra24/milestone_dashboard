@@ -5,10 +5,12 @@ import { BookOpen, Award, ArrowUp, ArrowDown } from 'lucide-react';
 
 interface SubjectsPerformanceCardProps {
   subjects: SubjectMetric[];
+  classId?: string;
 }
 
 export default function SubjectsPerformanceCard({
   subjects,
+  classId = 'IX',
 }: SubjectsPerformanceCardProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between">
@@ -20,10 +22,10 @@ export default function SubjectsPerformanceCard({
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-800">Subject Diagnostics</h3>
-              <p className="text-[11px] text-slate-400">Class IX Core Curriculum</p>
+              <p className="text-xs text-slate-500">Class {classId} Core Curriculum</p>
             </div>
           </div>
-          <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full">
+          <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full">
             6 Subjects
           </span>
         </div>
@@ -41,13 +43,13 @@ export default function SubjectsPerformanceCard({
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <span
-                    className="text-[10px] font-bold px-1.5 py-0.5 rounded text-white"
+                    className="text-xs font-bold px-1.5 py-0.5 rounded text-white"
                     style={{ backgroundColor: subj.color || '#3B82F6' }}
                   >
                     {subj.code}
                   </span>
                   <span
-                    className={`text-[10px] font-bold ${
+                    className={`text-xs font-bold ${
                       isAhead ? 'text-emerald-600' : 'text-rose-600'
                     }`}
                   >
@@ -63,11 +65,11 @@ export default function SubjectsPerformanceCard({
                   <span className="text-base font-extrabold text-slate-900 font-mono">
                     {subj.average}%
                   </span>
-                  <span className="text-[11px] text-slate-400">Tgt: {subj.targetAvg}%</span>
+                  <span className="text-xs text-slate-500">Tgt: {subj.targetAvg}%</span>
                 </div>
 
                 {/* Min / Max Range */}
-                <div className="mt-2 pt-1.5 border-t border-slate-200/50 flex items-center justify-between text-[10px] text-slate-400">
+                <div className="mt-2 pt-1.5 border-t border-slate-200/50 flex items-center justify-between text-xs text-slate-500">
                   <span className="text-emerald-700 font-medium">Max: {subj.highest}%</span>
                   <span className="text-rose-600 font-medium">Min: {subj.lowest}%</span>
                 </div>
@@ -77,7 +79,7 @@ export default function SubjectsPerformanceCard({
         </div>
       </div>
 
-      <div className="mt-3 pt-2 text-[11px] text-slate-400 flex items-center justify-between">
+      <div className="mt-3 pt-2 text-xs text-slate-500 flex items-center justify-between">
         <span>Highest Class Average: Social Science</span>
         <span>Curriculum Paced</span>
       </div>

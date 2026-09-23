@@ -53,11 +53,11 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                 <h3 className="text-sm font-bold text-slate-800">
                   Inter-Class Academic Comparison Heatmap
                 </h3>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                   Grades VI – XII
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-xs text-slate-500">
                 Cross-grade target pacing and remedial deficit matrix
               </p>
             </div>
@@ -84,7 +84,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Grade Cohort</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                    <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
                 <th className="py-3 px-3">Sections</th>
@@ -95,7 +95,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Class Avg</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                    <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
                 <th className="py-3 px-3">Target</th>
@@ -105,7 +105,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Target Gap</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                    <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
                 <th
@@ -114,7 +114,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                 >
                   <div className="flex items-center gap-1.5">
                     <span>On Track %</span>
-                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                    <ArrowUpDown className="w-3 h-3 text-slate-500" />
                   </div>
                 </th>
                 <th className="py-3 px-3">Critical (&lt;60%)</th>
@@ -136,19 +136,19 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                         <span>{c.label}</span>
                         {c.dataSource === 'sample' && (
                           <span
-                            className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200"
+                            className="text-xs font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200"
                             title="Generated placeholder roster; no official records imported yet"
                           >
                             Sample
                           </span>
                         )}
                         {c.classId === 'IX' && (
-                          <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-blue-600 text-white">
+                          <span className="text-xs font-extrabold px-1.5 py-0.2 rounded bg-blue-600 text-white">
                             Active
                           </span>
                         )}
                       </div>
-                      <div className="text-[10px] text-slate-400 flex items-center gap-1 mt-0.5">
+                      <div className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
                         <User className="w-3 h-3" />
                         {c.coordinator}
                       </div>
@@ -159,7 +159,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                         {c.sections.map((sec) => (
                           <span
                             key={sec}
-                            className="px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded text-[10px] font-semibold"
+                            className="px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded text-xs font-semibold"
                           >
                             {sec}
                           </span>
@@ -181,7 +181,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
 
                     <td className="py-3 px-3">
                       <span
-                        className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${
+                        className={`text-xs font-bold px-2 py-0.5 rounded-full border ${
                           isAhead
                             ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                             : 'bg-rose-50 text-rose-700 border-rose-200'
@@ -215,7 +215,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                       </span>
                     </td>
 
-                    <td className="py-3 px-3 text-[11px] text-slate-600 max-w-[170px] truncate">
+                    <td className="py-3 px-3 text-xs text-slate-600 max-w-[170px] truncate">
                       {c.milestoneStatus}
                     </td>
 
@@ -236,7 +236,7 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
         <span>Click 'Open' on any row to drill down into section breakdowns, individual rosters, and subject diagnostics</span>
         <span className="font-semibold text-slate-600">7 Active Grade Cohorts</span>
       </div>
