@@ -20,7 +20,6 @@ import UpcomingMilestoneCard from '@/components/dashboard/UpcomingMilestoneCard'
 import FmsWorkflowProgressCard from '@/components/dashboard/FmsWorkflowProgressCard';
 import QuickActionsCard from '@/components/dashboard/QuickActionsCard';
 import GlobalFilterBar, { SectionFilter, StatusFilter, ViewTab } from '@/components/dashboard/GlobalFilterBar';
-import Cohort3DGalaxy from '@/components/dashboard/Cohort3DGalaxy';
 import InterventionKanban from '@/components/dashboard/InterventionKanban';
 import { Loader2 } from 'lucide-react';
 
@@ -121,7 +120,7 @@ export default function DashboardPage() {
         }}
       />
 
-      {/* Top KPI Cards Row (Always visible across all tabs for instant pulse) */}
+      {/* Top KPI Cards Row (Click any card to triage filter) */}
       <KpiCards
         totalStudents={summary.totalStudents || filteredStudents.length}
         onTrackCount={summary.onTrackCount || 0}
@@ -133,6 +132,8 @@ export default function DashboardPage() {
         targetAchievedCount={summary.targetAchievedCount || 0}
         targetAchievedPct={summary.targetAchievedPct || 0}
         currentDate="12 Oct 2026"
+        activeStatus={selectedStatus}
+        onSelectStatus={setSelectedStatus}
       />
 
       {/* Tab 1: OVERVIEW */}
@@ -185,12 +186,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Tab 2: 3D COHORT GALAXY */}
-      {activeTab === 'GALAXY_3D' && (
-        <div className="animate-in fade-in duration-300">
-          <Cohort3DGalaxy students={filteredStudents} />
-        </div>
-      )}
+
 
       {/* Tab 3: INTERVENTIONS KANBAN */}
       {activeTab === 'KANBAN' && (

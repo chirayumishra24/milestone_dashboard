@@ -13,6 +13,8 @@ interface KpiCardsProps {
   targetAchievedCount: number;
   targetAchievedPct: number;
   currentDate?: string;
+  activeStatus?: 'ALL' | 'ACHIEVED' | 'ON_TRACK' | 'WATCH' | 'CRITICAL';
+  onSelectStatus?: (status: 'ALL' | 'ACHIEVED' | 'ON_TRACK' | 'WATCH' | 'CRITICAL') => void;
 }
 
 export default function KpiCards({
@@ -26,6 +28,8 @@ export default function KpiCards({
   targetAchievedCount,
   targetAchievedPct,
   currentDate = '12 Oct 2026',
+  activeStatus = 'ALL',
+  onSelectStatus,
 }: KpiCardsProps) {
   const cards = [
     {
@@ -41,6 +45,7 @@ export default function KpiCards({
       iconBg: 'bg-blue-600 text-white',
       accentColor: 'bg-blue-600',
       badge: 'Cohort IX',
+      statusKey: 'ALL' as const,
     },
     {
       title: 'On-Track Students',
@@ -55,6 +60,7 @@ export default function KpiCards({
       iconBg: 'bg-emerald-600 text-white',
       accentColor: 'bg-emerald-500',
       badge: '70%–84%',
+      statusKey: 'ON_TRACK' as const,
     },
     {
       title: 'At Risk (Watchlist)',
@@ -69,6 +75,7 @@ export default function KpiCards({
       iconBg: 'bg-amber-500 text-white',
       accentColor: 'bg-amber-500',
       badge: '60%–69%',
+      statusKey: 'WATCH' as const,
     },
     {
       title: 'Critical Attention',
@@ -83,6 +90,7 @@ export default function KpiCards({
       iconBg: 'bg-rose-600 text-white',
       accentColor: 'bg-rose-500',
       badge: '<60%',
+      statusKey: 'CRITICAL' as const,
     },
     {
       title: 'Target Achieved',
@@ -97,6 +105,7 @@ export default function KpiCards({
       iconBg: 'bg-indigo-600 text-white',
       accentColor: 'bg-indigo-500',
       badge: '85%+',
+      statusKey: 'ACHIEVED' as const,
     },
   ];
 
@@ -104,10 +113,19 @@ export default function KpiCards({
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
       {cards.map((c) => {
         const Icon = c.icon;
+        const isSelected = activeStatus === c.statusKey;
+
         return (
           <div
             key={c.title}
-            className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${c.cardBg} p-4 border ${c.borderColor} shadow-xs hover:shadow-md transition-all duration-300 group`}
+            onClick={() => onSelectStatus && onSelectStatus(c.statusKey)}
+            className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${c.cardBg} p-4 border transition-all duration-300 group ${
+              onSelectStatus ? 'cursor-pointer active:scale-[0.98]' : ''
+            } ${
+              isSelected
+                ? 'ring-2 ring-blue-600 border-blue-600 shadow-md scale-[1.02]'
+                : `${c.borderColor} shadow-xs hover:shadow-md hover:border-slate-300`
+            }`}
           >
             {/* Header info */}
             <div className="flex items-start justify-between">

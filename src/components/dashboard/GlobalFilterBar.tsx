@@ -4,7 +4,7 @@ import { Filter, Users, Layers, Award, AlertTriangle, Flame, Compass, Box } from
 
 export type SectionFilter = 'ALL' | 'AURA' | 'ZEN' | 'NEO';
 export type StatusFilter = 'ALL' | 'ACHIEVED' | 'ON_TRACK' | 'WATCH' | 'CRITICAL';
-export type ViewTab = 'OVERVIEW' | 'GALAXY_3D' | 'KANBAN';
+export type ViewTab = 'OVERVIEW' | 'KANBAN';
 
 interface GlobalFilterBarProps {
   selectedSection: SectionFilter;
@@ -99,21 +99,6 @@ export default function GlobalFilterBar({
           >
             <Layers className="w-3.5 h-3.5 text-blue-600" />
             <span>Overview</span>
-          </button>
-
-          <button
-            onClick={() => onTabChange('GALAXY_3D')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-              activeTab === 'GALAXY_3D'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Box className="w-3.5 h-3.5 text-indigo-600" />
-            <span className="flex items-center gap-1">
-              3D Orbit
-              <span className="text-[9px] px-1 bg-indigo-100 text-indigo-700 font-bold rounded">Three.js</span>
-            </span>
           </button>
 
           <button

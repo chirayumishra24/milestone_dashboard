@@ -13,6 +13,7 @@ import {
   BookOpen,
   CheckCircle2,
   Share2,
+  Printer,
 } from 'lucide-react';
 
 interface StudentProfileDrawerProps {
@@ -211,8 +212,12 @@ export default function StudentProfileDrawer({
           >
             Close
           </button>
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5">
-            <Share2 className="w-3.5 h-3.5" /> Export Student Profile (PDF)
+          <button
+            onClick={() => window.print()}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-colors flex items-center gap-1.5 active:scale-95"
+            title="Print or Save as PDF"
+          >
+            <Printer className="w-3.5 h-3.5" /> Print / Export Report (PDF)
           </button>
         </div>
       </div>

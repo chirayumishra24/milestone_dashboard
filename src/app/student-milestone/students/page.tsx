@@ -13,8 +13,11 @@ import {
   Flame,
   Layers,
   ArrowUpDown,
+  FileSpreadsheet,
 } from 'lucide-react';
 import StudentProfileDrawer from '@/components/dashboard/StudentProfileDrawer';
+
+type SortField = 'name' | 'section' | 'midTerm' | 'target' | 'gap';
 
 export default function StudentsPage() {
   const [students, setStudents] = useState<StudentRecord[]>([]);
@@ -24,6 +27,8 @@ export default function StudentsPage() {
   const [selectedStatus, setSelectedStatus] = useState<'ALL' | 'ACHIEVED' | 'ON_TRACK' | 'WATCH' | 'CRITICAL'>('ALL');
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sortField, setSortField] = useState<SortField>('name');
+  const [sortAsc, setSortAsc] = useState<boolean>(true);
 
   useEffect(() => {
     async function loadData() {
@@ -40,26 +45,97 @@ export default function StudentsPage() {
     loadData();
   }, []);
 
-  const filtered = students.filter((s) => {
-    const sec = s.section || s.group;
-    if (selectedSection !== 'ALL' && sec !== selectedSection) return false;
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(true);
+    }
+  };
 
-    const val = s.currentPerformance?.overall?.value ?? 0;
-    const tgt = s.schoolTarget?.overall?.value ?? 80;
+  const filtered = students
+    .filter((s) => {
+      const sec = s.section || s.group;
+      if (selectedSection !== 'ALL' && sec !== selectedSection) return false;
 
-    if (selectedStatus === 'ACHIEVED' && val < tgt) return false;
-    if (selectedStatus === 'ON_TRACK' && (val < 70 || val >= tgt)) return false;
-    if (selectedStatus === 'WATCH' && (val < 60 || val >= 70)) return false;
-    if (selectedStatus === 'CRITICAL' && val >= 60) return false;
+      const val = s.currentPerformance?.overall?.value ?? 0;
+      const tgt = s.schoolTarget?.overall?.value ?? 80;
 
-    if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    return (
-      s.name.toLowerCase().includes(q) ||
-      (s.enrollmentNumber || '').toLowerCase().includes(q) ||
-      (sec || '').toLowerCase().includes(q)
+      if (selectedStatus === 'ACHIEVED' && val < tgt) return false;
+      if (selectedStatus === 'ON_TRACK' && (val < 70 || val >= tgt)) return false;
+      if (selectedStatus === 'WATCH' && (val < 60 || val >= 70)) return false;
+      if (selectedStatus === 'CRITICAL' && val >= 60) return false;
+
+      if (!searchQuery) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        s.name.toLowerCase().includes(q) ||
+        (s.enrollmentNumber || '').toLowerCase().includes(q) ||
+        (sec || '').toLowerCase().includes(q)
+      );
+    })
+    .sort((a, b) => {
+      let cmp = 0;
+      const aVal = a.currentPerformance?.overall?.value ?? 0;
+      const bVal = b.currentPerformance?.overall?.value ?? 0;
+      const aTgt = a.schoolTarget?.overall?.value ?? 80;
+      const bTgt = b.schoolTarget?.overall?.value ?? 80;
+
+      if (sortField === 'name') cmp = a.name.localeCompare(b.name);
+      else if (sortField === 'section') cmp = (a.section || a.group || '').localeCompare(b.section || b.group || '');
+      else if (sortField === 'midTerm') cmp = aVal - bVal;
+      else if (sortField === 'target') cmp = aTgt - bTgt;
+      else if (sortField === 'gap') cmp = (aVal - aTgt) - (bVal - bTgt);
+
+      return sortAsc ? cmp : -cmp;
+    });
+
+  const exportToCSV = () => {
+    const headers = [
+      'Roll / Enrollment',
+      'Name',
+      'Section',
+      'English',
+      '2nd Lang',
+      'Mathematics',
+      'Science',
+      'Social Science',
+      'Computer / IT',
+      'Mid-Term %',
+      'Target %',
+      'Gap %',
+    ];
+
+    const rows = filtered.map((s) => [
+      `"${s.enrollmentNumber || s.studentId}"`,
+      `"${s.name}"`,
+      `"IX ${s.section || s.group}"`,
+      s.currentPerformance?.subjects?.english?.value ?? '',
+      s.currentPerformance?.subjects?.secondLanguage?.value ?? '',
+      s.currentPerformance?.subjects?.maths?.value ?? '',
+      s.currentPerformance?.subjects?.science?.value ?? '',
+      s.currentPerformance?.subjects?.socialScience?.value ?? '',
+      s.currentPerformance?.subjects?.it?.value ?? '',
+      s.currentPerformance?.overall?.value ?? '',
+      s.schoolTarget?.overall?.value ?? '',
+      Math.round(((s.currentPerformance?.overall?.value ?? 0) - (s.schoolTarget?.overall?.value ?? 80)) * 10) / 10,
+    ]);
+
+    const csvContent =
+      'data:text/csv;charset=utf-8,' +
+      [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute(
+      'download',
+      `Class_IX_Roster_${selectedSection}_${new Date().toISOString().slice(0, 10)}.csv`
     );
-  });
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const getStatusBadge = (val: number, tgt: number) => {
     if (val >= tgt) return { label: 'Target Met', color: 'bg-emerald-100 text-emerald-800' };
@@ -72,32 +148,41 @@ export default function StudentsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-        <div>
-          <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
-              <Users className="w-5 h-5" />
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-slate-900 tracking-tight">
-                Class IX Student Cohort Directory
-              </h1>
-              <p className="text-xs text-slate-500">
-                Full academic registry across AURA, ZEN, and NEO sections ({filtered.length} of {students.length} students)
-              </p>
-            </div>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
+            <Users className="w-5 h-5" />
+          </div>
+          <div>
+            <h1 className="text-lg font-bold text-slate-900 tracking-tight">
+              Class IX Student Cohort Directory
+            </h1>
+            <p className="text-xs text-slate-500">
+              Full academic registry across AURA, ZEN, and NEO sections ({filtered.length} of {students.length} students)
+            </p>
           </div>
         </div>
 
-        {/* Search */}
-        <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by student name or roll..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
-          />
+        {/* Search & Export Buttons */}
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="relative flex-1 sm:w-64">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by student name or roll..."
+              className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+            />
+          </div>
+
+          <button
+            onClick={exportToCSV}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-colors whitespace-nowrap active:scale-95"
+            title="Download full roster as CSV"
+          >
+            <Download className="w-4 h-4" />
+            <span>Export CSV</span>
+          </button>
         </div>
       </div>
 
@@ -146,17 +231,57 @@ export default function StudentsPage() {
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-50/90 text-slate-500 font-semibold border-b border-slate-200">
               <tr>
-                <th className="py-3 px-4">Student & ID</th>
-                <th className="py-3 px-3">Section</th>
+                <th
+                  onClick={() => handleSort('name')}
+                  className="py-3 px-4 cursor-pointer hover:text-blue-600 transition-colors select-none"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span>Student & ID</span>
+                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                  </div>
+                </th>
+                <th
+                  onClick={() => handleSort('section')}
+                  className="py-3 px-3 cursor-pointer hover:text-blue-600 transition-colors select-none"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span>Section</span>
+                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                  </div>
+                </th>
                 <th className="py-3 px-2 text-center">ENG</th>
                 <th className="py-3 px-2 text-center">LANG</th>
                 <th className="py-3 px-2 text-center">MATH</th>
                 <th className="py-3 px-2 text-center">SCI</th>
                 <th className="py-3 px-2 text-center">SST</th>
                 <th className="py-3 px-2 text-center">IT</th>
-                <th className="py-3 px-3">Mid-Term</th>
-                <th className="py-3 px-3">Target</th>
-                <th className="py-3 px-3">Status</th>
+                <th
+                  onClick={() => handleSort('midTerm')}
+                  className="py-3 px-3 cursor-pointer hover:text-blue-600 transition-colors select-none"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span>Mid-Term</span>
+                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                  </div>
+                </th>
+                <th
+                  onClick={() => handleSort('target')}
+                  className="py-3 px-3 cursor-pointer hover:text-blue-600 transition-colors select-none"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span>Target</span>
+                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                  </div>
+                </th>
+                <th
+                  onClick={() => handleSort('gap')}
+                  className="py-3 px-3 cursor-pointer hover:text-blue-600 transition-colors select-none"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span>Gap / Status</span>
+                    <ArrowUpDown className="w-3 h-3 text-slate-400" />
+                  </div>
+                </th>
                 <th className="py-3 px-4 text-right">360° Profile</th>
               </tr>
             </thead>
@@ -188,7 +313,7 @@ export default function StudentsPage() {
 
                     <td className="py-3 px-3">
                       <span className="px-2 py-0.5 rounded bg-slate-100 font-semibold text-[10px] text-slate-700">
-                        {s.section || s.group}
+                        IX {s.section || s.group}
                       </span>
                     </td>
 
@@ -220,9 +345,14 @@ export default function StudentsPage() {
                     </td>
 
                     <td className="py-3 px-3">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.color}`}>
-                        {badge.label}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.color}`}>
+                          {badge.label}
+                        </span>
+                        <span className={`text-[10px] font-bold font-mono ${gap >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                          ({gap >= 0 ? `+${gap}` : gap}%)
+                        </span>
+                      </div>
                     </td>
 
                     <td className="py-3 px-4 text-right">
