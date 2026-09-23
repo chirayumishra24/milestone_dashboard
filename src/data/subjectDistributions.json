@@ -1,0 +1,1280 @@
+{
+  "Overall": [
+    {
+      "bracket": "95 % and Above",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": 3.0,
+      "ix_pm_act": 3.0,
+      "ix_mt_tgt": 8.0
+    },
+    {
+      "bracket": "90-94 %",
+      "viii_hy": 10.0,
+      "ix_pm_tgt": 13.0,
+      "ix_pm_act": 9.0,
+      "ix_mt_tgt": 13.0
+    },
+    {
+      "bracket": "90 % and Above",
+      "viii_hy": 12.0,
+      "ix_pm_tgt": 16,
+      "ix_pm_act": 12.0,
+      "ix_mt_tgt": 21.0
+    },
+    {
+      "bracket": "89- 85 %",
+      "viii_hy": 21.0,
+      "ix_pm_tgt": 21.0,
+      "ix_pm_act": 17.0,
+      "ix_mt_tgt": 20.0
+    },
+    {
+      "bracket": "84-80 %",
+      "viii_hy": 21.0,
+      "ix_pm_tgt": 21.0,
+      "ix_pm_act": 20.0,
+      "ix_mt_tgt": 10.0
+    },
+    {
+      "bracket": "80 % and Above",
+      "viii_hy": 54.0,
+      "ix_pm_tgt": 58.0,
+      "ix_pm_act": 49.0,
+      "ix_mt_tgt": 51.0
+    },
+    {
+      "bracket": "79- 75 %",
+      "viii_hy": 26.0,
+      "ix_pm_tgt": 28.0,
+      "ix_pm_act": 18.0,
+      "ix_mt_tgt": 15.0
+    },
+    {
+      "bracket": "74- 70 %",
+      "viii_hy": 15.0,
+      "ix_pm_tgt": 17.0,
+      "ix_pm_act": 29.0,
+      "ix_mt_tgt": 15.0
+    },
+    {
+      "bracket": "70 % and Above",
+      "viii_hy": 95.0,
+      "ix_pm_tgt": 103,
+      "ix_pm_act": 96.0,
+      "ix_mt_tgt": 81.0
+    },
+    {
+      "bracket": "69- 65 %",
+      "viii_hy": 21.0,
+      "ix_pm_tgt": 20.0,
+      "ix_pm_act": 20.0,
+      "ix_mt_tgt": 15.0
+    },
+    {
+      "bracket": "64- 60 %",
+      "viii_hy": 15.0,
+      "ix_pm_tgt": 10.0,
+      "ix_pm_act": 7.0,
+      "ix_mt_tgt": 15.0
+    },
+    {
+      "bracket": "60 % and Above",
+      "viii_hy": 131.0,
+      "ix_pm_tgt": 140.0,
+      "ix_pm_act": 123.0,
+      "ix_mt_tgt": 111.0
+    },
+    {
+      "bracket": "59-55",
+      "viii_hy": 14.0,
+      "ix_pm_tgt": 10.0,
+      "ix_pm_act": 13.0,
+      "ix_mt_tgt": 10.0
+    },
+    {
+      "bracket": "54-50",
+      "viii_hy": 10.0,
+      "ix_pm_tgt": 10.0,
+      "ix_pm_act": 10.0,
+      "ix_mt_tgt": 10.0
+    },
+    {
+      "bracket": "50 % and Above",
+      "viii_hy": 155.0,
+      "ix_pm_tgt": 160.0,
+      "ix_pm_act": 146.0,
+      "ix_mt_tgt": 131.0
+    },
+    {
+      "bracket": "49-45",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": 0.0,
+      "ix_pm_act": 4.0,
+      "ix_mt_tgt": 4.0
+    },
+    {
+      "bracket": "44-40",
+      "viii_hy": 7.0,
+      "ix_pm_tgt": 0.0,
+      "ix_pm_act": 3.0,
+      "ix_mt_tgt": 4.0
+    },
+    {
+      "bracket": "40 % and Above",
+      "viii_hy": 167.0,
+      "ix_pm_tgt": 0.0,
+      "ix_pm_act": 153.0,
+      "ix_mt_tgt": 4.0
+    },
+    {
+      "bracket": "39-33",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": 0.0,
+      "ix_pm_act": 7.0,
+      "ix_mt_tgt": 4.0
+    },
+    {
+      "bracket": "33% and below",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": 0.0,
+      "ix_pm_act": 1.0,
+      "ix_mt_tgt": 3.0
+    }
+  ],
+  "English": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 14.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 16.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 20.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 22.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 58.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 18.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 17.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 93.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 18.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 10.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 121.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 15.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 8.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 144.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 152.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 4.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 4.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ],
+  "Hindi": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 1.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 4.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 16.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 11.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 32.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 21.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 23.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 76.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 21.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 13.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 110.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 11.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 12.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 133.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 10.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 10.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 153.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ],
+  "Sanskrit": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 4.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 7.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 11.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 8.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 11.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 30.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 6.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 38.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 13.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 54.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 61.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 4.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 74.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 1.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 1.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ],
+  "French": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 6.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 14.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 20.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 6.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 18.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 44.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 8.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 61.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 7.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 70.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 6.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 79.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 81.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ],
+  "Maths": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 6.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 7.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 13.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 8.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 17.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 38.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 16.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 63.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 11.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 83.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 14.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 106.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 16.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 131.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 15.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 18.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ],
+  "Science": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 21.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 26.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 33.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 20.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 79.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 26.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 12.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 117.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 12.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 132.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 11.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 6.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 149.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 155.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ],
+  "Social Science": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 2.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 13.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 15.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 14.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 17.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 46.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 19.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 17.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 82.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 16.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 14.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 112.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 11.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 132.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 9.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 6.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 147.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 8.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 5.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ],
+  "Computer": [
+    {
+      "bracket": "95 marks and Above",
+      "viii_hy": 26.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90\u201394 marks",
+      "viii_hy": 33.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "90 marks and Above",
+      "viii_hy": 59.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "89\u201385 marks",
+      "viii_hy": 32.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "84\u201380 marks",
+      "viii_hy": 23.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "80 marks and Above",
+      "viii_hy": 114.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "79\u201375 marks",
+      "viii_hy": 17.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "74\u201370 marks",
+      "viii_hy": 7.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "70 marks and Above",
+      "viii_hy": 138.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "69\u201365 marks",
+      "viii_hy": 12.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "64\u201360 marks",
+      "viii_hy": 3.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "60 marks and Above",
+      "viii_hy": 153.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "59\u201355 marks",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "54\u201350 marks",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "50 marks and Above",
+      "viii_hy": 153.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "49\u201345 marks",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "44\u201340 marks",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "40 marks and Above",
+      "viii_hy": 153.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "39\u201333 marks",
+      "viii_hy": 0.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    },
+    {
+      "bracket": "33 marks and Below",
+      "viii_hy": 7.0,
+      "ix_pm_tgt": null,
+      "ix_pm_act": null,
+      "ix_mt_tgt": null
+    }
+  ]
+}

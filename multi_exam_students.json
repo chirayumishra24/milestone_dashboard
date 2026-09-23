@@ -1,0 +1,4173 @@
+[
+  {
+    "sNo": 1,
+    "enrollmentNumber": "CCIS-IX-AURA-01",
+    "name": "ACHINTYA KHANDAL",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-achintya-khandal",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 68.0,
+        "hindi": 60.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 70.0,
+        "science": 75.0,
+        "socialScience": 65.0,
+        "it": 75.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12",
+        "hindi": "11.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "11.5",
+        "science": "10.5",
+        "socialScience": "10.5",
+        "it": "14"
+      },
+      "overall": "58.33%",
+      "totalMarks": "70.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 2,
+    "enrollmentNumber": "CCIS-IX-AURA-02",
+    "name": "AAFRIN KHAN",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-aafrin-khan",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 67.0,
+        "hindi": "65-70",
+        "sanskrit": null,
+        "french": null,
+        "maths": 52.0,
+        "science": "50-53",
+        "socialScience": 56.0,
+        "it": 70.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13",
+        "hindi": "9.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "8",
+        "science": "10.5",
+        "socialScience": "13",
+        "it": "17.5"
+      },
+      "overall": "59.58%",
+      "totalMarks": "71.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 3,
+    "enrollmentNumber": "CCIS-IX-AURA-03",
+    "name": "AMOGH RAWAL",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-amogh-rawal",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 70.0,
+        "maths": 70.0,
+        "science": 75.0,
+        "socialScience": 70.0,
+        "it": 80.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "14.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "17",
+        "maths": "11.5",
+        "science": "12.5",
+        "socialScience": "16.5",
+        "it": "19.5"
+      },
+      "overall": "76.25%",
+      "totalMarks": "91.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 4,
+    "enrollmentNumber": "CCIS-IX-AURA-04",
+    "name": "ARYAN YADAV",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-aryan-yadav",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 60.0,
+        "hindi": 65.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 75.0,
+        "science": 70.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "3",
+        "hindi": "5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "5",
+        "science": "3.5",
+        "socialScience": "5.5",
+        "it": "11"
+      },
+      "overall": "27.5%",
+      "totalMarks": "33.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 5,
+    "enrollmentNumber": "CCIS-IX-AURA-05",
+    "name": "ATHRAV SINGHAL",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-athrav-singhal",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 70.0,
+        "maths": 80.0,
+        "science": 85.0,
+        "socialScience": 75.0,
+        "it": 90.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "12",
+        "maths": "10",
+        "science": "10.5",
+        "socialScience": "11",
+        "it": "12"
+      },
+      "overall": "53.75%",
+      "totalMarks": "64.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 7,
+    "enrollmentNumber": "CCIS-IX-AURA-07",
+    "name": "DARSH CHAUHAN",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-darsh-chauhan",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 65.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 65.0,
+        "maths": 70.0,
+        "science": 70.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "95.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "12",
+        "maths": "ab",
+        "science": "8",
+        "socialScience": "8",
+        "it": "16"
+      },
+      "overall": "53.5%",
+      "totalMarks": "53.5 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 8,
+    "enrollmentNumber": "CCIS-IX-AURA-08",
+    "name": "DARSH SHARMA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-darsh-sharma",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 72.0,
+        "hindi": 73.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 74.0,
+        "science": 75.0,
+        "socialScience": 71.0,
+        "it": 45.0
+      },
+      "overall": "92.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11.5",
+        "hindi": "13.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "10.5",
+        "science": "12",
+        "socialScience": "10.5",
+        "it": "14"
+      },
+      "overall": "60.0%",
+      "totalMarks": "72.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 9,
+    "enrollmentNumber": "CCIS-IX-AURA-09",
+    "name": "DARSHIL  MEENA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-darshil--meena",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 75.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 65.0,
+        "science": 70.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12.5",
+        "hindi": "10.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "4.5",
+        "science": "ab",
+        "socialScience": "10.5",
+        "it": "12"
+      },
+      "overall": "50.0%",
+      "totalMarks": "50.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 10,
+    "enrollmentNumber": "CCIS-IX-AURA-10",
+    "name": "FIONA JAIN",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-fiona-jain",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "85-90",
+        "hindi": null,
+        "sanskrit": null,
+        "french": 80.0,
+        "maths": 80.0,
+        "science": "65-70",
+        "socialScience": "90-92",
+        "it": 95.0
+      },
+      "overall": "70-75%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "8",
+        "maths": "7.5",
+        "science": "10",
+        "socialScience": "8.5",
+        "it": "15"
+      },
+      "overall": "48.33%",
+      "totalMarks": "58.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 11,
+    "enrollmentNumber": "CCIS-IX-AURA-11",
+    "name": "GARVIT MODI",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-garvit-modi",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 72.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 68.0,
+        "science": 65.0,
+        "socialScience": 65.0,
+        "it": 70.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9.5",
+        "hindi": "16.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "12",
+        "science": "13.5",
+        "socialScience": "13.5",
+        "it": "16"
+      },
+      "overall": "67.5%",
+      "totalMarks": "81.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 12,
+    "enrollmentNumber": "CCIS-IX-AURA-12",
+    "name": "HARDIK DEWANI",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-hardik-dewani",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 65.0,
+        "hindi": 67.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 60.0,
+        "science": 60.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "75.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "7.5",
+        "hindi": "9",
+        "sanskrit": null,
+        "french": null,
+        "maths": "5",
+        "science": "6",
+        "socialScience": "7.5",
+        "it": "16"
+      },
+      "overall": "42.5%",
+      "totalMarks": "51.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 13,
+    "enrollmentNumber": "CCIS-IX-AURA-13",
+    "name": "HEER LONGANI",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-heer-longani",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 78.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 55.0,
+        "science": 58.0,
+        "socialScience": 57.0,
+        "it": 79.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": "9",
+        "sanskrit": null,
+        "french": null,
+        "maths": "5",
+        "science": "4",
+        "socialScience": "10",
+        "it": "17"
+      },
+      "overall": "46.25%",
+      "totalMarks": "55.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 14,
+    "enrollmentNumber": "CCIS-IX-AURA-14",
+    "name": "HRIDHAAN SARASWAT",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-hridhaan-saraswat",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": 65.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 80.0,
+        "science": 75.0,
+        "socialScience": 72.0,
+        "it": 80.0
+      },
+      "overall": "96.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "15.5",
+        "hindi": "16.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "ab",
+        "science": "14.5",
+        "socialScience": "17",
+        "it": "18.5"
+      },
+      "overall": "82.0%",
+      "totalMarks": "82.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 15,
+    "enrollmentNumber": "CCIS-IX-AURA-15",
+    "name": "ISHAAN DEEGWAL",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-ishaan-deegwal",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 65.0,
+        "hindi": 60.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 75.0,
+        "science": 75.0,
+        "socialScience": 60.0,
+        "it": 75.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13.5",
+        "hindi": "6.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "9.5",
+        "science": "8.5",
+        "socialScience": "12",
+        "it": "12.5"
+      },
+      "overall": "52.08%",
+      "totalMarks": "62.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 16,
+    "enrollmentNumber": "CCIS-IX-AURA-16",
+    "name": "ISHIT SHARMA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-ishit-sharma",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": null,
+        "sanskrit": 60.0,
+        "french": null,
+        "maths": 70.0,
+        "science": 70.0,
+        "socialScience": 65.0,
+        "it": 65.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11",
+        "hindi": null,
+        "sanskrit": "11",
+        "french": null,
+        "maths": "10.5",
+        "science": "10",
+        "socialScience": "9",
+        "it": "12"
+      },
+      "overall": "52.92%",
+      "totalMarks": "63.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 17,
+    "enrollmentNumber": "CCIS-IX-AURA-17",
+    "name": "JINISHA SAINI",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-jinisha-saini",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 79.0,
+        "hindi": 67.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 50.0,
+        "science": 65.0,
+        "socialScience": 79.0,
+        "it": 75.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11",
+        "hindi": "8",
+        "sanskrit": null,
+        "french": null,
+        "maths": "3",
+        "science": "10.5",
+        "socialScience": "9",
+        "it": "17.5"
+      },
+      "overall": "49.17%",
+      "totalMarks": "59.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 18,
+    "enrollmentNumber": "CCIS-IX-AURA-18",
+    "name": "JIYA GUPTA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-jiya-gupta",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 75.0,
+        "maths": 75.0,
+        "science": 70.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "90-95%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "15",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "18",
+        "maths": "ab",
+        "science": "15.5",
+        "socialScience": "16.5",
+        "it": "18"
+      },
+      "overall": "83.0%",
+      "totalMarks": "83.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 19,
+    "enrollmentNumber": "CCIS-IX-AURA-19",
+    "name": "KINSHUK SHARMA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-kinshuk-sharma",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 65.0,
+        "hindi": 65.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 75.0,
+        "science": 70.0,
+        "socialScience": 70.0,
+        "it": 40.0
+      },
+      "overall": "95.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11.5",
+        "hindi": "9",
+        "sanskrit": null,
+        "french": null,
+        "maths": "ab",
+        "science": "5",
+        "socialScience": "6",
+        "it": "11.5"
+      },
+      "overall": "43.0%",
+      "totalMarks": "43.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 20,
+    "enrollmentNumber": "CCIS-IX-AURA-20",
+    "name": "KULDEEP BADHALA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-kuldeep-badhala",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": 75.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 70.0,
+        "science": 70.0,
+        "socialScience": 70.0,
+        "it": 55.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9",
+        "hindi": "9.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "7.5",
+        "science": "12",
+        "socialScience": "12",
+        "it": "12.5"
+      },
+      "overall": "52.08%",
+      "totalMarks": "62.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 21,
+    "enrollmentNumber": "CCIS-IX-AURA-21",
+    "name": "KUSH YADAV",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-kush-yadav",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 65.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 60.0,
+        "maths": 70.0,
+        "science": 70.0,
+        "socialScience": 65.0,
+        "it": 65.0
+      },
+      "overall": "80-85%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "11",
+        "maths": "10",
+        "science": "ab",
+        "socialScience": "12",
+        "it": ""
+      },
+      "overall": "55.0%",
+      "totalMarks": "33.0 / 60",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 22,
+    "enrollmentNumber": "CCIS-IX-AURA-22",
+    "name": "KUSH GUPTA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-kush-gupta",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "50-55",
+        "hindi": null,
+        "sanskrit": "60-65",
+        "french": null,
+        "maths": "72-75",
+        "science": "69-72",
+        "socialScience": "50-55",
+        "it": "60-70"
+      },
+      "overall": "85%%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9.5",
+        "hindi": null,
+        "sanskrit": "9",
+        "french": null,
+        "maths": "13.5",
+        "science": "11.5",
+        "socialScience": "11",
+        "it": "9.5"
+      },
+      "overall": "53.33%",
+      "totalMarks": "64.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 22,
+    "enrollmentNumber": "CCIS-IX-AURA-22",
+    "name": "MAHIKA SHARMA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-mahika-sharma",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 60.0,
+        "hindi": 55.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": "50-55",
+        "science": 60.0,
+        "socialScience": "60-65",
+        "it": 75.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11",
+        "hindi": "5.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "9.5",
+        "science": "10.5",
+        "socialScience": "8",
+        "it": "16.5"
+      },
+      "overall": "50.83%",
+      "totalMarks": "61.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 23,
+    "enrollmentNumber": "CCIS-IX-AURA-23",
+    "name": "NAKSHATRA SHRIVASTAVA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-nakshatra-shrivastava",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 60.0,
+        "hindi": 65.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 65.0,
+        "science": 60.0,
+        "socialScience": 60.0,
+        "it": 60.0
+      },
+      "overall": "80-85%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "8",
+        "hindi": "9",
+        "sanskrit": null,
+        "french": null,
+        "maths": "9",
+        "science": "7.5",
+        "socialScience": "8",
+        "it": "12.5"
+      },
+      "overall": "45.0%",
+      "totalMarks": "54.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 24,
+    "enrollmentNumber": "CCIS-IX-AURA-24",
+    "name": "NIVAN SETHI",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-nivan-sethi",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 100.0,
+        "hindi": 95.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 100.0,
+        "science": 100.0,
+        "socialScience": 95.0,
+        "it": 100.0
+      },
+      "overall": "98.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13",
+        "hindi": "14.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "ab",
+        "science": "15",
+        "socialScience": "13.5",
+        "it": "18"
+      },
+      "overall": "74.0%",
+      "totalMarks": "74.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 25,
+    "enrollmentNumber": "CCIS-IX-AURA-25",
+    "name": "ROUNAK JEPH",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-rounak-jeph",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 92.0,
+        "hindi": 98.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 98.0,
+        "science": 95.0,
+        "socialScience": 100.0,
+        "it": 100.0
+      },
+      "overall": "97-98%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "14",
+        "hindi": "19",
+        "sanskrit": null,
+        "french": null,
+        "maths": "15.5",
+        "science": "13",
+        "socialScience": "15",
+        "it": "18"
+      },
+      "overall": "78.75%",
+      "totalMarks": "94.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 26,
+    "enrollmentNumber": "CCIS-IX-AURA-26",
+    "name": "RUDRAKSHA AGRAWAL",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-rudraksha-agrawal",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 65.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 75.0,
+        "science": 75.0,
+        "socialScience": 65.0,
+        "it": 80.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9",
+        "hindi": "10",
+        "sanskrit": null,
+        "french": null,
+        "maths": "7",
+        "science": "9.5",
+        "socialScience": "10.5",
+        "it": "18.5"
+      },
+      "overall": "53.75%",
+      "totalMarks": "64.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 27,
+    "enrollmentNumber": "CCIS-IX-AURA-27",
+    "name": "SAKSHAM ANAND",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-saksham-anand",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 65.0,
+        "hindi": 60.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 70.0,
+        "science": 60.0,
+        "socialScience": 65.0,
+        "it": 75.0
+      },
+      "overall": "Pending",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13",
+        "hindi": "6.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "6.5",
+        "science": "4.5",
+        "socialScience": "9.5",
+        "it": "14.5"
+      },
+      "overall": "45.42%",
+      "totalMarks": "54.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 29,
+    "enrollmentNumber": "CCIS-IX-AURA-29",
+    "name": "SATVIK GARG",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-satvik-garg",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 78.0,
+        "hindi": 74.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 75.0,
+        "science": 79.0,
+        "socialScience": 78.0,
+        "it": 75.0
+      },
+      "overall": "99.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13",
+        "hindi": "8",
+        "sanskrit": null,
+        "french": null,
+        "maths": "8",
+        "science": "13",
+        "socialScience": "13",
+        "it": "13.5"
+      },
+      "overall": "57.08%",
+      "totalMarks": "68.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 30,
+    "enrollmentNumber": "CCIS-IX-AURA-30",
+    "name": "SURYA PRATAP SINGH NATHAWAT",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-surya-pratap-singh-nathawat",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": 75.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 90.0,
+        "science": 91.0,
+        "socialScience": 95.0,
+        "it": 95.0
+      },
+      "overall": "94.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": "14",
+        "sanskrit": null,
+        "french": null,
+        "maths": "12.5",
+        "science": "14.5",
+        "socialScience": "16",
+        "it": "18"
+      },
+      "overall": "71.25%",
+      "totalMarks": "85.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 31,
+    "enrollmentNumber": "CCIS-IX-AURA-31",
+    "name": "VEDEHI SIHAG",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-vedehi-sihag",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": "85-90",
+        "sanskrit": null,
+        "french": null,
+        "maths": "80-90",
+        "science": "90-95",
+        "socialScience": "85-95",
+        "it": 90.0
+      },
+      "overall": "90-95%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12.5",
+        "hindi": "12.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "11.5",
+        "science": "12.5",
+        "socialScience": "12.5",
+        "it": "16.5"
+      },
+      "overall": "65.0%",
+      "totalMarks": "78.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 33,
+    "enrollmentNumber": "CCIS-IX-AURA-33",
+    "name": "YAJNESH JAJORIYA",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-yajnesh-jajoriya",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "60-70",
+        "hindi": "70-75",
+        "sanskrit": null,
+        "french": null,
+        "maths": "50-60",
+        "science": "70-80",
+        "socialScience": "72-75",
+        "it": "35-40"
+      },
+      "overall": "80-85%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9.5",
+        "hindi": "11",
+        "sanskrit": null,
+        "french": null,
+        "maths": "3.5",
+        "science": "6.5",
+        "socialScience": "7.5",
+        "it": "14.5"
+      },
+      "overall": "43.75%",
+      "totalMarks": "52.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 34,
+    "enrollmentNumber": "CCIS-IX-AURA-34",
+    "name": "YASHVARDHAN SINGH",
+    "section": "AURA",
+    "studentId": "ccis-ix-aura-yashvardhan-singh",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 65.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 70.0,
+        "science": 70.0,
+        "socialScience": 72.0,
+        "it": 75.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9",
+        "hindi": "10",
+        "sanskrit": null,
+        "french": null,
+        "maths": "12.5",
+        "science": "8.5",
+        "socialScience": "9.5",
+        "it": "13.5"
+      },
+      "overall": "52.5%",
+      "totalMarks": "63.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 1,
+    "enrollmentNumber": "CCIS-IX-ZEN-01",
+    "name": "AARADHYA GOYAL",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-aaradhya-goyal",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 96.25,
+        "hindi": null,
+        "sanskrit": 98.5,
+        "french": null,
+        "maths": 100.0,
+        "science": 97.5,
+        "socialScience": 97.5,
+        "it": 100.0
+      },
+      "overall": "98.28%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "15.5",
+        "hindi": null,
+        "sanskrit": "19",
+        "french": null,
+        "maths": "18.5",
+        "science": "17.5",
+        "socialScience": "19.5",
+        "it": "18.5"
+      },
+      "overall": "90.42%",
+      "totalMarks": "108.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 2,
+    "enrollmentNumber": "CCIS-IX-ZEN-02",
+    "name": "AARADHYA SHARMA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-aaradhya-sharma",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 80.0,
+        "hindi": null,
+        "sanskrit": 95.0,
+        "french": null,
+        "maths": 75.0,
+        "science": 75.0,
+        "socialScience": 85.0,
+        "it": 95.0
+      },
+      "overall": "85-90%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "14",
+        "hindi": null,
+        "sanskrit": "16.5",
+        "french": null,
+        "maths": "7",
+        "science": "11",
+        "socialScience": "14.5",
+        "it": "18"
+      },
+      "overall": "67.5%",
+      "totalMarks": "81.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 3,
+    "enrollmentNumber": "CCIS-IX-ZEN-03",
+    "name": "AARUHI SHARMA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-aaruhi-sharma",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": 100.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 96.0,
+        "science": 96.0,
+        "socialScience": 98.0,
+        "it": 99.0
+      },
+      "overall": "98.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13",
+        "hindi": "10.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "10.5",
+        "science": "12",
+        "socialScience": "11",
+        "it": "16"
+      },
+      "overall": "60.83%",
+      "totalMarks": "73.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 4,
+    "enrollmentNumber": "CCIS-IX-ZEN-04",
+    "name": "ADITI PANDIT",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-aditi-pandit",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 96.0,
+        "hindi": 98.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 85.0,
+        "science": 95.0,
+        "socialScience": 100.0,
+        "it": 100.0
+      },
+      "overall": "100.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13.5",
+        "hindi": "13",
+        "sanskrit": null,
+        "french": null,
+        "maths": "8",
+        "science": "10.5",
+        "socialScience": "16.5",
+        "it": "ab"
+      },
+      "overall": "61.5%",
+      "totalMarks": "61.5 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 5,
+    "enrollmentNumber": "CCIS-IX-ZEN-05",
+    "name": "AKSHOBHYA TIWARI",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-akshobhya-tiwari",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 60.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 80.0,
+        "science": 90.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "",
+        "hindi": "new",
+        "sanskrit": null,
+        "french": null,
+        "maths": "",
+        "science": "",
+        "socialScience": "",
+        "it": ""
+      },
+      "overall": "Pending",
+      "totalMarks": null,
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 6,
+    "enrollmentNumber": "CCIS-IX-ZEN-06",
+    "name": "ANUSHKA BHASKAR",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-anushka-bhaskar",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": 100.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 96.0,
+        "science": 98.0,
+        "socialScience": 97.0,
+        "it": 100.0
+      },
+      "overall": "98.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11",
+        "hindi": "12",
+        "sanskrit": null,
+        "french": null,
+        "maths": "8",
+        "science": "11",
+        "socialScience": "11",
+        "it": "17"
+      },
+      "overall": "58.33%",
+      "totalMarks": "70.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 7,
+    "enrollmentNumber": "CCIS-IX-ZEN-07",
+    "name": "ANUSHKA FOGLA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-anushka-fogla",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "69-89",
+        "hindi": 77.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": "71-72",
+        "science": 73.0,
+        "socialScience": "71-72",
+        "it": 75.0
+      },
+      "overall": "92.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "7",
+        "hindi": "8",
+        "sanskrit": null,
+        "french": null,
+        "maths": "6.5",
+        "science": "5.5",
+        "socialScience": "5",
+        "it": "13"
+      },
+      "overall": "37.5%",
+      "totalMarks": "45.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 8,
+    "enrollmentNumber": "CCIS-IX-ZEN-08",
+    "name": "ARTH PAREEK",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-arth-pareek",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "80-83",
+        "hindi": "80-83",
+        "sanskrit": null,
+        "french": null,
+        "maths": 90.0,
+        "science": 90.0,
+        "socialScience": "85-87",
+        "it": 90.0
+      },
+      "overall": "Pending",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": null,
+        "hindi": null,
+        "sanskrit": null,
+        "french": null,
+        "maths": null,
+        "science": null,
+        "socialScience": null,
+        "it": null
+      },
+      "overall": "Pending",
+      "totalMarks": null,
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 9,
+    "enrollmentNumber": "CCIS-IX-ZEN-09",
+    "name": "ARAV  CHITRANSH",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-arav--chitransh",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 60.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": "60-65",
+        "maths": 50.0,
+        "science": 80.0,
+        "socialScience": 90.0,
+        "it": 70.0
+      },
+      "overall": "Pending",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "6.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "6",
+        "maths": "4.5",
+        "science": "7.5",
+        "socialScience": "7.5",
+        "it": "13"
+      },
+      "overall": "37.5%",
+      "totalMarks": "45.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 10,
+    "enrollmentNumber": "CCIS-IX-ZEN-10",
+    "name": "ARPIT NITHARWAL",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-arpit-nitharwal",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 80.0,
+        "hindi": 85.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 90.0,
+        "science": 90.0,
+        "socialScience": 90.0,
+        "it": 90.0
+      },
+      "overall": "86.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": "13",
+        "sanskrit": null,
+        "french": null,
+        "maths": "12.5",
+        "science": "8.5",
+        "socialScience": "11.5",
+        "it": "17.5"
+      },
+      "overall": "61.25%",
+      "totalMarks": "73.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 11,
+    "enrollmentNumber": "CCIS-IX-ZEN-11",
+    "name": "AVI SHARMA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-avi-sharma",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 95.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 85.0,
+        "science": 85.0,
+        "socialScience": 90.0,
+        "it": 95.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12",
+        "hindi": "ab",
+        "sanskrit": null,
+        "french": null,
+        "maths": "ab",
+        "science": "11",
+        "socialScience": "",
+        "it": "17"
+      },
+      "overall": "66.67%",
+      "totalMarks": "40.0 / 60",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 12,
+    "enrollmentNumber": "CCIS-IX-ZEN-12",
+    "name": "DAKSHESH TANK",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-dakshesh-tank",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 80.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 82.0,
+        "science": 90.0,
+        "socialScience": 65.0,
+        "it": 85.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "7",
+        "hindi": "5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "7.5",
+        "science": "7.5",
+        "socialScience": "4.5",
+        "it": "12"
+      },
+      "overall": "36.25%",
+      "totalMarks": "43.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 13,
+    "enrollmentNumber": "CCIS-IX-ZEN-13",
+    "name": "DIVYANSHI KATARIYA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-divyanshi-katariya",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": null,
+        "sanskrit": 100.0,
+        "french": null,
+        "maths": 90.0,
+        "science": 95.0,
+        "socialScience": 100.0,
+        "it": 100.0
+      },
+      "overall": "Pending",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12.5",
+        "hindi": null,
+        "sanskrit": "13",
+        "french": null,
+        "maths": "7",
+        "science": "8",
+        "socialScience": "12.5",
+        "it": "13.5"
+      },
+      "overall": "55.42%",
+      "totalMarks": "66.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 14,
+    "enrollmentNumber": "CCIS-IX-ZEN-14",
+    "name": "GOURANGI TIWARI",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-gourangi-tiwari",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 76.0,
+        "hindi": null,
+        "sanskrit": 80.0,
+        "french": null,
+        "maths": 79.0,
+        "science": 79.0,
+        "socialScience": 80.0,
+        "it": 80.0
+      },
+      "overall": "98.5%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "17.5",
+        "hindi": null,
+        "sanskrit": "19",
+        "french": null,
+        "maths": "18.5",
+        "science": "18.5",
+        "socialScience": "18.5",
+        "it": "20"
+      },
+      "overall": "93.33%",
+      "totalMarks": "112.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 15,
+    "enrollmentNumber": "CCIS-IX-ZEN-15",
+    "name": "HAVISH CHOUDHARY",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-havish-choudhary",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 85.0,
+        "hindi": null,
+        "sanskrit": 85.0,
+        "french": null,
+        "maths": 70.0,
+        "science": 65.0,
+        "socialScience": "70-80",
+        "it": 85.0
+      },
+      "overall": "Pending",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "6",
+        "hindi": null,
+        "sanskrit": "9",
+        "french": null,
+        "maths": "4.5",
+        "science": "5.5",
+        "socialScience": "4",
+        "it": "10"
+      },
+      "overall": "32.5%",
+      "totalMarks": "39.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 16,
+    "enrollmentNumber": "CCIS-IX-ZEN-16",
+    "name": "HIYA GOYAL",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-hiya-goyal",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 95.0,
+        "maths": 100.0,
+        "science": 95.0,
+        "socialScience": 90.0,
+        "it": 100.0
+      },
+      "overall": "98-99%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "13",
+        "maths": "18",
+        "science": "13.5",
+        "socialScience": "9.5",
+        "it": "19.5"
+      },
+      "overall": "70.83%",
+      "totalMarks": "85.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 17,
+    "enrollmentNumber": "CCIS-IX-ZEN-17",
+    "name": "INAYA YADAV",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-inaya-yadav",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": 75.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 85.0,
+        "science": 80.0,
+        "socialScience": 80.0,
+        "it": 85.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12.5",
+        "hindi": "11.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "18",
+        "science": "8.5",
+        "socialScience": "12",
+        "it": "17.5"
+      },
+      "overall": "66.67%",
+      "totalMarks": "80.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 18,
+    "enrollmentNumber": "CCIS-IX-ZEN-18",
+    "name": "KAVISH KUSHWAHA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-kavish-kushwaha",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": 75.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 70.0,
+        "science": 75.0,
+        "socialScience": 75.0,
+        "it": 75.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "14",
+        "hindi": "15.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "12.5",
+        "science": "12",
+        "socialScience": "13.5",
+        "it": "15"
+      },
+      "overall": "68.75%",
+      "totalMarks": "82.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 19,
+    "enrollmentNumber": "CCIS-IX-ZEN-19",
+    "name": "KAVYA BANSAL",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-kavya-bansal",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 85.0,
+        "hindi": null,
+        "sanskrit": 80.0,
+        "french": null,
+        "maths": 75.0,
+        "science": 75.0,
+        "socialScience": 80.0,
+        "it": 85.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "15",
+        "hindi": null,
+        "sanskrit": "9.5",
+        "french": null,
+        "maths": "3.5",
+        "science": "5",
+        "socialScience": "10",
+        "it": "14.5"
+      },
+      "overall": "47.92%",
+      "totalMarks": "57.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 20,
+    "enrollmentNumber": "CCIS-IX-ZEN-20",
+    "name": "KHUSH SHARMA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-khush-sharma",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 48.0,
+        "hindi": null,
+        "sanskrit": 60.0,
+        "french": null,
+        "maths": 44.0,
+        "science": 55.0,
+        "socialScience": 52.0,
+        "it": 40.0
+      },
+      "overall": "61.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "2",
+        "hindi": null,
+        "sanskrit": "5",
+        "french": null,
+        "maths": "2.5",
+        "science": "2.5",
+        "socialScience": "ab",
+        "it": "3.5"
+      },
+      "overall": "15.5%",
+      "totalMarks": "15.5 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 21,
+    "enrollmentNumber": "CCIS-IX-ZEN-21",
+    "name": "KRISHANA  JANGIR",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-krishana--jangir",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 80.0,
+        "hindi": null,
+        "sanskrit": 78.0,
+        "french": null,
+        "maths": 72.0,
+        "science": 85.0,
+        "socialScience": 75.0,
+        "it": 80.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12",
+        "hindi": null,
+        "sanskrit": "12.5",
+        "french": null,
+        "maths": "7",
+        "science": "11",
+        "socialScience": "16.5",
+        "it": "10"
+      },
+      "overall": "57.5%",
+      "totalMarks": "69.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 22,
+    "enrollmentNumber": "CCIS-IX-ZEN-22",
+    "name": "KRITIKA MATWA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-kritika-matwa",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 96.0,
+        "hindi": null,
+        "sanskrit": 98.0,
+        "french": null,
+        "maths": 90.0,
+        "science": 95.0,
+        "socialScience": 95.0,
+        "it": 99.0
+      },
+      "overall": "98.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "15.5",
+        "hindi": null,
+        "sanskrit": "18.5",
+        "french": null,
+        "maths": "8",
+        "science": "13",
+        "socialScience": "19.5",
+        "it": "18.5"
+      },
+      "overall": "77.5%",
+      "totalMarks": "93.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 23,
+    "enrollmentNumber": "CCIS-IX-ZEN-23",
+    "name": "KUSHAGRA SINGH",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-kushagra-singh",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": null,
+        "sanskrit": 100.0,
+        "french": null,
+        "maths": 100.0,
+        "science": 98.0,
+        "socialScience": 98.0,
+        "it": 97.0
+      },
+      "overall": "98.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "14",
+        "hindi": null,
+        "sanskrit": "18.5",
+        "french": null,
+        "maths": "17.5",
+        "science": "17",
+        "socialScience": "14.5",
+        "it": "16"
+      },
+      "overall": "81.25%",
+      "totalMarks": "97.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 24,
+    "enrollmentNumber": "CCIS-IX-ZEN-24",
+    "name": "LOVE GUPTA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-love-gupta",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": 80.0,
+        "french": null,
+        "maths": 100.0,
+        "science": 100.0,
+        "socialScience": 99.0,
+        "it": 80.0
+      },
+      "overall": "92.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11.5",
+        "hindi": null,
+        "sanskrit": "12.5",
+        "french": null,
+        "maths": "15",
+        "science": "13.5",
+        "socialScience": "13.5",
+        "it": "11.5"
+      },
+      "overall": "64.58%",
+      "totalMarks": "77.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 25,
+    "enrollmentNumber": "CCIS-IX-ZEN-25",
+    "name": "MIHIRA PUROHIT",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-mihira-purohit",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": null,
+        "sanskrit": 95.0,
+        "french": null,
+        "maths": 100.0,
+        "science": 100.0,
+        "socialScience": 95.0,
+        "it": 100.0
+      },
+      "overall": "98-100%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "16",
+        "hindi": null,
+        "sanskrit": "16.5",
+        "french": null,
+        "maths": "ab",
+        "science": "15.5",
+        "socialScience": "13",
+        "it": "17.5"
+      },
+      "overall": "78.5%",
+      "totalMarks": "78.5 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 26,
+    "enrollmentNumber": "CCIS-IX-ZEN-26",
+    "name": "MILAN YADAV",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-milan-yadav",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": 80.0,
+        "french": null,
+        "maths": 75.0,
+        "science": 85.0,
+        "socialScience": 80.0,
+        "it": 95.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11.5",
+        "hindi": null,
+        "sanskrit": "12.5",
+        "french": null,
+        "maths": "6.5",
+        "science": "9.5",
+        "socialScience": "12.5",
+        "it": "15.5"
+      },
+      "overall": "56.67%",
+      "totalMarks": "68.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 27,
+    "enrollmentNumber": "CCIS-IX-ZEN-27",
+    "name": "NAGENDRA YADAV",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-nagendra-yadav",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": 95.0,
+        "french": null,
+        "maths": 95.0,
+        "science": 95.0,
+        "socialScience": 90.0,
+        "it": 90.0
+      },
+      "overall": "95.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11",
+        "hindi": null,
+        "sanskrit": "17.5",
+        "french": null,
+        "maths": "7.5",
+        "science": "11",
+        "socialScience": "11.5",
+        "it": "13"
+      },
+      "overall": "59.58%",
+      "totalMarks": "71.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 28,
+    "enrollmentNumber": "CCIS-IX-ZEN-28",
+    "name": "NIMISHA KATODA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-nimisha-katoda",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 91.0,
+        "hindi": null,
+        "sanskrit": 95.0,
+        "french": null,
+        "maths": 85.0,
+        "science": 85.0,
+        "socialScience": 90.0,
+        "it": 95.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10",
+        "hindi": null,
+        "sanskrit": "14",
+        "french": null,
+        "maths": "6.5",
+        "science": "14",
+        "socialScience": "12",
+        "it": "16.5"
+      },
+      "overall": "60.83%",
+      "totalMarks": "73.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 29,
+    "enrollmentNumber": "CCIS-IX-ZEN-29",
+    "name": "NIRVI MAHESHWARI",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-nirvi-maheshwari",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": 85.0,
+        "french": null,
+        "maths": 75.0,
+        "science": 75.0,
+        "socialScience": 80.0,
+        "it": 90.0
+      },
+      "overall": "90.85%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9",
+        "hindi": null,
+        "sanskrit": "11.5",
+        "french": null,
+        "maths": "ab",
+        "science": "2.5",
+        "socialScience": "14",
+        "it": "11"
+      },
+      "overall": "48.0%",
+      "totalMarks": "48.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 30,
+    "enrollmentNumber": "CCIS-IX-ZEN-30",
+    "name": "ROHAN POONIA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-rohan-poonia",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 87.0,
+        "hindi": 87.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 97.0,
+        "science": 94.0,
+        "socialScience": 95.0,
+        "it": 96.0
+      },
+      "overall": "93.15%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13.5",
+        "hindi": "14",
+        "sanskrit": null,
+        "french": null,
+        "maths": "8.5",
+        "science": "16",
+        "socialScience": "14",
+        "it": "18"
+      },
+      "overall": "70.0%",
+      "totalMarks": "84.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 31,
+    "enrollmentNumber": "CCIS-IX-ZEN-31",
+    "name": "SARTHAK SANYAL",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-sarthak-sanyal",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": 65.0,
+        "french": null,
+        "maths": 80.0,
+        "science": 65.0,
+        "socialScience": 80.0,
+        "it": 65.0
+      },
+      "overall": "70.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "7",
+        "hindi": null,
+        "sanskrit": "3",
+        "french": null,
+        "maths": "6.5",
+        "science": "7.5",
+        "socialScience": "8",
+        "it": "9"
+      },
+      "overall": "34.17%",
+      "totalMarks": "41.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 32,
+    "enrollmentNumber": "CCIS-IX-ZEN-32",
+    "name": "TEJAS DHINGRA",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-tejas-dhingra",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": 65.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 50.0,
+        "science": 60.0,
+        "socialScience": 65.0,
+        "it": 85.0
+      },
+      "overall": "60.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9.5",
+        "hindi": "8",
+        "sanskrit": null,
+        "french": null,
+        "maths": "6.5",
+        "science": "8.5",
+        "socialScience": "9.5",
+        "it": "9.5"
+      },
+      "overall": "42.92%",
+      "totalMarks": "51.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 33,
+    "enrollmentNumber": "CCIS-IX-ZEN-33",
+    "name": "VIKASH CHOUDHARY",
+    "section": "ZEN",
+    "studentId": "ccis-ix-zen-vikash-choudhary",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 80.0,
+        "hindi": null,
+        "sanskrit": 95.0,
+        "french": null,
+        "maths": 95.0,
+        "science": 80.0,
+        "socialScience": 80.0,
+        "it": 80.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "7.5",
+        "hindi": null,
+        "sanskrit": "11.5",
+        "french": null,
+        "maths": "11",
+        "science": "8",
+        "socialScience": "7",
+        "it": "10.5"
+      },
+      "overall": "46.25%",
+      "totalMarks": "55.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 1,
+    "enrollmentNumber": "CCIS-IX-NEO-01",
+    "name": "AADIT TIWARI",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-aadit-tiwari",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "60-70",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "65-70",
+        "maths": "65-70",
+        "science": "70-80",
+        "socialScience": "65-75",
+        "it": "40-45"
+      },
+      "overall": "85-90%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "5",
+        "maths": "9",
+        "science": "9",
+        "socialScience": "8.5",
+        "it": "14"
+      },
+      "overall": "46.67%",
+      "totalMarks": "56.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 2,
+    "enrollmentNumber": "CCIS-IX-NEO-02",
+    "name": "AARAV ALHA",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-aarav-alha",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": null,
+        "sanskrit": 95.0,
+        "french": null,
+        "maths": 95.0,
+        "science": 95.0,
+        "socialScience": 95.0,
+        "it": 95.0
+      },
+      "overall": "95.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13.5",
+        "hindi": null,
+        "sanskrit": "15",
+        "french": null,
+        "maths": "11.5",
+        "science": "15",
+        "socialScience": "16.5",
+        "it": "16"
+      },
+      "overall": "72.92%",
+      "totalMarks": "87.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 3,
+    "enrollmentNumber": "CCIS-IX-NEO-03",
+    "name": "ABHAY AGARWAL",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-abhay-agarwal",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 95.0,
+        "maths": 80.0,
+        "science": 85.0,
+        "socialScience": 97.0,
+        "it": 70.0
+      },
+      "overall": "89.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "ab",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "ab",
+        "maths": "ab",
+        "science": "ab",
+        "socialScience": "ab",
+        "it": ""
+      },
+      "overall": "Pending",
+      "totalMarks": null,
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 4,
+    "enrollmentNumber": "CCIS-IX-NEO-04",
+    "name": "ADHYAYAN AWASTHI",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-adhyayan-awasthi",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 100.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 95.0,
+        "maths": 100.0,
+        "science": 100.0,
+        "socialScience": 95.0,
+        "it": 100.0
+      },
+      "overall": "95.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "11",
+        "maths": "14",
+        "science": "16",
+        "socialScience": "10.5",
+        "it": "19"
+      },
+      "overall": "70.0%",
+      "totalMarks": "84.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 5,
+    "enrollmentNumber": "CCIS-IX-NEO-05",
+    "name": "AADYA KHANDELWAL",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-aadya-khandelwal",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 95.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 96.0,
+        "maths": 90.0,
+        "science": 94.0,
+        "socialScience": 85.0,
+        "it": 85.0
+      },
+      "overall": "91.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "new",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "new",
+        "maths": "",
+        "science": "10.5",
+        "socialScience": "",
+        "it": ""
+      },
+      "overall": "52.5%",
+      "totalMarks": "10.5 / 20",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 6,
+    "enrollmentNumber": "CCIS-IX-NEO-06",
+    "name": "AKSHIT DAGAR",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-akshit-dagar",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "50-60",
+        "hindi": "60-70",
+        "sanskrit": null,
+        "french": null,
+        "maths": "75-90",
+        "science": 90.0,
+        "socialScience": "55-65",
+        "it": 35.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "4.5",
+        "hindi": "5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "15",
+        "science": "10",
+        "socialScience": "6",
+        "it": "8.5"
+      },
+      "overall": "40.83%",
+      "totalMarks": "49.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 7,
+    "enrollmentNumber": "CCIS-IX-NEO-07",
+    "name": "AYAAN NITHARWAL",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-ayaan-nitharwal",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 97.0,
+        "maths": 100.0,
+        "science": 99.0,
+        "socialScience": 95.0,
+        "it": 99.0
+      },
+      "overall": "98.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "14",
+        "maths": "14",
+        "science": "13",
+        "socialScience": "15.5",
+        "it": "13.5"
+      },
+      "overall": "68.33%",
+      "totalMarks": "82.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 8,
+    "enrollmentNumber": "CCIS-IX-NEO-08",
+    "name": "AYANA AGARWAL",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-ayana-agarwal",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 100.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": "-",
+        "maths": 100.0,
+        "science": 100.0,
+        "socialScience": 100.0,
+        "it": 100.0
+      },
+      "overall": "100.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "15",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "13.5",
+        "maths": "10.5",
+        "science": "17",
+        "socialScience": "16",
+        "it": "19.5"
+      },
+      "overall": "76.25%",
+      "totalMarks": "91.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 9,
+    "enrollmentNumber": "CCIS-IX-NEO-09",
+    "name": "BHAVYA JEPH",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-bhavya-jeph",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 65.0,
+        "hindi": 60.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 90.0,
+        "science": 80.0,
+        "socialScience": 70.0,
+        "it": 50.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11.5",
+        "hindi": "11",
+        "sanskrit": null,
+        "french": null,
+        "maths": "7",
+        "science": "15",
+        "socialScience": "15",
+        "it": "18.5"
+      },
+      "overall": "65.0%",
+      "totalMarks": "78.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 10,
+    "enrollmentNumber": "CCIS-IX-NEO-10",
+    "name": "DAKSH DUDI",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-daksh-dudi",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 80.0,
+        "hindi": 80.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 90.0,
+        "science": 90.0,
+        "socialScience": 90.0,
+        "it": 90.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10",
+        "hindi": "12",
+        "sanskrit": null,
+        "french": null,
+        "maths": "12",
+        "science": "13",
+        "socialScience": "13",
+        "it": "12"
+      },
+      "overall": "60.0%",
+      "totalMarks": "72.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 11,
+    "enrollmentNumber": "CCIS-IX-NEO-11",
+    "name": "DAKSH YADAV",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-daksh-yadav",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 60.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 60.0,
+        "maths": 65.0,
+        "science": 65.0,
+        "socialScience": 65.0,
+        "it": "55-60"
+      },
+      "overall": "Pending",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "10",
+        "maths": "7.5",
+        "science": "4.5",
+        "socialScience": "9",
+        "it": "11"
+      },
+      "overall": "43.33%",
+      "totalMarks": "52.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 12,
+    "enrollmentNumber": "CCIS-IX-NEO-12",
+    "name": "DARSH LAL PRAKASH",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-darsh-lal-prakash",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 100.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 100.0,
+        "maths": 85.0,
+        "science": 85.0,
+        "socialScience": 70.0,
+        "it": 100.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "9.5",
+        "maths": "10",
+        "science": "7",
+        "socialScience": "6",
+        "it": "13"
+      },
+      "overall": "46.25%",
+      "totalMarks": "55.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 13,
+    "enrollmentNumber": "CCIS-IX-NEO-13",
+    "name": "DHANYA  DHAMA",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-dhanya--dhama",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 69.0,
+        "maths": 68.0,
+        "science": 70.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "93-95%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "11.5",
+        "maths": "2",
+        "science": "8",
+        "socialScience": "7.5",
+        "it": "10"
+      },
+      "overall": "41.25%",
+      "totalMarks": "49.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 14,
+    "enrollmentNumber": "CCIS-IX-NEO-14",
+    "name": "DUSHYANT GOYAL",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-dushyant-goyal",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 85.0,
+        "hindi": 85.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 95.0,
+        "science": 90.0,
+        "socialScience": 90.0,
+        "it": 90.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "5.5",
+        "hindi": "4.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "11.5",
+        "science": "9",
+        "socialScience": "7.5",
+        "it": "11"
+      },
+      "overall": "40.83%",
+      "totalMarks": "49.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 15,
+    "enrollmentNumber": "CCIS-IX-NEO-15",
+    "name": "DWIJ  NEGI",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-dwij--negi",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 65.0,
+        "maths": 80.0,
+        "science": 75.0,
+        "socialScience": 65.0,
+        "it": 70.0
+      },
+      "overall": "75.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "12",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "ab",
+        "maths": "",
+        "science": "15",
+        "socialScience": "",
+        "it": ""
+      },
+      "overall": "67.5%",
+      "totalMarks": "27.0 / 40",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 16,
+    "enrollmentNumber": "CCIS-IX-NEO-16",
+    "name": "GAVYA CHAUDHARY",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-gavya-chaudhary",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 80.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 90.0,
+        "maths": 60.0,
+        "science": 75.0,
+        "socialScience": 80.0,
+        "it": 90.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "13.5",
+        "maths": "6.5",
+        "science": "15",
+        "socialScience": "14",
+        "it": ""
+      },
+      "overall": "62.0%",
+      "totalMarks": "62.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 17,
+    "enrollmentNumber": "CCIS-IX-NEO-17",
+    "name": "HRIDHAAN  CHANDHOK",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-hridhaan--chandhok",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 95.0,
+        "maths": 80.0,
+        "science": 80.0,
+        "socialScience": 90.0,
+        "it": 95.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "8.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "14.5",
+        "maths": "6.5",
+        "science": "8",
+        "socialScience": "11",
+        "it": "18"
+      },
+      "overall": "55.42%",
+      "totalMarks": "66.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 18,
+    "enrollmentNumber": "CCIS-IX-NEO-18",
+    "name": "HIMANSHU GURJAR",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-himanshu-gurjar",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": 80.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 60.0,
+        "science": 70.0,
+        "socialScience": 90.0,
+        "it": 70.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "new",
+        "hindi": "new",
+        "sanskrit": null,
+        "french": null,
+        "maths": "",
+        "science": "ab",
+        "socialScience": "",
+        "it": ""
+      },
+      "overall": "Pending",
+      "totalMarks": null,
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 19,
+    "enrollmentNumber": "CCIS-IX-NEO-19",
+    "name": "ISHIKA CHOUDHARY",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-ishika-choudhary",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 56.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 55.0,
+        "maths": 60.0,
+        "science": 55.0,
+        "socialScience": 60.0,
+        "it": 70.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "8.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "5.5",
+        "maths": "ab",
+        "science": "2",
+        "socialScience": "6.5",
+        "it": "8.5"
+      },
+      "overall": "31.0%",
+      "totalMarks": "31.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 20,
+    "enrollmentNumber": "CCIS-IX-NEO-20",
+    "name": "NISHANT PUGLIA JAIN",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-nishant-puglia-jain",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 89.0,
+        "maths": 90.0,
+        "science": 95.0,
+        "socialScience": 87.0,
+        "it": 86.0
+      },
+      "overall": "93.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "13",
+        "maths": "14",
+        "science": "12",
+        "socialScience": "11.5",
+        "it": "13.5"
+      },
+      "overall": "62.08%",
+      "totalMarks": "74.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 21,
+    "enrollmentNumber": "CCIS-IX-NEO-21",
+    "name": "PANKHURI BHARDWAJ",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-pankhuri-bhardwaj",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 85.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 80.0,
+        "maths": 80.0,
+        "science": 85.0,
+        "socialScience": 80.0,
+        "it": 80.0
+      },
+      "overall": "80-85%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "12.5",
+        "maths": "4.5",
+        "science": "7",
+        "socialScience": "8",
+        "it": "8.5"
+      },
+      "overall": "42.5%",
+      "totalMarks": "51.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 22,
+    "enrollmentNumber": "CCIS-IX-NEO-22",
+    "name": "PRATEEK SAREEN",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-prateek-sareen",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 80.0,
+        "maths": 90.0,
+        "science": 90.0,
+        "socialScience": 70.0,
+        "it": 75.0
+      },
+      "overall": "77.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "10.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "14",
+        "maths": "16",
+        "science": "13",
+        "socialScience": "10",
+        "it": "13.5"
+      },
+      "overall": "64.17%",
+      "totalMarks": "77.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 23,
+    "enrollmentNumber": "CCIS-IX-NEO-23",
+    "name": "RAJVEER  CHOUDHARY",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-rajveer--choudhary",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 70.0,
+        "hindi": 80.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": 50.0,
+        "science": 65.0,
+        "socialScience": 80.0,
+        "it": 65.0
+      },
+      "overall": "75.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "6",
+        "hindi": "8",
+        "sanskrit": null,
+        "french": null,
+        "maths": "7",
+        "science": "4.5",
+        "socialScience": "7",
+        "it": "10.5"
+      },
+      "overall": "35.83%",
+      "totalMarks": "43.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 24,
+    "enrollmentNumber": "CCIS-IX-NEO-24",
+    "name": "RANVIJAY SINGH SHEKHAWAT",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-ranvijay-singh-shekhawat",
+    "secondLanguage": "Hindi",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": "55-60",
+        "hindi": 55.0,
+        "sanskrit": null,
+        "french": null,
+        "maths": "40-45",
+        "science": 60.0,
+        "socialScience": "50-55",
+        "it": 75.0
+      },
+      "overall": "75.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "2",
+        "hindi": "2.5",
+        "sanskrit": null,
+        "french": null,
+        "maths": "4.5",
+        "science": "3.5",
+        "socialScience": "6",
+        "it": "7.5"
+      },
+      "overall": "21.67%",
+      "totalMarks": "26.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 25,
+    "enrollmentNumber": "CCIS-IX-NEO-25",
+    "name": "REET KINRA",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-reet-kinra",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 96.0,
+        "maths": 85.0,
+        "science": 85.0,
+        "socialScience": 85.0,
+        "it": 95.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "16",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "16.5",
+        "maths": "",
+        "science": "15.5",
+        "socialScience": "14.5",
+        "it": "19"
+      },
+      "overall": "81.5%",
+      "totalMarks": "81.5 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 26,
+    "enrollmentNumber": "CCIS-IX-NEO-26",
+    "name": "SHIVANSHI CHOUDHARY",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-shivanshi-choudhary",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 100.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 100.0,
+        "maths": 100.0,
+        "science": 100.0,
+        "socialScience": 100.0,
+        "it": 100.0
+      },
+      "overall": "100.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "15",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "12",
+        "maths": "14.5",
+        "science": "15",
+        "socialScience": "17.5",
+        "it": "17"
+      },
+      "overall": "75.83%",
+      "totalMarks": "91.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 27,
+    "enrollmentNumber": "CCIS-IX-NEO-27",
+    "name": "SHREET SHARMA",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-shreet-sharma",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 80.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 80.0,
+        "maths": 70.0,
+        "science": 80.0,
+        "socialScience": 70.0,
+        "it": 45.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "11",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "ab",
+        "maths": "",
+        "science": "ab",
+        "socialScience": "",
+        "it": "14"
+      },
+      "overall": "62.5%",
+      "totalMarks": "25.0 / 40",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 28,
+    "enrollmentNumber": "CCIS-IX-NEO-28",
+    "name": "TANISHKA NEGI",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-tanishka-negi",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 95.0,
+        "maths": 80.0,
+        "science": 80.0,
+        "socialScience": 92.0,
+        "it": 95.0
+      },
+      "overall": "90.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "14.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "17.5",
+        "maths": "8.5",
+        "science": "14.5",
+        "socialScience": "17",
+        "it": "18"
+      },
+      "overall": "75.0%",
+      "totalMarks": "90.0 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 29,
+    "enrollmentNumber": "CCIS-IX-NEO-29",
+    "name": "TEJAS MEHLA",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-tejas-mehla",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 70.0,
+        "maths": 80.0,
+        "science": 80.0,
+        "socialScience": 70.0,
+        "it": 90.0
+      },
+      "overall": "85.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "6.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "3.5",
+        "maths": "6.5",
+        "science": "6.5",
+        "socialScience": "8.5",
+        "it": "11"
+      },
+      "overall": "35.42%",
+      "totalMarks": "42.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 30,
+    "enrollmentNumber": "CCIS-IX-NEO-30",
+    "name": "VISHESH SHIVHARE",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-vishesh-shivhare",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 75.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 65.0,
+        "maths": 75.0,
+        "science": 85.0,
+        "socialScience": 80.0,
+        "it": 95.0
+      },
+      "overall": "80.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "8",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "ab",
+        "maths": "8.5",
+        "science": "6.5",
+        "socialScience": "7",
+        "it": "11"
+      },
+      "overall": "41.0%",
+      "totalMarks": "41.0 / 100",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 31,
+    "enrollmentNumber": "CCIS-IX-NEO-31",
+    "name": "YAASHI MATHUR",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-yaashi-mathur",
+    "secondLanguage": "French",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 90.0,
+        "hindi": null,
+        "sanskrit": null,
+        "french": 97.0,
+        "maths": 85.0,
+        "science": 93.0,
+        "socialScience": 90.0,
+        "it": 90.0
+      },
+      "overall": "95.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "13.5",
+        "hindi": null,
+        "sanskrit": null,
+        "french": "15.5",
+        "maths": "9.5",
+        "science": "12.5",
+        "socialScience": "14.5",
+        "it": "18"
+      },
+      "overall": "69.58%",
+      "totalMarks": "83.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  },
+  {
+    "sNo": 32,
+    "enrollmentNumber": "CCIS-IX-NEO-32",
+    "name": "YOGESH KARWASRA",
+    "section": "NEO",
+    "studentId": "ccis-ix-neo-yogesh-karwasra",
+    "secondLanguage": "Sanskrit",
+    "exam1": {
+      "label": "Exam-1 (Baseline)",
+      "subjects": {
+        "english": 85.0,
+        "hindi": null,
+        "sanskrit": 90.0,
+        "french": null,
+        "maths": 80.0,
+        "science": 90.0,
+        "socialScience": 82.0,
+        "it": 87.0
+      },
+      "overall": "88.0%",
+      "maxMarks": 100
+    },
+    "exam2": {
+      "label": "Exam-2 (Mid Term)",
+      "subjects": {
+        "english": "9.5",
+        "hindi": null,
+        "sanskrit": "13.5",
+        "french": null,
+        "maths": "6.5",
+        "science": "12.5",
+        "socialScience": "9",
+        "it": "16.5"
+      },
+      "overall": "56.25%",
+      "totalMarks": "67.5 / 120",
+      "maxMarks": 20
+    },
+    "target": {
+      "label": "School Target",
+      "overall": "Not Assigned"
+    }
+  }
+]

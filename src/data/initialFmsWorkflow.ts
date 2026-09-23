@@ -1,0 +1,68 @@
+import { FMSWorkflowStep } from '@/types/academic';
+
+export const INITIAL_FMS_STEPS: FMSWorkflowStep[] = [
+  {
+    id: 'fms-step-0',
+    stepNumber: 0,
+    stepName: 'Triggering of the FMS',
+    status: 'Completed',
+    date: '1st week of October',
+    owner: 'PC',
+    remarks: 'Manual initiation of Class IX milestone protocol.',
+  },
+  {
+    id: 'fms-step-1',
+    stepNumber: 1,
+    stepName: 'Class VIII Half Yearly Compile',
+    status: 'Completed',
+    date: 'Within 10 days of Result',
+    owner: "Back Office (Suman Ma'am)",
+    remarks: 'Compiling data of Class VIII Half yearly Result and sharing it with Head Coordinators. Status: Done.',
+  },
+  {
+    id: 'fms-step-2',
+    stepNumber: 2,
+    stepName: 'Setting VIII Annual & IX Targets',
+    status: 'Completed',
+    date: 'Within 3 days of Step 1',
+    owner: 'Head Coordinators (VIII & IX)',
+    remarks: 'Analysis of Class VIII Half Result and setting Class VIII ANNUAL target and IX grade target; handover to Vice Principal.',
+  },
+  {
+    id: 'fms-step-3',
+    stepNumber: 3,
+    stepName: 'Deviation Analysis with Leadership',
+    status: 'Completed',
+    date: 'Within 3 days of Step 2',
+    owner: 'Head Coordinators & P/VP',
+    remarks: 'Discussing the range of difference in the analysis sheet and analysing the data with VP/P.',
+  },
+  {
+    id: 'fms-step-4',
+    stepNumber: 4,
+    stepName: 'Teacher Meeting for Deviation Root-Cause',
+    status: 'In Progress',
+    date: 'Within 1 day of Step 3',
+    owner: 'P/VP, Head Coordinator & C.C',
+    remarks: 'Taking meeting of the teachers for finding the reason for deviation and telling them to prepare strategy.',
+  },
+  {
+    id: 'fms-step-5',
+    stepNumber: 5,
+    stepName: 'Strategy Preparation Meeting',
+    status: 'Upcoming',
+    date: 'Within 7 days of Step 4',
+    owner: 'P/VP, Head Coordinator & C.C',
+    remarks: 'Taking meeting of the teachers to prepare the intervention strategy and remedial action plans.',
+  },
+  {
+    id: 'fms-step-6',
+    stepNumber: 6,
+    stepName: 'Class IX Half Yearly Result Compile',
+    status: 'Upcoming',
+    date: 'Within 11 days of Class IX Result',
+    owner: "Back Office (Suman Ma'am)",
+    remarks: 'Compiling data of Class IX Half yearly Result and sharing it with Head Coordinators.',
+  },
+];
+
