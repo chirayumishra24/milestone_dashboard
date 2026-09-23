@@ -134,6 +134,14 @@ export default function ClassComparisonHeatmap({ classes }: ClassComparisonHeatm
                     <td className="py-3 px-4">
                       <div className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5">
                         <span>{c.label}</span>
+                        {c.dataSource === 'sample' && (
+                          <span
+                            className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200"
+                            title="Generated placeholder roster; no official records imported yet"
+                          >
+                            Sample
+                          </span>
+                        )}
                         {c.classId === 'IX' && (
                           <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-blue-600 text-white">
                             Active

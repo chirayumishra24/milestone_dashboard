@@ -1,5 +1,5 @@
 import { NormalizedValue, StudentRecord, Milestone, OverallHealthMetrics } from '@/types/academic';
-import { calculateStudentStatus } from './statusEngine';
+import { getStudentScore, getStudentStatus, getStudentTarget } from './statusEngine';
 
 export interface PerformanceBucket {
   label: string;
@@ -76,6 +76,9 @@ export function calculateSubjectSummary(students: StudentRecord[]): SubjectMetri
     { key: 'it', name: 'Computer / IT', code: 'IT', color: '#06B6D4' },
   ];
 
+  // Subject targets are rarely recorded; fall back to the class's mean overall target
+  const classTargetAvg = calculateAverage(students.map(getStudentTarget));
+
   return subjectDefs.map((def) => {
     const actualScores: number[] = [];
     const targetScores: number[] = [];
@@ -92,7 +95,7 @@ export function calculateSubjectSummary(students: StudentRecord[]): SubjectMetri
     });
 
     const avg = calculateAverage(actualScores);
-    const tgtAvg = targetScores.length ? calculateAverage(targetScores) : Math.round((avg + 5) * 10) / 10;
+    const tgtAvg = targetScores.length ? calculateAverage(targetScores) : classTargetAvg;
     const highest = actualScores.length ? Math.max(...actualScores) : 0;
     const lowest = actualScores.length ? Math.min(...actualScores) : 0;
 
@@ -100,9 +103,9 @@ export function calculateSubjectSummary(students: StudentRecord[]): SubjectMetri
       key: def.key,
       name: def.name,
       code: def.code,
-      average: avg || 78,
-      targetAvg: tgtAvg || 85,
-      gap: calculateTargetGap(avg || 78, tgtAvg || 85),
+      average: avg,
+      targetAvg: tgtAvg,
+      gap: calculateTargetGap(avg, tgtAvg),
       highest,
       lowest,
       color: def.color,
@@ -135,20 +138,16 @@ export function calculateClassSummary(students: StudentRecord[]) {
   const actualScores: number[] = [];
   const targetScores: number[] = [];
 
+  // Status buckets are mutually exclusive, so the four counts sum to the total
   students.forEach((s) => {
-    const act = s.currentPerformance?.overall?.value ?? 0;
-    const tgt = s.schoolTarget?.overall?.value ?? 80;
-    actualScores.push(act);
-    targetScores.push(tgt);
+    actualScores.push(getStudentScore(s));
+    targetScores.push(getStudentTarget(s));
 
-    const status = calculateStudentStatus(act, tgt).status;
-    if (status === 'ON_TRACK') onTrack++;
+    const status = getStudentStatus(s).status;
+    if (status === 'ACHIEVED') achieved++;
+    else if (status === 'ON_TRACK') onTrack++;
     else if (status === 'WATCH' || status === 'INTERVENTION') atRisk++;
     else if (status === 'CRITICAL') critical++;
-
-    if (act >= tgt && tgt > 0) {
-      achieved++;
-    }
   });
 
   return {
@@ -174,11 +173,14 @@ export function calculateOverallMilestoneHealth(
   totalFmsSteps = 7
 ): OverallHealthMetrics {
   const summary = calculateClassSummary(students);
-  const studentsOnTrackPct = summary.onTrackPct || 74;
-  const targetAchievementPct = summary.targetAchievedPct || 69;
-  const targetProgress = Math.min(100, Math.round((summary.classAverage / (summary.targetAverage || 85)) * 100)) || 82;
-  const interventionsClosedPct = Math.round((interventionsClosedCount / (totalInterventions || 1)) * 100) || 61;
-  const fmsCompletionPct = Math.round((fmsCompletedSteps / (totalFmsSteps || 1)) * 100) || 67;
+  // "On track" for health purposes includes students who have already met target
+  const studentsOnTrackPct = summary.onTrackPct + summary.targetAchievedPct;
+  const targetAchievementPct = summary.targetAchievedPct;
+  const targetProgress = summary.targetAverage
+    ? Math.min(100, Math.round((summary.classAverage / summary.targetAverage) * 100))
+    : 0;
+  const interventionsClosedPct = totalInterventions ? Math.round((interventionsClosedCount / totalInterventions) * 100) : 0;
+  const fmsCompletionPct = totalFmsSteps ? Math.round((fmsCompletedSteps / totalFmsSteps) * 100) : 0;
 
   // Composite institutional health score
   const healthScore = Math.round(
@@ -190,7 +192,7 @@ export function calculateOverallMilestoneHealth(
   );
 
   return {
-    healthScore: healthScore || 82,
+    healthScore,
     targetProgress,
     studentsOnTrackPct,
     targetAchievementPct,

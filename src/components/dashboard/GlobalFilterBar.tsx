@@ -2,7 +2,7 @@
 import React from 'react';
 import { Filter, Users, Layers, Award, AlertTriangle, Flame, Compass, Box } from 'lucide-react';
 
-export type SectionFilter = 'ALL' | 'AURA' | 'ZEN' | 'NEO';
+export type SectionFilter = 'ALL' | string;
 export type StatusFilter = 'ALL' | 'ACHIEVED' | 'ON_TRACK' | 'WATCH' | 'CRITICAL';
 export type ViewTab = 'OVERVIEW' | 'KANBAN';
 
@@ -11,19 +11,12 @@ interface GlobalFilterBarProps {
   onSectionChange: (sec: SectionFilter) => void;
   selectedStatus: StatusFilter;
   onStatusChange: (status: StatusFilter) => void;
-  selectedExam: string;
-  onExamChange: (exam: string) => void;
   activeTab: ViewTab;
   onTabChange: (tab: ViewTab) => void;
-  counts: {
-    total: number;
-    aura: number;
-    zen: number;
-    neo: number;
-    onTrack: number;
-    atRisk: number;
-    critical: number;
-  };
+  classId: string;
+  totalCount: number;
+  /** Section names for the class with their student counts */
+  sectionCounts: { id: string; count: number }[];
 }
 
 export default function GlobalFilterBar({
@@ -31,17 +24,15 @@ export default function GlobalFilterBar({
   onSectionChange,
   selectedStatus,
   onStatusChange,
-  selectedExam,
-  onExamChange,
   activeTab,
   onTabChange,
-  counts,
+  classId,
+  totalCount,
+  sectionCounts,
 }: GlobalFilterBarProps) {
   const sections: { id: SectionFilter; label: string; count: number }[] = [
-    { id: 'ALL', label: 'All Sections', count: counts.total },
-    { id: 'AURA', label: 'IX AURA', count: counts.aura },
-    { id: 'ZEN', label: 'IX ZEN', count: counts.zen },
-    { id: 'NEO', label: 'IX NEO', count: counts.neo },
+    { id: 'ALL', label: 'All Sections', count: totalCount },
+    ...sectionCounts.map((sec) => ({ id: sec.id, label: `${classId} ${sec.id}`, count: sec.count })),
   ];
 
   const statuses: { id: StatusFilter; label: string; icon: React.ElementType; color: string }[] = [
@@ -115,8 +106,8 @@ export default function GlobalFilterBar({
         </div>
       </div>
 
-      {/* Bottom row: Status Filter and Exam Selector */}
-      <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+      {/* Bottom row: Status Filter */}
+      <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-3 text-xs">
         {/* Status filter pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           <span className="text-slate-400 font-medium mr-1 flex items-center gap-1">
@@ -138,21 +129,6 @@ export default function GlobalFilterBar({
               </button>
             );
           })}
-        </div>
-
-        {/* Exam baseline selector */}
-        <div className="flex items-center gap-2">
-          <span className="text-slate-400 font-medium">Evaluation Baseline:</span>
-          <select
-            value={selectedExam}
-            onChange={(e) => onExamChange(e.target.value)}
-            className="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
-          >
-            <option value="MID_TERM">Mid Term Examination (Oct 2026)</option>
-            <option value="PT2">Periodic Test 2 (Aug 2026)</option>
-            <option value="PT1">Periodic Test 1 (Jul 2026)</option>
-            <option value="BASELINE">Baseline Diagnostic (Apr 2026)</option>
-          </select>
         </div>
       </div>
     </div>

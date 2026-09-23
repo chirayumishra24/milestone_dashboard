@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import StudentProfileDrawer from './StudentProfileDrawer';
+import { getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
 
 interface StudentsRequiringAttentionTableProps {
   students: StudentRecord[];
@@ -25,19 +26,17 @@ export default function StudentsRequiringAttentionTable({
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Filter students who are in CRITICAL or WATCH status, or overall < 70% or gap < -5
+  // Students who are At Risk or Critical, or more than 5 points short of their target
   const attentionStudents = students.filter((s) => {
-    const val = s.currentPerformance?.overall?.value ?? 0;
-    const tgt = s.schoolTarget?.overall?.value ?? 80;
-    const gap = val - tgt;
+    const { status, gap } = getStudentStatus(s);
 
     if (filterMode === 'CRITICAL') {
-      return val < 60;
+      return status === 'CRITICAL';
     }
     if (filterMode === 'LARGE_GAP') {
       return gap <= -10;
     }
-    return val < 70 || gap < -5;
+    return status === 'WATCH' || status === 'CRITICAL' || gap < -5;
   });
 
   const searched = attentionStudents.filter((s) => {
@@ -145,9 +144,9 @@ export default function StudentsRequiringAttentionTable({
             <tbody className="divide-y divide-slate-100">
               {searched.slice(0, 7).map((s) => {
                 const current = s.currentPerformance?.overall?.value ?? 0;
-                const target = s.schoolTarget?.overall?.value ?? 80;
+                const target = getStudentTarget(s);
                 const gap = Math.round((current - target) * 10) / 10;
-                const isCritical = current < 60;
+                const isCritical = getStudentStatus(s).status === 'CRITICAL';
 
                 // Identify weakest subject
                 const subjEntries = Object.entries(s.currentPerformance?.subjects || {});

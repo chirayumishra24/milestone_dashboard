@@ -1,8 +1,11 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useApiData } from '@/hooks/useApiData';
+import { ErrorState, LoadingState, SampleDataBadge } from '@/components/ui/PageStatus';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
+import { matchesStatusFilter } from '@/utils/statusEngine';
 import {
   StudentRecord,
   Milestone,
@@ -44,74 +47,47 @@ export default function DynamicClassDashboard() {
   const router = useRouter();
   const classId = ((params?.classId as string) || 'IX').toUpperCase();
 
-  const [classInfo, setClassInfo] = useState<ClassSummary | null>(null);
-  const [students, setStudents] = useState<StudentRecord[]>([]);
-  const [milestones, setMilestones] = useState<Milestone[]>([]);
-  const [fmsSteps, setFmsSteps] = useState<FMSWorkflowStep[]>([]);
-  const [healthMetrics, setHealthMetrics] = useState<OverallHealthMetrics | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
   // Filter State
   const [selectedSection, setSelectedSection] = useState<SectionFilter>('ALL');
   const [selectedStatus, setSelectedStatus] = useState<StatusFilter>('ALL');
-  const [selectedExam, setSelectedExam] = useState<string>('MID_TERM');
   const [activeTab, setActiveTab] = useState<ViewTab>('OVERVIEW');
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        setIsLoading(true);
-        const [info, studentData, milestoneData, fmsData, healthData] = await Promise.all([
-          schoolMilestoneApi.getClassSummary(classId),
-          schoolMilestoneApi.getStudentsByClass(classId),
-          schoolMilestoneApi.getMilestones(),
-          schoolMilestoneApi.getFmsWorkflow(),
-          schoolMilestoneApi.getMilestoneHealth(),
-        ]);
-        setClassInfo(info);
-        setStudents(studentData);
-        setMilestones(milestoneData);
-        setFmsSteps(fmsData);
-        setHealthMetrics(healthData);
-      } catch (err) {
-        console.error('Failed loading class dashboard:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadData();
-  }, [classId]);
+  const { data, isLoading, error, reload } = useApiData(
+    () =>
+      Promise.all([
+        schoolMilestoneApi.getClassSummary(classId),
+        schoolMilestoneApi.getStudentsByClass(classId),
+        schoolMilestoneApi.getMilestones(),
+        schoolMilestoneApi.getFmsWorkflow(),
+        schoolMilestoneApi.getMilestoneHealth(classId),
+      ]),
+    [classId]
+  );
+  const [classInfo, students, milestones, fmsSteps, healthMetrics] = data ?? [null, [], [], [], null];
 
-  if (isLoading) {
+  if (error) return <ErrorState onRetry={reload} />;
+  if (isLoading) return <LoadingState message={`Loading ${classId} Academic Ledger...`} />;
+  if (!classInfo) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Loading {classId} Academic Ledger...</p>
-      </div>
+      <ErrorState
+        title={`Class ${classId} not found`}
+        message="There is no grade with this code. Choose a class from the sidebar."
+      />
     );
   }
 
   // Count sections
-  const secA = classInfo?.sections[0] || 'AURA';
-  const secB = classInfo?.sections[1] || 'ZEN';
-  const secC = classInfo?.sections[2] || 'NEO';
-
-  const countA = students.filter((s) => (s.section || s.group) === secA).length;
-  const countB = students.filter((s) => (s.section || s.group) === secB).length;
-  const countC = students.filter((s) => (s.section || s.group) === secC).length;
+  const sectionCounts = (classInfo?.sections || []).map((sec) => ({
+    id: sec,
+    count: students.filter((s) => (s.section || s.group) === sec).length,
+  }));
 
   // Filtered Students
   const filteredStudents = students.filter((s) => {
     const sec = s.section || s.group;
     if (selectedSection !== 'ALL' && sec !== selectedSection) return false;
 
-    const val = s.currentPerformance?.overall?.value ?? 0;
-    const tgt = s.schoolTarget?.overall?.value ?? 80;
-
-    if (selectedStatus === 'ACHIEVED' && val < tgt) return false;
-    if (selectedStatus === 'ON_TRACK' && (val < 70 || val >= tgt)) return false;
-    if (selectedStatus === 'WATCH' && (val < 60 || val >= 70)) return false;
-    if (selectedStatus === 'CRITICAL' && val >= 60) return false;
+    if (!matchesStatusFilter(s, selectedStatus)) return false;
 
     return true;
   });
@@ -136,6 +112,7 @@ export default function DynamicClassDashboard() {
               <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                 AY 2026–27
               </span>
+              {classInfo.dataSource === 'sample' && <SampleDataBadge />}
             </div>
             <p className="text-xs text-slate-500 mt-1">
               Coordinator: <strong>{classInfo?.coordinator || 'Faculty Head'}</strong> • {students.length} Scholars Enrolled across {classInfo?.sections.join(', ')}
@@ -167,33 +144,25 @@ export default function DynamicClassDashboard() {
         onSectionChange={setSelectedSection}
         selectedStatus={selectedStatus}
         onStatusChange={setSelectedStatus}
-        selectedExam={selectedExam}
-        onExamChange={setSelectedExam}
         activeTab={activeTab}
         onTabChange={setActiveTab}
-        counts={{
-          total: students.length,
-          aura: countA,
-          zen: countB,
-          neo: countC,
-          onTrack: summary.onTrackCount || 0,
-          atRisk: summary.atRiskCount || 0,
-          critical: summary.criticalCount || 0,
-        }}
+        classId={classId}
+        totalCount={students.length}
+        sectionCounts={sectionCounts}
       />
 
       {/* Top KPI Cards Row (Clickable triage) */}
       <KpiCards
         totalStudents={summary.totalStudents || filteredStudents.length}
-        onTrackCount={summary.onTrackCount || 0}
+        onTrackCount={summary.onTrackCount}
         onTrackPct={summary.onTrackPct || 0}
-        atRiskCount={summary.atRiskCount || 0}
+        atRiskCount={summary.atRiskCount}
         atRiskPct={summary.atRiskPct || 0}
-        criticalCount={summary.criticalCount || 0}
+        criticalCount={summary.criticalCount}
         criticalPct={summary.criticalPct || 0}
         targetAchievedCount={summary.targetAchievedCount || 0}
         targetAchievedPct={summary.targetAchievedPct || 0}
-        currentDate="23 Sep 2026"
+        classId={classId}
         activeStatus={selectedStatus}
         onSelectStatus={setSelectedStatus}
       />
@@ -225,13 +194,13 @@ export default function DynamicClassDashboard() {
             </div>
             <div className="lg:col-span-1">
               <UpcomingMilestoneCard
-                daysLeft={23}
+                startDate="2026-11-05"
                 title="Mid Term Examination"
                 dateRange="5 Nov 2026 – 15 Nov 2026"
-                targetAvg={classInfo?.targetAvg || 82}
-                currentAvg={summary.classAverage || 79}
-                studentsOnTrack={summary.onTrackCount || 118}
-                needAttention={summary.atRiskCount || 27}
+                targetAvg={summary.targetAverage}
+                currentAvg={summary.classAverage}
+                studentsOnTrack={summary.onTrackCount}
+                needAttention={summary.atRiskCount}
               />
             </div>
           </div>
@@ -242,7 +211,7 @@ export default function DynamicClassDashboard() {
               <FmsWorkflowProgressCard steps={fmsSteps} />
             </div>
             <div className="lg:col-span-1">
-              <QuickActionsCard />
+              <QuickActionsCard classId={classId} onOpenInterventions={() => setActiveTab('KANBAN')} />
             </div>
           </div>
         </div>
@@ -251,7 +220,7 @@ export default function DynamicClassDashboard() {
       {/* Tab 2: Kanban Action Board */}
       {activeTab === 'KANBAN' && (
         <div className="animate-in fade-in duration-300">
-          <InterventionKanban />
+          <InterventionKanban classId={classId} />
         </div>
       )}
     </div>

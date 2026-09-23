@@ -1,6 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InterventionRecord } from '@/types/academic';
+import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
 import {
   LifeBuoy,
   UserCheck,
@@ -14,101 +15,62 @@ import {
 } from 'lucide-react';
 
 interface InterventionKanbanProps {
-  initialInterventions?: InterventionRecord[];
+  classId?: string;
 }
 
-const DEFAULT_INTERVENTIONS: InterventionRecord[] = [
-  {
-    id: 'INT-01',
-    studentId: 'STU-042',
-    studentName: 'Aarav Patel',
-    section: 'AURA',
-    subject: 'Mathematics',
-    currentPerformance: 54.5,
-    target: 80,
-    gap: -25.5,
-    reason: 'Algebra & Quadratic Foundations deficit',
-    assignedTeacher: 'Mrs. S. Sharma',
-    strategy: 'Twice-weekly remedial drills',
-    createdDate: '12 Sep 2026',
-    reviewDate: '15 Oct 2026',
-    status: 'Pending',
-    remarks: 'Parent consent received',
-  },
-  {
-    id: 'INT-02',
-    studentId: 'STU-088',
-    studentName: 'Diya Sharma',
-    section: 'ZEN',
-    subject: 'Science',
-    currentPerformance: 58.0,
-    target: 78,
-    gap: -20.0,
-    reason: 'Physics Numerical Problem Solving',
-    assignedTeacher: 'Mr. R. Verma',
-    strategy: 'Peer study buddy + Formula flashcards',
-    createdDate: '15 Sep 2026',
-    reviewDate: '18 Oct 2026',
-    status: 'In Progress',
-    remarks: 'Session 3 completed',
-  },
-  {
-    id: 'INT-03',
-    studentId: 'STU-115',
-    studentName: 'Kabir Mehta',
-    section: 'NEO',
-    subject: 'Social Science',
-    currentPerformance: 56.5,
-    target: 75,
-    gap: -18.5,
-    reason: 'Map work & History source-based questions',
-    assignedTeacher: 'Ms. A. Iyer',
-    strategy: 'Visual timeline mapping worksheets',
-    createdDate: '18 Sep 2026',
-    reviewDate: '20 Oct 2026',
-    status: 'In Progress',
-    remarks: 'Score improved by +8% in practice quiz',
-  },
-  {
-    id: 'INT-04',
-    studentId: 'STU-019',
-    studentName: 'Ananya Roy',
-    section: 'AURA',
-    subject: 'English',
-    currentPerformance: 62.0,
-    target: 75,
-    gap: -13.0,
-    reason: 'Grammar editing & Letter writing structure',
-    assignedTeacher: 'Mrs. M. Sen',
-    strategy: 'Writing template masterclasses',
-    createdDate: '05 Sep 2026',
-    reviewDate: '02 Oct 2026',
-    status: 'Completed',
-    remarks: 'Achieved 76% in Mid-Term review',
-  },
-];
+type InterventionStatus = InterventionRecord['status'];
 
-export default function InterventionKanban({
-  initialInterventions = DEFAULT_INTERVENTIONS,
-}: InterventionKanbanProps) {
-  const [items, setItems] = useState<InterventionRecord[]>(initialInterventions);
+export default function InterventionKanban({ classId = 'IX' }: InterventionKanbanProps) {
+  const [items, setItems] = useState<InterventionRecord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [selectedSection, setSelectedSection] = useState<'ALL' | 'AURA' | 'ZEN' | 'NEO'>('ALL');
 
-  const filtered = items.filter((item) => {
+  useEffect(() => {
+    let cancelled = false;
+    schoolMilestoneApi
+      .getInterventions()
+      .then((data) => {
+        if (!cancelled) setItems(data);
+      })
+      .catch((err) => console.error('Failed loading interventions:', err))
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Records without a classId predate multi-class support and belong to Class IX
+  const classItems = items.filter((item) => (item.classId || 'IX') === classId);
+
+  const filtered = classItems.filter((item) => {
     if (selectedSection === 'ALL') return true;
     return item.section === selectedSection;
   });
 
-  const columns: { id: 'Pending' | 'In Progress' | 'Completed'; title: string; color: string; bg: string }[] = [
+  const columns: { id: InterventionStatus; title: string; color: string; bg: string }[] = [
     { id: 'Pending', title: 'Identified (Pending Remedial)', color: 'text-amber-800', bg: 'bg-amber-50 border-amber-200' },
     { id: 'In Progress', title: 'Active Remedial Tutoring', color: 'text-blue-800', bg: 'bg-blue-50 border-blue-200' },
     { id: 'Completed', title: 'Target Deficit Closed', color: 'text-emerald-800', bg: 'bg-emerald-50 border-emerald-200' },
   ];
 
-  const handleMoveStatus = (id: string, newStatus: 'Pending' | 'In Progress' | 'Completed') => {
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
-    );
+  const handleMoveStatus = async (id: string, newStatus: InterventionStatus) => {
+    const previous = items;
+    const target = items.find((item) => item.id === id);
+    if (!target) return;
+
+    // Optimistic update, rolled back if the save fails
+    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, status: newStatus } : item)));
+    setSaveError(null);
+    try {
+      await schoolMilestoneApi.saveIntervention({ ...target, status: newStatus });
+    } catch (err) {
+      console.error('Failed saving intervention:', err);
+      setItems(previous);
+      setSaveError(`Could not update ${target.studentName}. Please try again.`);
+    }
   };
 
   return (
@@ -150,8 +112,21 @@ export default function InterventionKanban({
         </div>
       </div>
 
+      {saveError && (
+        <div role="alert" className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs font-medium text-rose-700 flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          {saveError}
+        </div>
+      )}
+
+      {!isLoading && classItems.length === 0 && (
+        <div className="mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500">
+          No interventions have been recorded for Class {classId} yet.
+        </div>
+      )}
+
       {/* Kanban 3-Column Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${isLoading ? 'opacity-50 pointer-events-none' : ''}`} aria-busy={isLoading}>
         {columns.map((col) => {
           const colItems = filtered.filter((i) => i.status === col.id);
 
@@ -179,7 +154,7 @@ export default function InterventionKanban({
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-slate-900">{item.studentName}</span>
                       <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-semibold">
-                        IX {item.section}
+                        {classId} {item.section}
                       </span>
                     </div>
 

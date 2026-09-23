@@ -5,59 +5,41 @@ import Link from 'next/link';
 import {
   Search,
   Calendar,
-  Download,
-  Bell,
-  CheckCircle2,
-  RefreshCw,
-  Sparkles,
-  User,
   ChevronRight,
-  X,
   GraduationCap,
   Building,
 } from 'lucide-react';
-import { INITIAL_CLASS_IX_STUDENTS } from '@/data/initialClass9Data';
+import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
 import { StudentRecord } from '@/types/academic';
 import StudentProfileDrawer from '@/components/dashboard/StudentProfileDrawer';
 
-interface HeaderProps {
-  selectedYear: string;
-  onYearChange: (year: string) => void;
-  onSearchQueryChange?: (q: string) => void;
-}
-
-export default function Header({
-  selectedYear,
-  onYearChange,
-  onSearchQueryChange,
-}: HeaderProps) {
+export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [query, setQuery] = useState('');
-  const [isSyncing, setIsSyncing] = useState(false);
+  const [searchPool, setSearchPool] = useState<StudentRecord[]>([]);
   const [searchResults, setSearchResults] = useState<StudentRecord[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleSync = () => {
-    setIsSyncing(true);
-    setTimeout(() => {
-      setIsSyncing(false);
-    }, 1200);
+  // Load every roster through the API service so search covers all grades and sees saved edits
+  const loadSearchPool = async (): Promise<StudentRecord[]> => {
+    if (searchPool.length) return searchPool;
+    const students = await schoolMilestoneApi.getAllStudents();
+    setSearchPool(students);
+    return students;
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setQuery(val);
-    if (onSearchQueryChange) {
-      onSearchQueryChange(val);
-    }
 
     if (val.trim().length > 0) {
       const q = val.toLowerCase();
-      const matches = INITIAL_CLASS_IX_STUDENTS.filter(
+      const pool = await loadSearchPool();
+      const matches = pool.filter(
         (s) =>
           s.name.toLowerCase().includes(q) ||
           (s.enrollmentNumber || '').toLowerCase().includes(q) ||
@@ -158,7 +140,7 @@ export default function Header({
             {showDropdown && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="p-2.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
-                  <span>Matching Class IX Students ({searchResults.length})</span>
+                  <span>Matching Students ({searchResults.length})</span>
                   <span>ESC to close</span>
                 </div>
 
@@ -180,7 +162,7 @@ export default function Header({
                               {s.name}
                             </div>
                             <div className="text-[10px] text-slate-400 font-mono">
-                              {s.enrollmentNumber || s.studentId} • IX {s.section || s.group}
+                              {s.enrollmentNumber || s.studentId} • {s.class} {s.section || s.group}
                             </div>
                           </div>
                         </div>
@@ -232,35 +214,11 @@ export default function Header({
             </select>
           </div>
 
-          {/* Academic Session Selector */}
-          <div className="flex items-center gap-1.5 bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-medium text-slate-700">
+          {/* Academic Session (only the active session has data) */}
+          <div className="hidden sm:flex items-center gap-1.5 bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-800">
             <Calendar className="w-3.5 h-3.5 text-slate-500" />
-            <select
-              value={selectedYear}
-              onChange={(e) => onYearChange(e.target.value)}
-              className="bg-transparent border-none text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer"
-            >
-              <option value="2026 – 27">AY 2026 – 27</option>
-              <option value="2025 – 26">AY 2025 – 26 (Archived)</option>
-            </select>
+            <span>AY 2026 – 27</span>
           </div>
-
-          {/* Sync Button */}
-          <button
-            onClick={handleSync}
-            disabled={isSyncing}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-50 transition-colors shadow-sm active:scale-95"
-            title="Refresh Ledger Cache"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 text-slate-500 ${isSyncing ? 'animate-spin text-blue-600' : ''}`} />
-            <span>{isSyncing ? 'Syncing...' : 'Sync'}</span>
-          </button>
-
-          {/* Notification Indicator */}
-          <button className="relative p-2 rounded-xl text-slate-600 hover:bg-slate-100 border border-slate-200/70 transition-colors">
-            <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600 ring-2 ring-white"></span>
-          </button>
         </div>
       </div>
 

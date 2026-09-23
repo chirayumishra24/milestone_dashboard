@@ -1,8 +1,11 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useApiData } from '@/hooks/useApiData';
+import { ErrorState, LoadingState, SampleDataBadge } from '@/components/ui/PageStatus';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
+import { downloadCsv } from '@/utils/csv';
 import { StudentRecord, ClassSummary } from '@/types/academic';
 import {
   Users,
@@ -14,6 +17,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import StudentProfileDrawer from '@/components/dashboard/StudentProfileDrawer';
+import { getStudentTarget } from '@/utils/statusEngine';
 
 type SortField = 'name' | 'section' | 'midTerm' | 'target' | 'gap';
 
@@ -21,9 +25,6 @@ export default function DynamicClassStudentsPage() {
   const params = useParams();
   const classId = ((params?.classId as string) || 'IX').toUpperCase();
 
-  const [classInfo, setClassInfo] = useState<ClassSummary | null>(null);
-  const [students, setStudents] = useState<StudentRecord[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSection, setSelectedSection] = useState<string>('ALL');
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
@@ -31,24 +32,15 @@ export default function DynamicClassStudentsPage() {
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortAsc, setSortAsc] = useState(true);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        setIsLoading(true);
-        const [info, list] = await Promise.all([
-          schoolMilestoneApi.getClassSummary(classId),
-          schoolMilestoneApi.getStudentsByClass(classId),
-        ]);
-        setClassInfo(info);
-        setStudents(list);
-      } catch (err) {
-        console.error('Failed loading students:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadData();
-  }, [classId]);
+  const { data, isLoading, error, reload } = useApiData(
+    () =>
+      Promise.all([
+        schoolMilestoneApi.getClassSummary(classId),
+        schoolMilestoneApi.getStudentsByClass(classId),
+      ]),
+    [classId]
+  );
+  const [classInfo, students] = data ?? [null, []];
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -75,8 +67,8 @@ export default function DynamicClassStudentsPage() {
       let cmp = 0;
       const aVal = a.currentPerformance?.overall?.value ?? 0;
       const bVal = b.currentPerformance?.overall?.value ?? 0;
-      const aTgt = a.schoolTarget?.overall?.value ?? 80;
-      const bTgt = b.schoolTarget?.overall?.value ?? 80;
+      const aTgt = getStudentTarget(a);
+      const bTgt = getStudentTarget(b);
 
       if (sortField === 'name') cmp = a.name.localeCompare(b.name);
       else if (sortField === 'section') cmp = (a.section || a.group || '').localeCompare(b.section || b.group || '');
@@ -90,30 +82,25 @@ export default function DynamicClassStudentsPage() {
   const exportCSV = () => {
     const headers = ['Roll No', 'Name', 'Section', 'Mid-Term %', 'Target %', 'Gap %'];
     const rows = filtered.map((s) => [
-      `"${s.enrollmentNumber || s.studentId}"`,
-      `"${s.name}"`,
-      `"${s.section || s.group}"`,
+      s.enrollmentNumber || s.studentId,
+      s.name,
+      s.section || s.group,
       s.currentPerformance?.overall?.value ?? '',
       s.schoolTarget?.overall?.value ?? '',
-      Math.round(((s.currentPerformance?.overall?.value ?? 0) - (s.schoolTarget?.overall?.value ?? 80)) * 10) / 10,
+      Math.round(((s.currentPerformance?.overall?.value ?? 0) - (getStudentTarget(s))) * 10) / 10,
     ]);
 
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Class_${classId}_Roster_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    downloadCsv(`Class_${classId}_Roster_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows);
   };
 
-  if (isLoading) {
+  if (error) return <ErrorState onRetry={reload} />;
+  if (isLoading) return <LoadingState message={`Loading ${classId} Student Directory...`} />;
+  if (!classInfo) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Loading {classId} Student Directory...</p>
-      </div>
+      <ErrorState
+        title={`Class ${classId} not found`}
+        message="There is no grade with this code. Choose a class from the sidebar."
+      />
     );
   }
 
@@ -129,9 +116,12 @@ export default function DynamicClassStudentsPage() {
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-lg font-bold text-slate-900 tracking-tight">
-              {classInfo?.label || `Class ${classId}`} Student Directory
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg font-bold text-slate-900 tracking-tight">
+                {classInfo?.label || `Class ${classId}`} Student Directory
+              </h1>
+              {classInfo.dataSource === 'sample' && <SampleDataBadge />}
+            </div>
             <p className="text-xs text-slate-500">
               {filtered.length} of {students.length} Scholars Enrolled
             </p>
@@ -217,7 +207,7 @@ export default function DynamicClassStudentsPage() {
             <tbody className="divide-y divide-slate-100">
               {filtered.map((s) => {
                 const current = s.currentPerformance?.overall?.value ?? 0;
-                const target = s.schoolTarget?.overall?.value ?? 80;
+                const target = getStudentTarget(s);
                 const gap = Math.round((current - target) * 10) / 10;
                 const isAhead = gap >= 0;
 

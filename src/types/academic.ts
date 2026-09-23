@@ -43,9 +43,11 @@ export interface StudentRecord {
   studentId: string;
   enrollmentNumber: string;
   name: string;
-  class: 'IX';
-  group: 'AURA' | 'ZEN' | 'NEO';
-  section?: 'AURA' | 'ZEN' | 'NEO';
+  /** Grade code, e.g. 'IX' */
+  class: string;
+  /** Section name within the grade, e.g. 'AURA' for Class IX or 'RUBY' for Class VI */
+  group: string;
+  section?: string;
   school: string;
   gender?: string;
   secondLanguage?: 'Hindi' | 'Sanskrit' | 'French';
@@ -119,6 +121,8 @@ export interface FMSWorkflowStep {
 
 export interface InterventionRecord {
   id: string;
+  /** Grade the intervention belongs to; records without it are Class IX */
+  classId?: string;
   studentId: string;
   studentName: string;
   section: string;
@@ -161,6 +165,8 @@ export interface ClassSummary {
   sections: string[];
   coordinator: string;
   milestoneStatus: string;
+  /** 'official' rosters come from school records; 'sample' rosters are generated placeholders */
+  dataSource: 'official' | 'sample';
 }
 
 export interface SchoolOverviewMetrics {

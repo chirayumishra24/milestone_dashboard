@@ -3,7 +3,8 @@ import React from 'react';
 import { Calendar, Clock, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
 
 interface UpcomingMilestoneCardProps {
-  daysLeft: number;
+  /** ISO date (YYYY-MM-DD) the milestone starts; the countdown is calculated from it */
+  startDate: string;
   title: string;
   dateRange: string;
   targetAvg: number;
@@ -13,14 +14,17 @@ interface UpcomingMilestoneCardProps {
 }
 
 export default function UpcomingMilestoneCard({
-  daysLeft = 23,
-  title = 'Mid Term Examination',
-  dateRange = '5 Nov 2026 – 15 Nov 2026',
-  targetAvg = 82,
-  currentAvg = 79,
-  studentsOnTrack = 118,
-  needAttention = 27,
+  startDate,
+  title,
+  dateRange,
+  targetAvg,
+  currentAvg,
+  studentsOnTrack,
+  needAttention,
 }: UpcomingMilestoneCardProps) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const daysLeft = Math.ceil((new Date(`${startDate}T00:00:00`).getTime() - today.getTime()) / 86_400_000);
   const gap = Math.round((currentAvg - targetAvg) * 10) / 10;
   const isAhead = gap >= 0;
 
@@ -35,7 +39,7 @@ export default function UpcomingMilestoneCard({
             <Clock className="w-3.5 h-3.5 text-blue-400" /> Next Critical Gate
           </span>
           <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
-            {daysLeft} Days Remaining
+            {daysLeft > 0 ? `${daysLeft} Days Remaining` : 'Underway'}
           </span>
         </div>
 

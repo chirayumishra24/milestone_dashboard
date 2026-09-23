@@ -1,28 +1,42 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import {
   FileSpreadsheet,
-  Download,
-  PlusCircle,
-  RefreshCw,
+  FileText,
+  ChevronRight,
   Sparkles,
   LifeBuoy,
-  Check,
 } from 'lucide-react';
 
-export default function QuickActionsCard() {
-  const [downloaded, setDownloaded] = useState(false);
-  const [synced, setSynced] = useState(false);
+interface QuickActionsCardProps {
+  classId?: string;
+  /** Switches the dashboard to its intervention board tab */
+  onOpenInterventions?: () => void;
+}
 
-  const handleExport = () => {
-    setDownloaded(true);
-    setTimeout(() => setDownloaded(false), 2000);
-  };
+export default function QuickActionsCard({ classId = 'IX', onOpenInterventions }: QuickActionsCardProps) {
+  const actionClass =
+    'w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50 hover:bg-blue-50/50 transition-all text-left group';
 
-  const handleSync = () => {
-    setSynced(true);
-    setTimeout(() => setSynced(false), 2000);
-  };
+  const actions = [
+    {
+      key: 'roster',
+      href: `/classes/${classId}/students`,
+      icon: FileSpreadsheet,
+      iconClass: 'bg-emerald-100 text-emerald-700',
+      title: 'Export Class Roster',
+      subtitle: 'Open the directory and download CSV',
+    },
+    {
+      key: 'report',
+      href: `/classes/${classId}/reports`,
+      icon: FileText,
+      iconClass: 'bg-blue-100 text-blue-700',
+      title: `Class ${classId} Report Card`,
+      subtitle: 'Printable audit and honour roll',
+    },
+  ];
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between h-full">
@@ -32,79 +46,49 @@ export default function QuickActionsCard() {
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-800">Executive Quick Actions</h3>
-            <p className="text-[11px] text-slate-400">Ledger Management & Tools</p>
+            <h3 className="text-sm font-bold text-slate-800">Quick Actions</h3>
+            <p className="text-[11px] text-slate-400">Reports, exports & remediation</p>
           </div>
         </div>
 
         <div className="space-y-2.5">
-          <button
-            onClick={handleExport}
-            className="w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50 hover:bg-blue-50/50 transition-all text-left group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                <FileSpreadsheet className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
-                  Export Class IX Report Card
-                </h4>
-                <p className="text-[11px] text-slate-400">160 Students • All 6 Subjects</p>
-              </div>
-            </div>
-            {downloaded ? (
-              <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
-                <Check className="w-4 h-4" /> Downloaded
-              </span>
-            ) : (
-              <Download className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
-            )}
-          </button>
+          {actions.map((a) => {
+            const Icon = a.icon;
+            return (
+              <Link key={a.key} href={a.href} className={actionClass}>
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${a.iconClass}`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
+                      {a.title}
+                    </h4>
+                    <p className="text-[11px] text-slate-400">{a.subtitle}</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+              </Link>
+            );
+          })}
 
-          <button
-            onClick={handleSync}
-            className="w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50 hover:bg-blue-50/50 transition-all text-left group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
-                <RefreshCw className={`w-4 h-4 ${synced ? 'animate-spin text-blue-600' : ''}`} />
+          {onOpenInterventions && (
+            <button type="button" onClick={onOpenInterventions} className={actionClass}>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center">
+                  <LifeBuoy className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
+                    Intervention Board
+                  </h4>
+                  <p className="text-[11px] text-slate-400">Track remedial actions for this class</p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
-                  Re-sync Master FMS Sheet
-                </h4>
-                <p className="text-[11px] text-slate-400">Connect Google Sheets v4 API</p>
-              </div>
-            </div>
-            {synced ? (
-              <span className="text-xs font-bold text-blue-600 flex items-center gap-1">
-                <Check className="w-4 h-4" /> Synced
-              </span>
-            ) : (
-              <RefreshCw className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
-            )}
-          </button>
-
-          <button className="w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-purple-300 bg-slate-50 hover:bg-purple-50/50 transition-all text-left group">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center">
-                <LifeBuoy className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-slate-800 group-hover:text-purple-700 transition-colors">
-                  Trigger Remedial Notification
-                </h4>
-                <p className="text-[11px] text-slate-400">Notify 27 Subject Mentors</p>
-              </div>
-            </div>
-            <PlusCircle className="w-4 h-4 text-slate-400 group-hover:text-purple-600 transition-colors" />
-          </button>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+            </button>
+          )}
         </div>
-      </div>
-
-      <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 text-center">
-        Encrypted Ledger • CBSE Reg 2026-27
       </div>
     </div>
   );

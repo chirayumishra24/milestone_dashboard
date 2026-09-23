@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-import { Users, CheckCircle2, AlertTriangle, AlertOctagon, Award, TrendingUp, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Users, CheckCircle2, AlertTriangle, AlertOctagon, Award } from 'lucide-react';
+import { getStatusThresholds } from '@/utils/statusEngine';
 
 interface KpiCardsProps {
   totalStudents: number;
@@ -12,9 +13,9 @@ interface KpiCardsProps {
   criticalPct: number;
   targetAchievedCount: number;
   targetAchievedPct: number;
-  currentDate?: string;
   activeStatus?: 'ALL' | 'ACHIEVED' | 'ON_TRACK' | 'WATCH' | 'CRITICAL';
   onSelectStatus?: (status: 'ALL' | 'ACHIEVED' | 'ON_TRACK' | 'WATCH' | 'CRITICAL') => void;
+  classId?: string;
 }
 
 export default function KpiCards({
@@ -27,84 +28,76 @@ export default function KpiCards({
   criticalPct,
   targetAchievedCount,
   targetAchievedPct,
-  currentDate = '12 Oct 2026',
   activeStatus = 'ALL',
   onSelectStatus,
+  classId = 'IX',
 }: KpiCardsProps) {
+  const { onTrackCutoff, criticalCutoff } = getStatusThresholds();
+
   const cards = [
     {
-      title: 'Total Class IX Cohort',
+      title: `Total Class ${classId} Cohort`,
       value: totalStudents,
       subtext: 'Active Enrolled',
       pct: 100,
       icon: Users,
-      trend: '+100% CBSE Validated',
-      trendPositive: true,
       cardBg: 'from-blue-500/10 via-slate-50 to-white',
       borderColor: 'border-blue-100',
       iconBg: 'bg-blue-600 text-white',
       accentColor: 'bg-blue-600',
-      badge: 'Cohort IX',
+      badge: `Cohort ${classId}`,
       statusKey: 'ALL' as const,
     },
     {
       title: 'On-Track Students',
       value: onTrackCount,
-      subtext: `${onTrackPct}% of total cohort`,
+      subtext: `Scoring ${onTrackCutoff}%+, below target`,
       pct: onTrackPct,
       icon: CheckCircle2,
-      trend: '+4.2% vs PT-1',
-      trendPositive: true,
       cardBg: 'from-emerald-500/10 via-slate-50 to-white',
       borderColor: 'border-emerald-100',
       iconBg: 'bg-emerald-600 text-white',
       accentColor: 'bg-emerald-500',
-      badge: '70%–84%',
+      badge: `${onTrackCutoff}%+`,
       statusKey: 'ON_TRACK' as const,
     },
     {
       title: 'At Risk (Watchlist)',
       value: atRiskCount,
-      subtext: `${atRiskPct}% within ±5% of target`,
+      subtext: `Scoring ${criticalCutoff}–${onTrackCutoff - 1}%`,
       pct: atRiskPct,
       icon: AlertTriangle,
-      trend: '-1.8% improving',
-      trendPositive: true,
       cardBg: 'from-amber-500/10 via-slate-50 to-white',
       borderColor: 'border-amber-100',
       iconBg: 'bg-amber-500 text-white',
       accentColor: 'bg-amber-500',
-      badge: '60%–69%',
+      badge: `${criticalCutoff}–${onTrackCutoff - 1}%`,
       statusKey: 'WATCH' as const,
     },
     {
       title: 'Critical Attention',
       value: criticalCount,
-      subtext: `${criticalPct}% below 60% mark`,
+      subtext: `Scoring below ${criticalCutoff}%`,
       pct: criticalPct,
       icon: AlertOctagon,
-      trend: 'Requires Action Plan',
-      trendPositive: false,
       cardBg: 'from-rose-500/10 via-slate-50 to-white',
       borderColor: 'border-rose-100',
       iconBg: 'bg-rose-600 text-white',
       accentColor: 'bg-rose-500',
-      badge: '<60%',
+      badge: `<${criticalCutoff}%`,
       statusKey: 'CRITICAL' as const,
     },
     {
       title: 'Target Achieved',
       value: targetAchievedCount,
-      subtext: `${targetAchievedPct}% exceeded school target`,
+      subtext: 'At or above own target',
       pct: targetAchievedPct,
       icon: Award,
-      trend: 'Top Quartile',
-      trendPositive: true,
       cardBg: 'from-indigo-500/10 via-slate-50 to-white',
       borderColor: 'border-indigo-100',
       iconBg: 'bg-indigo-600 text-white',
       accentColor: 'bg-indigo-500',
-      badge: '85%+',
+      badge: 'Target',
       statusKey: 'ACHIEVED' as const,
     },
   ];
@@ -155,22 +148,8 @@ export default function KpiCards({
               />
             </div>
 
-            {/* Subtext and trend */}
-            <div className="mt-2.5 flex items-center justify-between text-[11px]">
-              <span className="text-slate-500 truncate">{c.subtext}</span>
-              <span
-                className={`font-semibold flex items-center gap-0.5 ${
-                  c.trendPositive ? 'text-emerald-600' : 'text-rose-600'
-                }`}
-              >
-                {c.trendPositive ? (
-                  <ArrowUpRight className="w-3 h-3" />
-                ) : (
-                  <ArrowDownRight className="w-3 h-3" />
-                )}
-                {c.trend}
-              </span>
-            </div>
+            {/* Subtext */}
+            <div className="mt-2.5 text-[11px] text-slate-500 truncate">{c.subtext}</div>
           </div>
         );
       })}

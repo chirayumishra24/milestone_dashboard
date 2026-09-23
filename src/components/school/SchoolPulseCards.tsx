@@ -11,17 +11,23 @@ import {
   ShieldCheck,
   Building2,
 } from 'lucide-react';
+import { getStatusThresholds } from '@/utils/statusEngine';
 
 interface SchoolPulseCardsProps {
   overview: SchoolOverviewMetrics;
 }
 
 export default function SchoolPulseCards({ overview }: SchoolPulseCardsProps) {
+  const sectionCount = overview.classes.reduce((sum, c) => sum + c.sections.length, 0);
+  const schoolGap = Math.round((overview.overallSchoolAverage - overview.schoolTargetAverage) * 10) / 10;
+  const healthBand =
+    overview.schoolHealthIndex >= 80 ? 'Strong' : overview.schoolHealthIndex >= 65 ? 'Moderate' : 'Needs attention';
+
   const cards = [
     {
       title: 'Total School Enrollment',
       value: overview.totalSchoolStudents,
-      subtext: 'Grades VI – XII • 21 Sections',
+      subtext: `Grades VI – XII • ${sectionCount} Sections`,
       pct: 100,
       icon: Building2,
       trend: 'CBSE Affiliated',
@@ -34,11 +40,11 @@ export default function SchoolPulseCards({ overview }: SchoolPulseCardsProps) {
     {
       title: 'School-Wide Average',
       value: `${overview.overallSchoolAverage}%`,
-      subtext: `Target: ${overview.schoolTargetAverage}% (-0.7% Gap)`,
+      subtext: `Target: ${overview.schoolTargetAverage}% (${schoolGap >= 0 ? '+' : ''}${schoolGap}% Gap)`,
       pct: Math.round((overview.overallSchoolAverage / overview.schoolTargetAverage) * 100),
       icon: Award,
-      trend: '+2.4% vs Last Year',
-      trendPositive: true,
+      trend: schoolGap >= 0 ? 'At or above target' : 'Below target',
+      trendPositive: schoolGap >= 0,
       cardBg: 'from-indigo-500/10 via-slate-50 to-white',
       borderColor: 'border-indigo-100',
       iconBg: 'bg-indigo-600 text-white',
@@ -50,7 +56,7 @@ export default function SchoolPulseCards({ overview }: SchoolPulseCardsProps) {
       subtext: `${overview.studentsOnTrackPct}% Meeting Grade Goals`,
       pct: overview.studentsOnTrackPct,
       icon: CheckCircle2,
-      trend: 'Above 70% Cutoff',
+      trend: `${getStatusThresholds().onTrackCutoff}%+ or at target`,
       trendPositive: true,
       cardBg: 'from-emerald-500/10 via-slate-50 to-white',
       borderColor: 'border-emerald-100',
@@ -76,8 +82,8 @@ export default function SchoolPulseCards({ overview }: SchoolPulseCardsProps) {
       subtext: 'Composite Academic Index',
       pct: overview.schoolHealthIndex,
       icon: ShieldCheck,
-      trend: 'Optimal Standard',
-      trendPositive: true,
+      trend: healthBand,
+      trendPositive: overview.schoolHealthIndex >= 65,
       cardBg: 'from-purple-500/10 via-slate-50 to-white',
       borderColor: 'border-purple-100',
       iconBg: 'bg-purple-600 text-white',

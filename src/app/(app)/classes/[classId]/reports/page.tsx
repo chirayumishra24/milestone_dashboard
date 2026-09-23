@@ -1,8 +1,11 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useApiData } from '@/hooks/useApiData';
+import { ErrorState, LoadingState, SampleDataBadge } from '@/components/ui/PageStatus';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
+import { downloadCsv } from '@/utils/csv';
 import {
   StudentRecord,
   ClassSummary,
@@ -24,40 +27,31 @@ import {
   Building,
   CheckCircle2,
 } from 'lucide-react';
+import { getStudentScore, getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
 
 export default function ClassReportPage() {
   const params = useParams();
   const classId = ((params?.classId as string) || 'IX').toUpperCase();
 
-  const [classInfo, setClassInfo] = useState<ClassSummary | null>(null);
-  const [students, setStudents] = useState<StudentRecord[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        setIsLoading(true);
-        const [info, studentList] = await Promise.all([
-          schoolMilestoneApi.getClassSummary(classId),
-          schoolMilestoneApi.getStudentsByClass(classId),
-        ]);
-        setClassInfo(info);
-        setStudents(studentList);
-      } catch (err) {
-        console.error('Failed loading class report:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadData();
-  }, [classId]);
+  const { data, isLoading, error, reload } = useApiData(
+    () =>
+      Promise.all([
+        schoolMilestoneApi.getClassSummary(classId),
+        schoolMilestoneApi.getStudentsByClass(classId),
+      ]),
+    [classId]
+  );
+  const [classInfo, students] = data ?? [null, []];
 
-  if (isLoading) {
+  if (error) return <ErrorState onRetry={reload} />;
+  if (isLoading) return <LoadingState message={`Generating Class ${classId} Report Card...`} />;
+  if (!classInfo) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Generating Class {classId} Report Card...</p>
-      </div>
+      <ErrorState
+        title={`Class ${classId} not found`}
+        message="There is no grade with this code. Choose a class from the sidebar."
+      />
     );
   }
 
@@ -84,32 +78,25 @@ export default function ClassReportPage() {
   );
   const topPerformers = sortedStudents.slice(0, 5);
   const criticalScholars = sortedStudents
-    .filter((s) => (s.currentPerformance?.overall?.value ?? 0) < 60)
+    .filter((s) => getStudentStatus(s).status === 'CRITICAL')
     .slice(0, 5);
 
   const handleExportCSV = () => {
     const headers = ['Roll No', 'Name', 'Section', 'Overall Score (%)', 'Target (%)', 'Status'];
     const rows = students.map((s) => {
-      const val = s.currentPerformance?.overall?.value ?? 0;
-      const tgt = s.schoolTarget?.overall?.value ?? 80;
-      const status = val >= tgt ? 'Target Achieved' : val >= 70 ? 'On Track' : val >= 60 ? 'Watch List' : 'Critical Support';
+      const val = getStudentScore(s);
+      const tgt = getStudentTarget(s);
+      const status = getStudentStatus(s).label;
       return [
         s.studentId,
-        `"${s.name}"`,
+        s.name,
         s.section || s.group || '-',
         val,
         tgt,
         status,
-      ].join(',');
+      ];
     });
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows].join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Class_${classId}_Academic_Report.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    downloadCsv(`Class_${classId}_Academic_Report.csv`, headers, rows);
   };
 
   return (
@@ -165,9 +152,12 @@ export default function ClassReportPage() {
 
         <div className="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-              Class {classId} Milestone Assessment Report
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+                Class {classId} Milestone Assessment Report
+              </h1>
+              {classInfo.dataSource === 'sample' && <SampleDataBadge />}
+            </div>
             <p className="text-sm text-slate-600 mt-1">
               Curricular Stage: <strong>{classInfo?.label || `Class ${classId}`}</strong> • Faculty Coordinator: <strong>{classInfo?.coordinator}</strong>
             </p>

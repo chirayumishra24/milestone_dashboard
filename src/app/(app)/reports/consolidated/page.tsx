@@ -1,7 +1,10 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useApiData } from '@/hooks/useApiData';
+import { ErrorState, LoadingState } from '@/components/ui/PageStatus';
 import Link from 'next/link';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
+import { downloadCsv } from '@/utils/csv';
 import { SchoolConsolidatedReport } from '@/types/academic';
 import {
   FileText,
@@ -18,55 +21,26 @@ import {
 } from 'lucide-react';
 
 export default function ConsolidatedReportPage() {
-  const [report, setReport] = useState<SchoolConsolidatedReport | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: report, isLoading, error, reload } = useApiData(() => schoolMilestoneApi.getSchoolConsolidatedReport(), []);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        setIsLoading(true);
-        const data = await schoolMilestoneApi.getSchoolConsolidatedReport();
-        setReport(data);
-      } catch (err) {
-        console.error('Failed loading report:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    load();
-  }, []);
-
-  if (isLoading || !report) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Generating Consolidated School Report...</p>
-      </div>
-    );
-  }
+  if (error) return <ErrorState onRetry={reload} />;
+  if (isLoading || !report) return <LoadingState message="Generating Consolidated School Report..." />;
 
   const exportCSV = () => {
     const headers = ['Grade', 'Coordinator', 'Students', 'Class Avg %', 'Target %', 'Gap %', 'On Track %', 'Critical Count', 'Status'];
     const rows = report.overview.classes.map((c) => [
-      `"${c.label}"`,
-      `"${c.coordinator}"`,
+      c.label,
+      c.coordinator,
       c.totalStudents,
       c.classAverage,
       c.targetAvg,
       c.gap,
       c.onTrackPct,
       c.criticalCount,
-      `"${c.milestoneStatus}"`,
+      c.milestoneStatus,
     ]);
 
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `School_Consolidated_Academic_Report_${report.academicSession.replace(/\s+/g, '_')}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    downloadCsv(`School_Consolidated_Academic_Report_${report.academicSession.replace(/\s+/g, '_')}.csv`, headers, rows);
   };
 
   return (

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'School Milestone — Class IX Academic Progress & FMS Portal',
+  title: 'Milestone — Central Public School Academic Progress & FMS Portal',
   description: 'Production-ready Academic Progress, Target Tracking, Milestone & Closed-Loop FMS Management System',
 };
 

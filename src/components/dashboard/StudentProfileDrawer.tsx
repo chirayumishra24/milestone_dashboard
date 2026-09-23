@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { StudentRecord } from '@/types/academic';
+import { extractNumericValue, getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
 import {
   X,
   User,
@@ -8,7 +9,6 @@ import {
   Award,
   AlertTriangle,
   TrendingUp,
-  PhoneCall,
   Calendar,
   BookOpen,
   CheckCircle2,
@@ -30,27 +30,39 @@ export default function StudentProfileDrawer({
   if (!isOpen || !student) return null;
 
   const currentOverall = student.currentPerformance?.overall?.value ?? 0;
-  const targetOverall = student.schoolTarget?.overall?.value ?? 80;
+  const targetOverall = getStudentTarget(student);
   const gap = Math.round((currentOverall - targetOverall) * 10) / 10;
   const isAhead = gap >= 0;
 
-  const subjects = [
-    { key: 'english', name: 'English', actual: student.currentPerformance?.subjects?.english?.value ?? 0, target: student.schoolTarget?.subjects?.english?.value ?? 80, color: 'bg-blue-600' },
-    { key: 'secondLanguage', name: 'Hindi / 2nd Lang', actual: student.currentPerformance?.subjects?.secondLanguage?.value ?? 0, target: student.schoolTarget?.subjects?.secondLanguage?.value ?? 80, color: 'bg-purple-600' },
-    { key: 'maths', name: 'Mathematics', actual: student.currentPerformance?.subjects?.maths?.value ?? 0, target: student.schoolTarget?.subjects?.maths?.value ?? 85, color: 'bg-emerald-600' },
-    { key: 'science', name: 'Science', actual: student.currentPerformance?.subjects?.science?.value ?? 0, target: student.schoolTarget?.subjects?.science?.value ?? 85, color: 'bg-amber-600' },
-    { key: 'socialScience', name: 'Social Science', actual: student.currentPerformance?.subjects?.socialScience?.value ?? 0, target: student.schoolTarget?.subjects?.socialScience?.value ?? 80, color: 'bg-rose-600' },
-    { key: 'it', name: 'Computer / IT', actual: student.currentPerformance?.subjects?.it?.value ?? 0, target: student.schoolTarget?.subjects?.it?.value ?? 85, color: 'bg-cyan-600' },
-  ];
+  const SUBJECT_DEFS = [
+    { key: 'english', name: 'English', color: 'bg-blue-600' },
+    { key: 'secondLanguage', name: 'Hindi / 2nd Lang', color: 'bg-purple-600' },
+    { key: 'maths', name: 'Mathematics', color: 'bg-emerald-600' },
+    { key: 'science', name: 'Science', color: 'bg-amber-600' },
+    { key: 'socialScience', name: 'Social Science', color: 'bg-rose-600' },
+    { key: 'it', name: 'Computer / IT', color: 'bg-cyan-600' },
+  ] as const;
 
-  const getStatusBadge = () => {
-    if (currentOverall >= 85) return { label: 'Target Achieved', bg: 'bg-emerald-100 text-emerald-800 border-emerald-300' };
-    if (currentOverall >= 70) return { label: 'On Track', bg: 'bg-blue-100 text-blue-800 border-blue-300' };
-    if (currentOverall >= 60) return { label: 'Watch / At Risk', bg: 'bg-amber-100 text-amber-800 border-amber-300' };
-    return { label: 'Critical Attention', bg: 'bg-rose-100 text-rose-800 border-rose-300' };
-  };
+  // Per-subject targets are rarely recorded, so subjects default to the student's overall target
+  const subjectScores = SUBJECT_DEFS.map((def) => ({
+    ...def,
+    score: extractNumericValue(student.currentPerformance?.subjects?.[def.key]),
+    target: extractNumericValue(student.schoolTarget?.subjects?.[def.key]) ?? targetOverall,
+  }));
+  const subjects = subjectScores.map((subj) => ({ ...subj, actual: subj.score ?? 0 }));
 
-  const status = getStatusBadge();
+  // Weakest assessed subject relative to its target, for the recommendation card
+  const weakestSubject = subjectScores
+    .filter((subj) => subj.score !== null)
+    .map((subj) => ({ ...subj, gap: Math.round(((subj.score as number) - subj.target) * 10) / 10 }))
+    .sort((a, b) => a.gap - b.gap)[0];
+
+  const examHistory = (student.examOrder || [])
+    .map((id) => student.exams?.[id])
+    .filter((exam): exam is NonNullable<typeof exam> => !!exam);
+
+  const evaluation = getStudentStatus(student);
+  const status = { label: evaluation.label, bg: `${evaluation.badgeBg} ${evaluation.badgeColor}` };
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden flex justify-end">
@@ -76,7 +88,7 @@ export default function StudentProfileDrawer({
                 </span>
               </div>
               <p className="text-xs text-slate-300 mt-0.5">
-                Class IX • Section <strong>{student.section || student.group}</strong> • Roll/ID: <span className="font-mono">{student.enrollmentNumber || student.studentId}</span>
+                Class {student.class} • Section <strong>{student.section || student.group}</strong> • Roll/ID: <span className="font-mono">{student.enrollmentNumber || student.studentId}</span>
               </p>
             </div>
           </div>
@@ -155,53 +167,58 @@ export default function StudentProfileDrawer({
             </div>
           </div>
 
-          {/* Multi-Exam Historical Trajectory */}
+          {/* Exam History */}
           <div>
             <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
-              Historical Progression (Class IX)
+              Exam History
             </h4>
-            <div className="grid grid-cols-4 gap-2 text-center text-xs">
-              <div className="p-2.5 rounded-lg border border-slate-200 bg-slate-50">
-                <span className="text-[10px] text-slate-400 font-semibold block">Baseline</span>
-                <span className="text-sm font-bold text-slate-700 block mt-1">68.5%</span>
-                <span className="text-[10px] text-slate-400">Apr 26</span>
+            {examHistory.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+                {examHistory.map((exam, idx) => {
+                  const isLatest = idx === examHistory.length - 1;
+                  const score = extractNumericValue(exam.overall);
+                  return (
+                    <div
+                      key={exam.id}
+                      className={`p-2.5 rounded-lg border ${
+                        isLatest ? 'border-blue-300 bg-blue-50/60 ring-1 ring-blue-200' : 'border-slate-200 bg-slate-50'
+                      }`}
+                    >
+                      <span className={`text-[11px] font-semibold block ${isLatest ? 'text-blue-700' : 'text-slate-500'}`}>
+                        {exam.label}
+                      </span>
+                      <span className={`text-sm font-bold block mt-1 ${isLatest ? 'text-blue-900' : 'text-slate-700'}`}>
+                        {score !== null ? `${score}%` : exam.overall.displayValue}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="p-2.5 rounded-lg border border-slate-200 bg-slate-50">
-                <span className="text-[10px] text-slate-400 font-semibold block">PT-1</span>
-                <span className="text-sm font-bold text-slate-700 block mt-1">72.0%</span>
-                <span className="text-[10px] text-slate-400">Jul 26</span>
-              </div>
-              <div className="p-2.5 rounded-lg border border-slate-200 bg-slate-50">
-                <span className="text-[10px] text-slate-400 font-semibold block">PT-2</span>
-                <span className="text-sm font-bold text-slate-700 block mt-1">75.5%</span>
-                <span className="text-[10px] text-slate-400">Aug 26</span>
-              </div>
-              <div className="p-2.5 rounded-lg border border-blue-300 bg-blue-50/60 ring-1 ring-blue-200">
-                <span className="text-[10px] text-blue-700 font-bold block">Mid Term</span>
-                <span className="text-sm font-black text-blue-900 block mt-1">{currentOverall}%</span>
-                <span className="text-[10px] text-blue-600 font-semibold">Latest</span>
-              </div>
-            </div>
+            ) : (
+              <p className="p-3 rounded-lg border border-slate-200 bg-slate-50 text-[11px] text-slate-500">
+                Only the latest assessment ({currentOverall}%) is on record. Earlier exam results have not been imported yet.
+              </p>
+            )}
           </div>
 
-          {/* 1-Click Remedial Intervention Action */}
-          <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-xs space-y-2">
-            <div className="flex items-center gap-2 text-amber-800 font-bold">
-              <AlertTriangle className="w-4 h-4 text-amber-600" />
-              <span>Recommended Pedagogical Intervention</span>
+          {/* Weakest-subject recommendation */}
+          {weakestSubject && weakestSubject.gap < 0 ? (
+            <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-xs space-y-2">
+              <div className="flex items-center gap-2 text-amber-800 font-bold">
+                <AlertTriangle className="w-4 h-4 text-amber-600" />
+                <span>Recommended Focus</span>
+              </div>
+              <p className="text-amber-800 text-[11px]">
+                {weakestSubject.name} is {Math.abs(weakestSubject.gap)} points below target ({weakestSubject.score}% against{' '}
+                {weakestSubject.target}%). Consider targeted remedial support in this subject before the next assessment.
+              </p>
             </div>
-            <p className="text-amber-700 text-[11px]">
-              Mathematics indicates a gap of -6.5%. Assigning 2 hours weekly remedial tutoring is recommended before the Annual Pre-Board.
-            </p>
-            <div className="pt-2 flex items-center gap-2">
-              <button className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg text-xs shadow-xs transition-colors">
-                Schedule Remedial Tutoring
-              </button>
-              <button className="px-3 py-1.5 bg-white border border-amber-300 text-amber-900 font-semibold rounded-lg text-xs hover:bg-amber-50 transition-colors flex items-center gap-1">
-                <PhoneCall className="w-3.5 h-3.5" /> Call Parent
-              </button>
+          ) : (
+            <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <span>Every assessed subject is at or above target.</span>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Footer Actions */}

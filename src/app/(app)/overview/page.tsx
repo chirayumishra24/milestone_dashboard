@@ -1,5 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useApiData } from '@/hooks/useApiData';
+import { ErrorState, LoadingState } from '@/components/ui/PageStatus';
 import Link from 'next/link';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
 import { SchoolOverviewMetrics } from '@/types/academic';
@@ -17,32 +19,10 @@ import {
 } from 'lucide-react';
 
 export default function SchoolOverviewPage() {
-  const [overview, setOverview] = useState<SchoolOverviewMetrics | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: overview, isLoading, error, reload } = useApiData(() => schoolMilestoneApi.getSchoolOverview(), []);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        setIsLoading(true);
-        const data = await schoolMilestoneApi.getSchoolOverview();
-        setOverview(data);
-      } catch (err) {
-        console.error('Failed loading school overview:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    load();
-  }, []);
-
-  if (isLoading || !overview) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Consolidating School-Wide Master Ledger...</p>
-      </div>
-    );
-  }
+  if (error) return <ErrorState onRetry={reload} />;
+  if (isLoading || !overview) return <LoadingState message="Consolidating School-Wide Master Ledger..." />;
 
   return (
     <div className="space-y-6">

@@ -11,6 +11,9 @@ interface TargetVsActualChartProps {
 export default function TargetVsActualChart({ students }: TargetVsActualChartProps) {
   const [hoveredSubject, setHoveredSubject] = useState<string | null>(null);
   const subjects: SubjectMetric[] = calculateSubjectSummary(students);
+  const assessed = subjects.filter((s) => s.average > 0);
+  const highest = assessed.reduce<SubjectMetric | null>((best, s) => (!best || s.average > best.average ? s : best), null);
+  const largestGap = assessed.reduce<SubjectMetric | null>((worst, s) => (!worst || s.gap < worst.gap ? s : worst), null);
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between">
@@ -112,8 +115,12 @@ export default function TargetVsActualChart({ students }: TargetVsActualChartPro
       </div>
 
       <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
-        <span>Highest: English (82.4%)</span>
-        <span className="text-rose-600 font-semibold">Priority Gap: Mathematics (-6.5%)</span>
+        <span>{highest ? `Highest: ${highest.name} (${highest.average}%)` : 'No subject scores yet'}</span>
+        {largestGap && largestGap.gap < 0 && (
+          <span className="text-rose-600 font-semibold">
+            Priority Gap: {largestGap.name} ({largestGap.gap}%)
+          </span>
+        )}
       </div>
     </div>
   );
