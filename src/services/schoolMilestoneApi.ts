@@ -199,6 +199,60 @@ class SchoolMilestoneApiService {
   getLastUpdated(): string {
     return this.cache.lastUpdated;
   }
+
+  /**
+   * Multi-Class: Returns whole school overview metrics
+   */
+  async getSchoolOverview(): Promise<import('@/types/academic').SchoolOverviewMetrics> {
+    const { SCHOOL_OVERVIEW_DATA } = await import('@/data/schoolClassesData');
+    return SCHOOL_OVERVIEW_DATA;
+  }
+
+  /**
+   * Multi-Class: Returns all class summaries (VI to XII)
+   */
+  async getAllClasses(): Promise<import('@/types/academic').ClassSummary[]> {
+    const { SCHOOL_CLASSES } = await import('@/data/schoolClassesData');
+    return SCHOOL_CLASSES;
+  }
+
+  /**
+   * Multi-Class: Returns specific class summary by code
+   */
+  async getClassSummary(classId: string): Promise<import('@/types/academic').ClassSummary | null> {
+    const classes = await this.getAllClasses();
+    return classes.find((c) => c.classId.toUpperCase() === classId.toUpperCase()) || null;
+  }
+
+  /**
+   * Multi-Class: Returns school consolidated audit report
+   */
+  async getSchoolConsolidatedReport(): Promise<import('@/types/academic').SchoolConsolidatedReport> {
+    const { SCHOOL_CONSOLIDATED_REPORT } = await import('@/data/schoolClassesData');
+    return SCHOOL_CONSOLIDATED_REPORT;
+  }
+
+  /**
+   * Multi-Class: Returns students for specific grade
+   */
+  async getStudentsByClass(classId: string): Promise<StudentRecord[]> {
+    // For Class IX, return the official 160 students dataset
+    if (classId.toUpperCase() === 'IX' || classId.toUpperCase() === '9') {
+      return this.getStudents();
+    }
+    // For other classes, return representative student roster
+    const baseStudents = await this.getStudents();
+    const classInfo = await this.getClassSummary(classId);
+    const sections = classInfo?.sections || ['A', 'B', 'C'];
+
+    return baseStudents.slice(0, 50).map((s, idx) => ({
+      ...s,
+      studentId: `STU-${classId}-${idx + 101}`,
+      class: 'IX' as any, // Type compatibility
+      section: sections[idx % sections.length] as any,
+      group: sections[idx % sections.length] as any,
+    }));
+  }
 }
 
 export const schoolMilestoneApi = new SchoolMilestoneApiService();

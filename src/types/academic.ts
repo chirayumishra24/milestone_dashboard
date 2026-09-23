@@ -143,3 +143,55 @@ export interface OverallHealthMetrics {
   interventionsClosedPct: number;
   fmsCompletionPct: number;
 }
+
+export interface ClassSummary {
+  classId: string;
+  code: string;
+  label: string;
+  totalStudents: number;
+  classAverage: number;
+  targetAvg: number;
+  gap: number;
+  onTrackCount: number;
+  onTrackPct: number;
+  atRiskCount: number;
+  atRiskPct: number;
+  criticalCount: number;
+  criticalPct: number;
+  sections: string[];
+  coordinator: string;
+  milestoneStatus: string;
+}
+
+export interface SchoolOverviewMetrics {
+  schoolName: string;
+  academicYear: string;
+  totalSchoolStudents: number;
+  overallSchoolAverage: number;
+  schoolTargetAverage: number;
+  targetAchievementPct: number;
+  studentsOnTrackCount: number;
+  studentsOnTrackPct: number;
+  totalCriticalCount: number;
+  totalCriticalPct: number;
+  schoolHealthIndex: number;
+  activeExamsCount: number;
+  classes: ClassSummary[];
+}
+
+export interface SchoolConsolidatedReport {
+  generatedDate: string;
+  academicSession: string;
+  schoolName: string;
+  affiliationNo: string;
+  executiveSummary: string;
+  overview: SchoolOverviewMetrics;
+  topPerformingClasses: string[];
+  priorityInterventionAreas: {
+    grade: string;
+    subject: string;
+    gap: number;
+    actionRequired: string;
+  }[];
+}
+
