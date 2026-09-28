@@ -12,7 +12,16 @@ import {
   Sparkles,
 } from 'lucide-react';
 import StudentProfileDrawer from './StudentProfileDrawer';
-import { getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
+import { getStatusThresholds, getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
+
+const SUBJECT_LABELS: Record<string, string> = {
+  english: 'English',
+  secondLanguage: '2nd Language',
+  maths: 'Mathematics',
+  science: 'Science',
+  socialScience: 'Social Science',
+  it: 'Computer / IT',
+};
 
 interface StudentsRequiringAttentionTableProps {
   students: StudentRecord[];
@@ -23,6 +32,7 @@ export default function StudentsRequiringAttentionTable({
   students,
   classId = 'IX',
 }: StudentsRequiringAttentionTableProps) {
+  const { criticalCutoff } = getStatusThresholds();
   const [filterMode, setFilterMode] = useState<'ALL_ATTENTION' | 'CRITICAL' | 'LARGE_GAP'>('ALL_ATTENTION');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
@@ -75,7 +85,7 @@ export default function StudentsRequiringAttentionTable({
                 </span>
               </div>
               <p className="text-xs text-slate-500">
-                Action triage for students below 70% or with target deficit
+                Students at risk or critical, or more than 5 points short of target
               </p>
             </div>
           </div>
@@ -100,7 +110,7 @@ export default function StudentsRequiringAttentionTable({
                   : 'text-slate-600 hover:text-rose-600'
               }`}
             >
-              Critical (&lt;60%)
+              Critical (&lt;{criticalCutoff}%)
             </button>
             <button
               onClick={() => setFilterMode('LARGE_GAP')}
@@ -152,12 +162,12 @@ export default function StudentsRequiringAttentionTable({
 
                 // Identify weakest subject
                 const subjEntries = Object.entries(s.currentPerformance?.subjects || {});
-                let weakestName = 'Maths';
+                let weakestName = '–';
                 let lowestScore = 100;
-                subjEntries.forEach(([k, v]: [string, any]) => {
+                subjEntries.forEach(([k, v]) => {
                   if (typeof v?.value === 'number' && v.value < lowestScore) {
                     lowestScore = v.value;
-                    weakestName = k;
+                    weakestName = SUBJECT_LABELS[k] ?? k;
                   }
                 });
 

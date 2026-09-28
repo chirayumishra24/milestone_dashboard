@@ -1,6 +1,8 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  // Dark mode is opt-in per page via a `.dark` ancestor (only the milestone dashboard uses it)
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,6 +11,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Milestone dashboard tokens (financial-data language: navy ink, cool canvas, hairlines)
+        ink: { DEFAULT: '#0d253d', secondary: '#273951', mute: '#64748d' },
+        canvas: { soft: '#f6f9fc' },
+        hairline: '#e3e8ee',
+        night: { DEFAULT: '#0a1426', card: '#0f1d35', raised: '#172a4b' },
         navy: {
           50: '#F0F4F8',
           100: '#D9E2EC',

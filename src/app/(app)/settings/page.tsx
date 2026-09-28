@@ -12,6 +12,7 @@ import {
   validateThresholds,
 } from '@/utils/statusEngine';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
+import RosterImportCard from '@/components/settings/RosterImportCard';
 
 const FIELDS: { key: keyof StatusThresholds; label: string; hint: string }[] = [
   {
@@ -162,6 +163,8 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
+
+      <RosterImportCard />
     </div>
   );
 }

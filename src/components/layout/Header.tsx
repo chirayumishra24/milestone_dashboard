@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search, Calendar, ChevronRight, GraduationCap, Building, Menu } from 'lucide-react';
+import { Search, Calendar, ChevronRight, GraduationCap, Building, Menu, FileSearch } from 'lucide-react';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
 import { StudentRecord } from '@/types/academic';
 import StudentProfileDrawer from '@/components/dashboard/StudentProfileDrawer';
@@ -17,6 +17,37 @@ const CLASS_PAGE_LABELS: Record<string, string> = {
   interventions: 'Interventions',
   workflow: 'Exam Workflow',
 };
+
+type SearchResult =
+  | { kind: 'page'; key: string; label: string; href: string }
+  | { kind: 'student'; key: string; student: StudentRecord };
+
+/** Every navigable page, searchable by words in its label (e.g. "vii directory") */
+const PAGE_DESTINATIONS: { label: string; href: string }[] = [
+  { label: 'Whole-School Cockpit', href: '/overview' },
+  { label: 'Consolidated Report Card', href: '/reports/consolidated' },
+  { label: 'Settings', href: '/settings' },
+  ...CLASSES.flatMap((cls) => [
+    { label: `Class ${cls} Dashboard`, href: `/classes/${cls}` },
+    ...Object.entries(CLASS_PAGE_LABELS).map(([page, label]) => ({
+      label: `Class ${cls} ${label}`,
+      href: `/classes/${cls}/${page}`,
+    })),
+  ]),
+];
+
+const GRADE_CODE = /^(vi|vii|viii|ix|x|xi|xii)$/;
+
+function matchPages(query: string): SearchResult[] {
+  const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+  return PAGE_DESTINATIONS.filter((d) => {
+    const words = d.label.toLowerCase().split(/\s+/);
+    // Grade codes must match a whole word so "vi" doesn't also match "vii"
+    return tokens.every((t) => words.some((w) => (GRADE_CODE.test(t) ? w === t : w.startsWith(t))));
+  })
+    .slice(0, 4)
+    .map((d): SearchResult => ({ kind: 'page', key: d.href, label: d.label, href: d.href }));
+}
 
 interface Crumb {
   label: string;
@@ -47,7 +78,7 @@ export default function Header({ onOpenNav }: HeaderProps) {
   const pathname = usePathname() || '';
   const [query, setQuery] = useState('');
   const [searchPool, setSearchPool] = useState<StudentRecord[]>([]);
-  const [searchResults, setSearchResults] = useState<StudentRecord[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [highlighted, setHighlighted] = useState(0);
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
@@ -70,15 +101,16 @@ export default function Header({ onOpenNav }: HeaderProps) {
     if (val.trim().length > 0) {
       const q = val.toLowerCase();
       const pool = await loadSearchPool();
-      const matches = pool
+      const students = pool
         .filter(
           (s) =>
             s.name.toLowerCase().includes(q) ||
             (s.enrollmentNumber || '').toLowerCase().includes(q) ||
             (s.section || s.group || '').toLowerCase().includes(q)
         )
-        .slice(0, 8);
-      setSearchResults(matches);
+        .slice(0, 6)
+        .map((student): SearchResult => ({ kind: 'student', key: student.studentId, student }));
+      setSearchResults([...matchPages(val), ...students]);
       setShowDropdown(true);
     } else {
       setSearchResults([]);
@@ -86,8 +118,9 @@ export default function Header({ onOpenNav }: HeaderProps) {
     }
   };
 
-  const handleSelectStudent = (s: StudentRecord) => {
-    setSelectedStudent(s);
+  const handleSelect = (result: SearchResult) => {
+    if (result.kind === 'page') router.push(result.href);
+    else setSelectedStudent(result.student);
     setShowDropdown(false);
     setQuery('');
   };
@@ -105,7 +138,7 @@ export default function Header({ onOpenNav }: HeaderProps) {
       setHighlighted((i) => (i - 1 + searchResults.length) % searchResults.length);
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      handleSelectStudent(searchResults[highlighted]);
+      handleSelect(searchResults[highlighted]);
     } else if (e.key === 'Escape') {
       setShowDropdown(false);
     }
@@ -185,7 +218,7 @@ export default function Header({ onOpenNav }: HeaderProps) {
               id="global-search-input"
               type="text"
               role="combobox"
-              aria-label="Search students across all grades"
+              aria-label="Search students and pages"
               aria-expanded={showDropdown}
               aria-controls={listboxId}
               aria-autocomplete="list"
@@ -196,7 +229,7 @@ export default function Header({ onOpenNav }: HeaderProps) {
               onFocus={() => {
                 if (query.trim().length > 0) setShowDropdown(true);
               }}
-              placeholder="Search students…"
+              placeholder="Search students or pages…"
               className="w-full pl-9 pr-12 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 placeholder:text-slate-500 text-slate-800"
             />
             <kbd className="hidden sm:block absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-500 bg-slate-100 px-1.5 rounded border border-slate-300">
@@ -206,39 +239,52 @@ export default function Header({ onOpenNav }: HeaderProps) {
             {showDropdown && (
               <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-[26rem] mt-2 bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden z-50">
                 <div className="px-3 py-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
-                  <span>{searchResults.length ? `${searchResults.length} matching students` : 'No matches'}</span>
+                  <span>{searchResults.length ? `${searchResults.length} results` : 'No matches'}</span>
                   <span className="hidden sm:inline">↑↓ to move • Enter to open • Esc to close</span>
                 </div>
-                <ul id={listboxId} role="listbox" aria-label="Matching students" className="max-h-80 overflow-y-auto divide-y divide-slate-100">
-                  {searchResults.map((s, idx) => (
+                <ul id={listboxId} role="listbox" aria-label="Search results" className="max-h-80 overflow-y-auto divide-y divide-slate-100">
+                  {searchResults.map((result, idx) => (
                     <li
-                      key={s.studentId}
+                      key={result.key}
                       id={`search-option-${idx}`}
                       role="option"
                       aria-selected={idx === highlighted}
                       onMouseEnter={() => setHighlighted(idx)}
                       onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => handleSelectStudent(s)}
+                      onClick={() => handleSelect(result)}
                       className={`px-4 py-2.5 flex items-center justify-between gap-3 cursor-pointer ${
                         idx === highlighted ? 'bg-blue-50' : ''
                       }`}
                     >
-                      <div className="min-w-0">
-                        <div className="text-sm font-bold text-slate-800 truncate">{s.name}</div>
-                        <div className="text-xs text-slate-500 font-mono truncate">
-                          Class {s.class} {s.section || s.group} • {s.enrollmentNumber || s.studentId}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-xs font-bold font-mono text-slate-700">
-                          {s.currentPerformance?.overall?.value ?? 0}%
-                        </span>
-                        <StatusBadge status={getStudentStatus(s).status} />
-                      </div>
+                      {result.kind === 'page' ? (
+                        <>
+                          <div className="flex items-center gap-2 min-w-0">
+                            <FileSearch className="w-4 h-4 text-blue-600 flex-shrink-0" aria-hidden="true" />
+                            <span className="text-sm font-semibold text-slate-800 truncate">{result.label}</span>
+                          </div>
+                          <span className="text-xs text-slate-500 flex-shrink-0">Go to page</span>
+                        </>
+                      ) : (
+                        <>
+                          <div className="min-w-0">
+                            <div className="text-sm font-bold text-slate-800 truncate">{result.student.name}</div>
+                            <div className="text-xs text-slate-500 font-mono truncate">
+                              Class {result.student.class} {result.student.section || result.student.group} •{' '}
+                              {result.student.enrollmentNumber || result.student.studentId}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span className="text-xs font-bold font-mono text-slate-700">
+                              {result.student.currentPerformance?.overall?.value ?? 0}%
+                            </span>
+                            <StatusBadge status={getStudentStatus(result.student).status} />
+                          </div>
+                        </>
+                      )}
                     </li>
                   ))}
                   {searchResults.length === 0 && (
-                    <li className="p-4 text-center text-sm text-slate-500">No students match “{query}”.</li>
+                    <li className="p-4 text-center text-sm text-slate-500">Nothing matches “{query}”.</li>
                   )}
                 </ul>
               </div>

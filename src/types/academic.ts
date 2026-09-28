@@ -117,6 +117,8 @@ export interface FMSWorkflowStep {
   date: string;
   owner: string;
   remarks: string;
+  /** ISO timestamp of the last edit made in the app */
+  updatedAt?: string;
 }
 
 export interface InterventionRecord {
@@ -137,6 +139,14 @@ export interface InterventionRecord {
   reviewDate: string;
   status: 'Pending' | 'In Progress' | 'Completed';
   remarks: string;
+  /** Change log, newest last. Seed records have none. */
+  history?: InterventionEvent[];
+}
+
+export interface InterventionEvent {
+  /** ISO timestamp */
+  at: string;
+  description: string;
 }
 
 export interface OverallHealthMetrics {
@@ -144,8 +154,10 @@ export interface OverallHealthMetrics {
   targetProgress: number;
   studentsOnTrackPct: number;
   targetAchievementPct: number;
-  interventionsClosedPct: number;
-  fmsCompletionPct: number;
+  /** null when the class has no interventions recorded */
+  interventionsClosedPct: number | null;
+  /** null when the class does not run the FMS exam workflow */
+  fmsCompletionPct: number | null;
 }
 
 export interface ClassSummary {

@@ -12,7 +12,7 @@ export default function OverallMilestoneHealth({
   metrics,
   classId = 'IX',
 }: OverallMilestoneHealthProps) {
-  const score = metrics.healthScore || 78;
+  const score = metrics.healthScore;
   const radius = 42;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (score / 100) * circumference;
@@ -25,6 +25,14 @@ export default function OverallMilestoneHealth({
   };
 
   const status = getHealthStatus(score);
+
+  // Components a class has no records for (no interventions, no FMS workflow) are omitted
+  const subMetrics = [
+    { label: 'Target Progress', value: metrics.targetProgress, color: 'bg-blue-600' },
+    { label: 'Students on Track', value: metrics.studentsOnTrackPct, color: 'bg-emerald-500' },
+    { label: 'Interventions Closed', value: metrics.interventionsClosedPct, color: 'bg-purple-500' },
+    { label: 'FMS Workflow Complete', value: metrics.fmsCompletionPct, color: 'bg-indigo-500' },
+  ].filter((m): m is { label: string; value: number; color: string } => m.value !== null);
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between h-full">
@@ -86,38 +94,17 @@ export default function OverallMilestoneHealth({
 
       {/* Sub-Metrics Breakdown */}
       <div className="space-y-2 pt-3 border-t border-slate-100 text-xs">
-        <div className="flex items-center justify-between text-slate-600">
-          <span className="text-slate-500">Target Progress</span>
-          <span className="font-bold text-slate-800">{metrics.targetProgress || 82}%</span>
-        </div>
-        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-          <div
-            className="h-full bg-blue-600 rounded-full"
-            style={{ width: `${metrics.targetProgress || 82}%` }}
-          />
-        </div>
-
-        <div className="flex items-center justify-between text-slate-600 pt-1">
-          <span className="text-slate-500">Students on Track</span>
-          <span className="font-bold text-slate-800">{metrics.studentsOnTrackPct || 74}%</span>
-        </div>
-        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-          <div
-            className="h-full bg-emerald-500 rounded-full"
-            style={{ width: `${metrics.studentsOnTrackPct || 74}%` }}
-          />
-        </div>
-
-        <div className="flex items-center justify-between text-slate-600 pt-1">
-          <span className="text-slate-500">FMS Governance Sync</span>
-          <span className="font-bold text-slate-800">{metrics.fmsCompletionPct || 86}%</span>
-        </div>
-        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-          <div
-            className="h-full bg-indigo-500 rounded-full"
-            style={{ width: `${metrics.fmsCompletionPct || 86}%` }}
-          />
-        </div>
+        {subMetrics.map((m, idx) => (
+          <div key={m.label} className={idx ? 'pt-1' : ''}>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-slate-500">{m.label}</span>
+              <span className="font-bold text-slate-800">{m.value}%</span>
+            </div>
+            <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+              <div className={`h-full rounded-full ${m.color}`} style={{ width: `${Math.min(m.value, 100)}%` }} />
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

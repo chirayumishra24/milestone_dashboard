@@ -1,6 +1,10 @@
 'use client';
 import { useEffect, useRef } from 'react';
 
+// Open dialogs, innermost last. Only the top dialog reacts to Escape/Tab, so a form opened
+// from a drawer closes on its own without also closing the drawer.
+const openDialogs: symbol[] = [];
+
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -16,6 +20,8 @@ export function useModalDialog<T extends HTMLElement>(isOpen: boolean, onClose: 
 
   useEffect(() => {
     if (!isOpen) return;
+    const token = Symbol('dialog');
+    openDialogs.push(token);
     const previouslyFocused = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -24,6 +30,7 @@ export function useModalDialog<T extends HTMLElement>(isOpen: boolean, onClose: 
     (panel?.querySelector<HTMLElement>(FOCUSABLE) ?? panel)?.focus();
 
     const onKeyDown = (e: KeyboardEvent) => {
+      if (openDialogs[openDialogs.length - 1] !== token) return;
       if (e.key === 'Escape') {
         e.stopPropagation();
         onCloseRef.current();
@@ -46,6 +53,7 @@ export function useModalDialog<T extends HTMLElement>(isOpen: boolean, onClose: 
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
+      openDialogs.splice(openDialogs.indexOf(token), 1);
       document.body.style.overflow = previousOverflow;
       previouslyFocused?.focus?.();
     };

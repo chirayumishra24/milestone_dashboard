@@ -32,7 +32,7 @@ export default function ClassWorkflowPage() {
       />
 
       {classInfo.hasMilestoneProgramme ? (
-        <FmsWorkflowProgressCard steps={steps} />
+        <FmsWorkflowProgressCard steps={steps} editable />
       ) : (
         <EmptyState
           icon={GitMerge}

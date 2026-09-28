@@ -53,8 +53,7 @@ export const INITIAL_MILESTONES: Milestone[] = [
     subtitle: 'Target',
     type: 'target',
     targetAvg: 82,
-    actualAvg: 79,
-    difference: -3,
+    // Exam has not been held yet (5–15 Nov 2026), so there is no actual average to report
     status: 'current',
     studentsOnTrackCount: 118,
     totalStudents: 160,

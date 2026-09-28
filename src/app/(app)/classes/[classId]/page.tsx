@@ -162,7 +162,7 @@ export default function ClassDashboardPage() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <FmsWorkflowProgressCard steps={fmsSteps} />
+              <FmsWorkflowProgressCard steps={fmsSteps} manageHref={`/classes/${classId}/workflow`} />
             </div>
             <QuickActionsCard classId={classId} />
           </div>

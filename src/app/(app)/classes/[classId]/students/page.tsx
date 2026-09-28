@@ -12,6 +12,7 @@ import { useToast } from '@/components/ui/Toast';
 import StudentProfileDrawer from '@/components/dashboard/StudentProfileDrawer';
 import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
 import { downloadCsv } from '@/utils/csv';
+import { ROSTER_CSV_HEADERS, rosterCsvRow } from '@/utils/rosterCsv';
 import {
   StatusFilterValue,
   extractNumericValue,
@@ -87,7 +88,7 @@ export default function ClassStudentsPage() {
           className="text-left"
         >
           <span className="block font-bold text-slate-900 group-hover:text-blue-700">{s.name}</span>
-          <span className="block text-xs text-slate-500 font-mono">{s.enrollmentNumber || s.studentId}</span>
+          <span className="block text-xs text-slate-500 font-mono whitespace-nowrap">{s.enrollmentNumber || s.studentId}</span>
         </button>
       ),
     },
@@ -170,18 +171,8 @@ export default function ClassStudentsPage() {
   if (!classInfo) return <ErrorState title={`Class ${classId} not found`} message="Choose a class from the sidebar." />;
 
   const exportCsv = () => {
-    const headers = ['Roll / Enrollment', 'Name', 'Section', ...SUBJECT_COLUMNS.map((c) => c.label), 'Score %', 'Target %', 'Gap', 'Status'];
-    const rows = filtered.map((s) => [
-      s.enrollmentNumber || s.studentId,
-      s.name,
-      `${classId} ${s.section || s.group}`,
-      ...SUBJECT_COLUMNS.map((c) => subjectScore(s, c.key) ?? ''),
-      getStudentScore(s),
-      getStudentTarget(s),
-      gapOf(s),
-      getStudentStatus(s).label,
-    ]);
-    downloadCsv(`Class_${classId}_Roster_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows);
+    const rows = filtered.map((s) => rosterCsvRow(s, classId));
+    downloadCsv(`Class_${classId}_Roster_${new Date().toISOString().slice(0, 10)}.csv`, ROSTER_CSV_HEADERS, rows);
     showToast(`Exported ${rows.length} students to CSV`);
   };
 

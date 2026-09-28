@@ -18,6 +18,7 @@ import {
   calculateOverallMilestoneHealth,
   calculateSubjectSummary,
 } from '@/utils/academicCalculations';
+import { toIsoDate } from '@/utils/dates';
 
 const STORAGE_KEYS = {
   STUDENTS: 'school_milestone_students_v1',
@@ -180,20 +181,62 @@ class SchoolMilestoneApiService {
   }
 
   /**
-   * Adds or updates an intervention
+   * Interventions recorded for one student, newest first
    */
-  async saveIntervention(intervention: InterventionRecord): Promise<InterventionRecord> {
+  async getInterventionsForStudent(studentId: string): Promise<InterventionRecord[]> {
     const list = await this.getInterventions();
-    const existingIndex = list.findIndex((i) => i.id === intervention.id);
+    return list.filter((i) => i.studentId === studentId);
+  }
+
+  /**
+   * Adds or updates an intervention. When `change` is given it is appended to the
+   * record's history with the current time.
+   */
+  async saveIntervention(intervention: InterventionRecord, change?: string): Promise<InterventionRecord> {
+    const list = await this.getInterventions();
+    const record: InterventionRecord = change
+      ? {
+          ...intervention,
+          history: [...(intervention.history ?? []), { at: new Date().toISOString(), description: change }],
+        }
+      : intervention;
+    const existingIndex = list.findIndex((i) => i.id === record.id);
 
     const updated =
-      existingIndex >= 0
-        ? list.map((item, idx) => (idx === existingIndex ? intervention : item))
-        : [intervention, ...list];
+      existingIndex >= 0 ? list.map((item, idx) => (idx === existingIndex ? record : item)) : [record, ...list];
 
     this.writeStored(STORAGE_KEYS.INTERVENTIONS, updated);
     this.cache.interventions = updated;
-    return intervention;
+    return record;
+  }
+
+  /**
+   * Creates a new intervention with a generated id and today's date
+   */
+  async createIntervention(
+    input: Omit<InterventionRecord, 'id' | 'createdDate' | 'history'>
+  ): Promise<InterventionRecord> {
+    const record: InterventionRecord = {
+      ...input,
+      id: `int-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`,
+      createdDate: toIsoDate(new Date()),
+    };
+    return this.saveIntervention(record, 'Created');
+  }
+
+  async deleteIntervention(id: string): Promise<void> {
+    const list = await this.getInterventions();
+    const updated = list.filter((i) => i.id !== id);
+    this.writeStored(STORAGE_KEYS.INTERVENTIONS, updated);
+    this.cache.interventions = updated;
+  }
+
+  /**
+   * Replaces the official Class IX roster (used by CSV import). Stored in this browser only.
+   */
+  async replaceStudents(students: StudentRecord[]): Promise<void> {
+    this.writeStored(STORAGE_KEYS.STUDENTS, students);
+    this.cache.students = students;
   }
 
   /**
@@ -201,8 +244,9 @@ class SchoolMilestoneApiService {
    */
   async updateFmsStep(stepId: string, status: FMSWorkflowStep['status'], remarks?: string): Promise<FMSWorkflowStep[]> {
     const steps = await this.getFmsWorkflow();
+    const updatedAt = new Date().toISOString();
     const updated = steps.map((s) =>
-      s.id === stepId ? { ...s, status, remarks: remarks !== undefined ? remarks : s.remarks } : s
+      s.id === stepId ? { ...s, status, remarks: remarks !== undefined ? remarks : s.remarks, updatedAt } : s
     );
 
     this.writeStored(STORAGE_KEYS.FMS_STEPS, updated);

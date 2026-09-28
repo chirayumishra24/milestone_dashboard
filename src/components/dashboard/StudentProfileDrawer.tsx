@@ -1,6 +1,10 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { StudentRecord } from '@/types/academic';
+import { useApiData } from '@/hooks/useApiData';
+import { schoolMilestoneApi } from '@/services/schoolMilestoneApi';
+import InterventionForm, { INTERVENTION_SUBJECTS } from '@/components/interventions/InterventionForm';
+import { displayDate } from '@/utils/dates';
 import { extractNumericValue, getStudentStatus, getStudentTarget } from '@/utils/statusEngine';
 import { useModalDialog } from '@/hooks/useModalDialog';
 import StatusBadge from '@/components/ui/StatusBadge';
@@ -14,6 +18,8 @@ import {
   Calendar,
   BookOpen,
   CheckCircle2,
+  LifeBuoy,
+  Plus,
   Share2,
   Printer,
 } from 'lucide-react';
@@ -29,7 +35,13 @@ export default function StudentProfileDrawer({
   isOpen,
   onClose,
 }: StudentProfileDrawerProps) {
+  const [formOpen, setFormOpen] = useState(false);
   const panelRef = useModalDialog<HTMLDivElement>(isOpen && !!student, onClose);
+  const studentId = student?.studentId;
+  const { data: studentInterventions, reload: reloadInterventions } = useApiData(
+    () => (studentId ? schoolMilestoneApi.getInterventionsForStudent(studentId) : Promise.resolve([])),
+    [studentId]
+  );
   if (!isOpen || !student) return null;
 
   const currentOverall = student.currentPerformance?.overall?.value ?? 0;
@@ -231,7 +243,67 @@ export default function StudentProfileDrawer({
               <span>Every assessed subject is at or above target.</span>
             </div>
           )}
+
+          {/* Interventions for this student */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                <LifeBuoy className="w-3.5 h-3.5 text-purple-600" aria-hidden="true" /> Interventions
+              </h4>
+              <button
+                type="button"
+                onClick={() => setFormOpen(true)}
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
+              >
+                <Plus className="w-3.5 h-3.5" aria-hidden="true" /> Create intervention
+              </button>
+            </div>
+            {studentInterventions && studentInterventions.length > 0 ? (
+              <ul className="space-y-2">
+                {studentInterventions.map((item) => (
+                  <li key={item.id} className="p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-bold text-slate-800">{item.subject}</span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full font-semibold border ${
+                          item.status === 'Completed'
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                            : item.status === 'In Progress'
+                            ? 'bg-blue-50 text-blue-800 border-blue-200'
+                            : 'bg-amber-50 text-amber-900 border-amber-200'
+                        }`}
+                      >
+                        {item.status}
+                      </span>
+                    </div>
+                    <p className="text-slate-600 mt-1">{item.reason}</p>
+                    <p className="text-slate-500 mt-1">
+                      {item.assignedTeacher} • Review {displayDate(item.reviewDate)}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="p-3 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-600">
+                No interventions recorded for this student.
+              </p>
+            )}
+          </div>
         </div>
+
+        <InterventionForm
+          isOpen={formOpen}
+          onClose={() => setFormOpen(false)}
+          onSaved={() => reloadInterventions()}
+          classId={student.class}
+          prefill={{
+            studentId: student.studentId,
+            subject:
+              weakestSubject && weakestSubject.gap < 0
+                ? INTERVENTION_SUBJECTS.find((s) => s.key === weakestSubject.key)?.label
+                : undefined,
+          }}
+        />
 
         {/* Footer Actions */}
         <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
