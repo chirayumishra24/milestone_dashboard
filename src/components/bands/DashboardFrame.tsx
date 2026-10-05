@@ -3,12 +3,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Download, GraduationCap, Maximize2, Minimize2, Moon, Printer, Sun } from 'lucide-react';
 import { downloadCsv, type CsvCell } from '@/utils/csv';
-import { tagClass } from './styles';
 
 interface DashboardFrameProps {
+  /** Product title in the top bar, e.g. "Class IX Results" */
+  title: string;
   schoolName: string;
+  /** Short provenance line shown on wide screens, e.g. "Sheet saved 22 Sept 2026" */
   updatedLabel: string;
-  isSample: boolean;
   fontClassName: string;
   /** Class-wise table offered by the CSV button; omitted when there is nothing to export */
   csv?: { filename: string; headers: string[]; rows: CsvCell[][] };
@@ -43,7 +44,7 @@ function GradientWash() {
  * Page frame: top bar, light/dark theme (follows the system until the viewer picks one),
  * CSV export, print, and a Present button that puts the dashboard into fullscreen for display screens.
  */
-export default function DashboardFrame({ schoolName, updatedLabel, isSample, fontClassName, csv, children }: DashboardFrameProps) {
+export default function DashboardFrame({ title, schoolName, updatedLabel, fontClassName, csv, children }: DashboardFrameProps) {
   const [dark, setDark] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const darkBeforePrint = useRef<boolean | null>(null);
@@ -132,7 +133,7 @@ export default function DashboardFrame({ schoolName, updatedLabel, isSample, fon
                 <GraduationCap className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
               </div>
               <div className="min-w-0 leading-tight">
-                <p className="truncate text-[15px] font-semibold tracking-tight">Milestone Results</p>
+                <p className="truncate text-[15px] font-semibold tracking-tight">{title}</p>
                 <p className="truncate text-xs text-ink-mute dark:text-slate-400" translate="no">
                   {schoolName}
                 </p>
@@ -140,14 +141,13 @@ export default function DashboardFrame({ schoolName, updatedLabel, isSample, fon
             </div>
 
             <div className="print-hide flex flex-shrink-0 items-center gap-1.5 sm:gap-2">
-              {isSample && <span className={`${tagClass} hidden md:inline-flex`}>Sample Data</span>}
-              <span className="hidden text-xs text-ink-mute xl:inline dark:text-slate-400">Updated {updatedLabel}</span>
+              <span className="hidden text-xs text-ink-mute xl:inline dark:text-slate-400">{updatedLabel}</span>
               {csv && (
                 <button
                   type="button"
                   onClick={() => downloadCsv(csv.filename, csv.headers, csv.rows)}
                   className={`${pillGhost} max-sm:w-9 max-sm:px-0`}
-                  aria-label="Download class-wise figures as CSV"
+                  aria-label="Download all figures as CSV"
                   title="Download CSV"
                 >
                   <Download className="h-4 w-4" aria-hidden="true" />
