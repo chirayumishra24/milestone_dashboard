@@ -2,8 +2,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { motion, useReducedMotion, type Variants } from 'motion/react';
-import { BandId, ClassBandCounts, EXAMS, ExamId, FineCounts, SCORE_BANDS, THRESHOLDS } from '@/data/milestoneBands';
-import { BandCounts, atOrAbove, bandFill, fineAtOrAbove, fineTotal, formatCount, formatPct, share, totalOf } from '@/utils/bands';
+import { BandId, ClassBandCounts, SCORE_BANDS } from '@/data/milestoneBands';
+import { BandCounts, atOrAbove, bandFill, formatCount, formatPct, share, totalOf } from '@/utils/bands';
 import { EASE_OUT } from './motion';
 import { tagClass } from './styles';
 
@@ -272,75 +272,56 @@ export function BandRowsTable({
 }
 
 /**
- * The sheet's "N and above" rows for every exam side by side: count and share of that exam's
- * students. Cumulative totals are computed from the single bands, not read from the sheet.
+ * One group's score bands as rows: students, share, and the running "at or above" total
+ * (that band plus every band above it, computed from the sheet's single bands).
  */
-export function ExamComparisonTable({
-  results,
-  highlight,
-}: {
-  results: Partial<Record<ExamId, FineCounts>>;
-  /** Exam column to emphasise (the one shown in the chart) */
-  highlight: ExamId;
-}) {
-  const exams = EXAMS.filter((exam) => results[exam.id]);
-  const colTint = (id: ExamId) => (id === highlight ? 'bg-[#eef4fd] dark:bg-white/[0.04]' : '');
-
+export function DetailedBreakdownTable({ counts, caption }: { counts: BandCounts; caption: string }) {
+  const total = totalOf(counts);
   return (
     <div className="-mx-1 overflow-x-auto px-1">
-      <table className="w-full min-w-[460px] table-fixed text-sm">
-        <caption className="sr-only">Students at or above each score in every exam, with the share of that exam&apos;s students</caption>
+      <table className="w-full min-w-[440px] table-fixed text-sm">
+        <caption className="sr-only">{caption}</caption>
         <colgroup>
-          <col className="w-[28%]" />
-          {exams.map((exam) => (
-            <col key={exam.id} />
-          ))}
+          <col className="w-[40%]" />
+          <col className="w-[18%]" />
+          <col className="w-[16%]" />
+          <col className="w-[26%]" />
         </colgroup>
         <thead className="border-b border-hairline dark:border-white/10">
           <tr>
-            <th scope="col" className={`${th} text-left`}>Score</th>
-            {exams.map((exam) => (
-              <th
-                key={exam.id}
-                scope="col"
-                className={`${th} rounded-t-lg text-right ${colTint(exam.id)} ${exam.id === highlight ? 'text-ink dark:text-slate-100' : ''}`}
-              >
-                {exam.shortLabel}
-              </th>
-            ))}
+            <th scope="col" className={`${th} text-left`}>Score band</th>
+            <th scope="col" className={`${th} text-right`}>Students</th>
+            <th scope="col" className={`${th} text-right`}>Share</th>
+            <th scope="col" className={`${th} text-right`}>At or above</th>
           </tr>
         </thead>
         <RevealBody className="divide-y divide-hairline/70 dark:divide-white/[0.05]">
-          {THRESHOLDS.map((threshold) => (
-            <motion.tr key={threshold.label} variants={rowVariants}>
-              <th scope="row" className={`${td} text-left text-[15px] font-medium ${strong}`}>
-                {threshold.label}
-              </th>
-              {exams.map((exam) => {
-                const fine = results[exam.id] as FineCounts;
-                const value = fineAtOrAbove(fine, threshold.through);
-                return (
-                  <td key={exam.id} className={`${td} text-right ${colTint(exam.id)}`}>
-                    <span className={`text-[15px] ${exam.id === highlight ? 'font-semibold' : 'font-medium'} ${strong}`}>
-                      {formatCount(value)}
-                    </span>
-                    <span className={`ml-1.5 text-xs ${mute}`}>{formatPct(value, fineTotal(fine))}</span>
-                  </td>
-                );
-              })}
-            </motion.tr>
-          ))}
+          {SCORE_BANDS.map((band) => {
+            const cumulative = atOrAbove(counts, band.id);
+            return (
+              <motion.tr key={band.id} variants={rowVariants}>
+                <th scope="row" className={`${td} text-left text-[15px] font-medium ${strong}`}>
+                  <span className="flex items-center gap-2.5">
+                    <Swatch bandId={band.id} size="h-3 w-3" />
+                    {band.description}
+                  </span>
+                </th>
+                <td className={`${td} text-right text-[15px] font-semibold ${strong}`}>{formatCount(counts[band.id])}</td>
+                <td className={`${td} text-right text-[13px] ${mute}`}>{formatPct(counts[band.id], total)}</td>
+                <td className={`${td} text-right`}>
+                  <span className={`text-[15px] font-semibold ${strong}`}>{formatCount(cumulative)}</span>
+                  <span className={`ml-1.5 text-xs ${mute}`}>({formatPct(cumulative, total)})</span>
+                </td>
+              </motion.tr>
+            );
+          })}
         </RevealBody>
-        <tfoot className="border-t border-[#c9d3df] dark:border-white/15">
+        <tfoot className="border-t border-[#c9d3df] bg-canvas-soft/70 dark:border-white/15 dark:bg-white/[0.03]">
           <tr>
-            <th scope="row" className={`${td} text-left text-[15px] font-semibold ${strong}`}>
-              Students assessed
-            </th>
-            {exams.map((exam) => (
-              <td key={exam.id} className={`${td} rounded-b-lg text-right text-[15px] font-semibold ${strong} ${colTint(exam.id)}`}>
-                {formatCount(fineTotal(results[exam.id] as FineCounts))}
-              </td>
-            ))}
+            <th scope="row" className={`${td} text-left text-[15px] font-semibold ${strong}`}>Total</th>
+            <td className={`${td} text-right text-[15px] font-semibold ${strong}`}>{formatCount(total)}</td>
+            <td className={`${td} text-right text-[13px] ${mute}`}>100%</td>
+            <td className={td} />
           </tr>
         </tfoot>
       </table>

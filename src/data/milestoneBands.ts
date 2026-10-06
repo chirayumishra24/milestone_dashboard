@@ -36,9 +36,9 @@ const INK_ON_LIGHT = '#0b1b33';
 /** Highest band first. Order drives every chart bar and table column. */
 export const SCORE_BANDS: ScoreBand[] = [
   { id: 'b95', label: '95+', description: '95% and above', fill: { light: '#0d366b', dark: '#9ec5f4' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
-  { id: 'b90', label: '90-94', description: '90% to 94%', fill: { light: '#1c5cab', dark: '#6da7ec' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
-  { id: 'b80', label: '80-89', description: '80% to 89%', fill: { light: '#2a78d6', dark: '#3987e5' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
-  { id: 'b70', label: '70-79', description: '70% to 79%', fill: { light: '#5598e7', dark: '#256abf' }, ink: { light: INK_ON_LIGHT, dark: INK_ON_DARK } },
+  { id: 'b90', label: '90-94', description: '90% to 94.9%', fill: { light: '#1c5cab', dark: '#6da7ec' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
+  { id: 'b80', label: '80-89', description: '80% to 89.9%', fill: { light: '#2a78d6', dark: '#3987e5' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
+  { id: 'b70', label: '70-79', description: '70% to 79.9%', fill: { light: '#5598e7', dark: '#256abf' }, ink: { light: INK_ON_LIGHT, dark: INK_ON_DARK } },
   { id: 'below70', label: '<70', description: 'Below 70%', fill: { light: '#86b6ef', dark: '#184f95' }, ink: { light: INK_ON_LIGHT, dark: INK_ON_DARK } },
 ];
 
@@ -75,10 +75,10 @@ export const THRESHOLDS: { label: string; through: FineBandId }[] = [
 /** Exams in the sheet, oldest first. The sheet column each one comes from is noted. */
 export type ExamId = 'viiiHalfYearly' | 'preMid' | 'midTerm';
 
-export const EXAMS: { id: ExamId; label: string; shortLabel: string; sheetColumn: string }[] = [
-  { id: 'viiiHalfYearly', label: 'Class VIII Half-Yearly', shortLabel: 'VIII Half-Yearly', sheetColumn: 'B' },
-  { id: 'preMid', label: 'Pre-Mid Term', shortLabel: 'Pre-Mid Term', sheetColumn: 'V' },
-  { id: 'midTerm', label: 'Mid Term (Half-Yearly)', shortLabel: 'Mid Term', sheetColumn: 'AA' },
+export const EXAMS: { id: ExamId; label: string; name: string; shortLabel: string; sheetColumn: string }[] = [
+  { id: 'viiiHalfYearly', label: 'Class VIII Half-Yearly Examination', name: 'Class VIII Half-Yearly', shortLabel: 'VIII Half-Yearly', sheetColumn: 'B' },
+  { id: 'preMid', label: 'Pre-Mid Term Examination', name: 'Pre-Mid Term', shortLabel: 'Pre-Mid', sheetColumn: 'V' },
+  { id: 'midTerm', label: 'Mid Term Examination', name: 'Mid Term', shortLabel: 'Mid Term', sheetColumn: 'AA' },
 ];
 
 /** One block of the sheet (the whole class, or one subject) and the exams it has figures for */
