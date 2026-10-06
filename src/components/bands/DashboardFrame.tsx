@@ -137,7 +137,10 @@ export default function DashboardFrame({ title, subtitle, shortSubtitle, fontCla
           <div className="mx-auto max-w-[1320px] space-y-2 px-4 py-3 sm:px-6 lg:px-10">
             <div className="flex items-center justify-between gap-3 sm:gap-4">
               <div className="flex min-w-0 flex-1 items-center gap-3">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-maroon text-white shadow-[0_4px_12px_rgba(150,3,48,0.25)] dark:bg-[#E895A9]/15 dark:text-[#F5C9D3] dark:shadow-none">
+                <div
+                  style={{ backgroundColor: '#960330', color: '#ffffff' }}
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[#960330] text-white shadow-[0_4px_12px_rgba(150,3,48,0.3)] dark:bg-[#960330] dark:text-white"
+                >
                   <GraduationCap className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
                 </div>
                 <div className="min-w-0 leading-tight">
