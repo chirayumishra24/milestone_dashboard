@@ -2,8 +2,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { AlertTriangle, ArrowDownRight, ArrowUpRight, Award, BookOpen, Calendar, Info, Layers, TrendingUp, Users } from 'lucide-react';
-import { EXAMS, ExamId, type ActualDataset, type ActualGroup, type FineCounts } from '@/data/milestoneBands';
-import { BandCounts, atOrAbove, examsWithData, formatCount, formatPct, leaderBy90, ninetyShare, subjectRows, toChartCounts, totalOf } from '@/utils/bands';
+import { EXAMS, ExamId, SCORE_BANDS, type ActualDataset, type ActualGroup, type FineCounts } from '@/data/milestoneBands';
+import { BandCounts, atOrAbove, examsWithData, formatCount, formatPct, leaderBy90, ninetyShare, toChartCounts, totalOf } from '@/utils/bands';
 import type { CsvCell } from '@/utils/csv';
 import DashboardFrame from './DashboardFrame';
 import BandThemeStyle from './BandThemeStyle';
@@ -16,6 +16,34 @@ import { cardClass, cardSubtitleClass, cardTitleClass, raisedCardClass, textMute
 const round1 = (value: number) => Math.round(value * 10) / 10;
 const examById = (id: ExamId) => EXAMS.find((exam) => exam.id === id)!;
 const countsFor = (group: ActualGroup, exam: ExamId): BandCounts => toChartCounts(group.results[exam] as FineCounts);
+
+/** What the toggle can show: one exam from the sheet, or "Overall" */
+type ViewId = 'overall' | ExamId;
+
+/**
+ * "Overall", as on the school website: each band's student count averaged over the two Class IX
+ * exams and rounded, so its "students assessed" is an average, not a headcount.
+ */
+const OVERALL_EXAMS: ExamId[] = ['preMid', 'midTerm'];
+const OVERALL = {
+  label: 'Overall Performance',
+  name: 'Overall',
+  shortLabel: 'Overall',
+  title: 'Average of Pre-Mid Term and Mid Term',
+};
+
+function overallCounts(group: ActualGroup): BandCounts | undefined {
+  if (!OVERALL_EXAMS.every((exam) => group.results[exam])) return undefined;
+  const parts = OVERALL_EXAMS.map((exam) => countsFor(group, exam));
+  return Object.fromEntries(
+    SCORE_BANDS.map((band) => [band.id, Math.round(parts.reduce((sum, part) => sum + part[band.id], 0) / parts.length)]),
+  ) as BandCounts;
+}
+
+const viewCounts = (group: ActualGroup, view: ViewId): BandCounts | undefined =>
+  view === 'overall' ? overallCounts(group) : group.results[view] ? countsFor(group, view) : undefined;
+
+const viewInfo = (view: ViewId) => (view === 'overall' ? OVERALL : { ...examById(view), title: examById(view).label });
 
 /** Keeps a choice in the URL (?exam=preMid, ?subject=maths) so a view can be shared */
 function useUrlParam<T extends string>(param: string, options: readonly T[], fallback: T): [T, (value: T) => void] {
@@ -222,32 +250,45 @@ export default function Class9Dashboard({
   csv: { filename: string; headers: string[]; rows: CsvCell[][] };
 }) {
   const whole = data.wholeClass;
-  // Newest first in the toggle, as on the school website
-  const wholeExams = [...examsWithData(whole)].reverse();
-  const [exam, setExam] = useUrlParam<ExamId>('exam', wholeExams.map((e) => e.id), wholeExams[0].id);
+  // Overall first, then the exams newest first, as on the school website
+  const examViews: ViewId[] = [...examsWithData(whole)].reverse().map((exam) => exam.id);
+  const views: ViewId[] = overallCounts(whole) ? ['overall', ...examViews] : examViews;
+  const [view, setView] = useUrlParam<ViewId>('exam', views, views[0]);
 
-  const counts = countsFor(whole, exam);
+  const counts = viewCounts(whole, view) as BandCounts;
   const total = totalOf(counts);
   const classShare = ninetyShare(counts);
-  const examInfo = examById(exam);
-  const isClassIX = exam !== 'viiiHalfYearly';
-  // The exam just before this one in the sheet that the class has figures for
+  const examInfo = viewInfo(view);
+  const isOverall = view === 'overall';
+  const isClassIX = view !== 'viiiHalfYearly';
+  // The exam just before this one in the sheet that the class has figures for (none for Overall)
   const chronological = examsWithData(whole);
-  const previous = chronological[chronological.findIndex((e) => e.id === exam) - 1];
+  const previous = isOverall ? undefined : chronological[chronological.findIndex((exam) => exam.id === view) - 1];
 
-  // Subjects: follow the header exam when the sheet has subject figures for it, otherwise the latest exam that has them
-  const subjectExams = EXAMS.filter((e) => data.subjects.some((s) => s.results[e.id]));
-  const subjectExam = subjectExams.some((e) => e.id === exam) ? exam : subjectExams[subjectExams.length - 1]?.id;
-  const rows = useMemo(() => (subjectExam ? subjectRows(data.subjects, subjectExam) : []), [data.subjects, subjectExam]);
+  // Subjects: follow the header choice when the sheet has subject figures for it, otherwise the latest exam that has them
+  const subjectViews = (['overall', ...EXAMS.map((exam) => exam.id)] as ViewId[]).filter((v) =>
+    data.subjects.some((subject) => viewCounts(subject, v)),
+  );
+  const subjectView: ViewId | undefined = subjectViews.includes(view)
+    ? view
+    : [...EXAMS].reverse().map((exam) => exam.id).find((id) => subjectViews.includes(id));
+  const rows = useMemo(
+    () =>
+      data.subjects.flatMap((subject) => {
+        const subjectCounts = subjectView ? viewCounts(subject, subjectView) : undefined;
+        return subjectCounts ? [{ classId: subject.id, label: subject.label, counts: subjectCounts }] : [];
+      }),
+    [data.subjects, subjectView],
+  );
   const [subjectId, setSubjectId] = useUrlParam<string>('subject', data.subjects.map((s) => s.id), data.subjects[0]?.id ?? '');
   const subjectRow = rows.find((row) => row.classId === subjectId) ?? rows[0];
   const leader = leaderBy90(rows);
 
   const examToggle = (placement: 'bar' | 'row') => (
     <PillToggle
-      options={wholeExams.map((e) => ({ id: e.id, label: e.shortLabel, title: e.label }))}
-      value={exam}
-      onChange={setExam}
+      options={views.map((v) => ({ id: v, label: viewInfo(v).shortLabel, title: viewInfo(v).title }))}
+      value={view}
+      onChange={setView}
       label="Select examination"
       layoutId={`exam-toggle-${placement}`}
     />
@@ -273,7 +314,8 @@ export default function Class9Dashboard({
             <p className="inline-flex items-center gap-2 rounded-full border border-hairline/80 bg-white/70 px-3 py-1 text-sm font-medium backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
               <Calendar className="h-3.5 w-3.5 text-[#1c5cab] dark:text-blue-200" aria-hidden="true" />
               <span className={textSecondary}>
-                {examInfo.label} · {isClassIX ? `AY ${data.academicYear}` : 'this cohort in Class VIII'}
+                {isOverall ? 'Overall · average of Pre-Mid Term & Mid Term' : examInfo.label} ·{' '}
+                {isClassIX ? `AY ${data.academicYear}` : 'this cohort in Class VIII'}
               </span>
             </p>
             <p className={`mt-6 text-[72px] font-light leading-[0.95] tracking-[-0.045em] tabular-nums sm:text-[100px] ${textPrimary}`}>
@@ -284,7 +326,7 @@ export default function Class9Dashboard({
             </p>
             <p className={`mt-3 max-w-[48ch] text-pretty text-[15px] leading-relaxed ${textSecondary}`}>
               {formatCount(atOrAbove(counts, 'b90'))} of {formatCount(total)} students {isClassIX ? 'in Class IX' : 'in this cohort'} achieved
-              90% or higher in the {examInfo.label}.
+              90% or higher {isOverall ? 'on average across both exams' : `in the ${examInfo.label}`}.
             </p>
             {previous && (
               <Reveal delay={0.3} className="mt-4">
@@ -297,7 +339,7 @@ export default function Class9Dashboard({
             <HeroStat
               label="Students assessed"
               value={total}
-              detail={isClassIX ? 'Across all sections' : 'In Class VIII'}
+              detail={isOverall ? 'Average of both exams' : isClassIX ? 'Across all sections' : 'In Class VIII'}
               delay={0.1}
               icon={<Users className="h-3.5 w-3.5" />}
             />
@@ -338,7 +380,7 @@ export default function Class9Dashboard({
           <BandPanel
             counts={counts}
             groupLabel={examInfo.label}
-            chartKey={`class-${exam}`}
+            chartKey={`class-${view}`}
             caption={`Class IX students in each score band, ${examInfo.label}`}
           />
         </section>
@@ -352,16 +394,17 @@ export default function Class9Dashboard({
             icon={<BookOpen className="h-4 w-4" aria-hidden="true" />}
           />
 
-          {!subjectExam || !subjectRow ? (
+          {!subjectView || !subjectRow ? (
             <div className={`${cardClass} p-8 text-center text-sm ${textSecondary}`}>The sheet has no subject-wise figures yet.</div>
           ) : (
             <div className="space-y-5">
-              {subjectExam !== exam && (
+              {subjectView !== view && (
                 <Reveal className="flex items-start gap-3 rounded-xl border border-[#c9dbf5] bg-[#eef4fd] p-4 text-sm text-ink-secondary dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-slate-200">
                   <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#1c5cab] dark:text-blue-200" aria-hidden="true" />
                   <p className="text-pretty">
-                    <span className="font-semibold text-ink dark:text-slate-50">Subject figures below are from the {examById(subjectExam).label}.</span>{' '}
-                    The sheet does not have subject-wise figures for the {examInfo.label} yet. This section switches over once they are added.
+                    <span className="font-semibold text-ink dark:text-slate-50">Subject figures below are from the {viewInfo(subjectView).label}.</span>{' '}
+                    The sheet does not have subject-wise figures for {isOverall ? 'the Class IX exams' : `the ${examInfo.label}`} yet. This
+                    section switches over once they are added.
                   </p>
                 </Reveal>
               )}
@@ -379,21 +422,21 @@ export default function Class9Dashboard({
 
               <BandPanel
                 counts={subjectRow.counts}
-                groupLabel={`${subjectRow.label}, ${examById(subjectExam).name}`}
-                chartKey={`subject-${subjectRow.classId}-${subjectExam}`}
-                caption={`${subjectRow.label} students in each score band, ${examById(subjectExam).label}`}
+                groupLabel={`${subjectRow.label}, ${viewInfo(subjectView).name}`}
+                chartKey={`subject-${subjectRow.classId}-${subjectView}`}
+                caption={`${subjectRow.label} students in each score band, ${viewInfo(subjectView).label}`}
               />
 
               <Reveal className={`${cardClass} p-4 sm:p-6`}>
                 <div className="mb-3 px-1 sm:px-0">
                   <h3 className={cardTitleClass}>All Subjects</h3>
-                  <p className={cardSubtitleClass}>{examById(subjectExam).label}. Select a column heading to rank subjects.</p>
+                  <p className={cardSubtitleClass}>{viewInfo(subjectView).label}. Select a column heading to rank subjects.</p>
                 </div>
                 <BandRowsTable
                   rows={rows}
                   rowHeader="Subject"
                   leaderId={leader?.classId}
-                  caption={`Students in each score band by subject, ${examById(subjectExam).label}`}
+                  caption={`Students in each score band by subject, ${viewInfo(subjectView).label}`}
                 />
               </Reveal>
             </div>
