@@ -91,7 +91,8 @@ export interface ActualGroup {
 }
 
 export interface ActualDataset {
-  source: { workbook: string; tab: string; sheetSavedOn: string | null };
+  /** Where the figures were read from; url is set when read from the live Google Sheet */
+  source: { workbook: string; tab: string; sheetSavedOn: string | null; url?: string };
   school: string;
   academicYear: string;
   wholeClass: ActualGroup;
