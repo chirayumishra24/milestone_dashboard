@@ -11,11 +11,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Milestone dashboard tokens (financial-data language: navy ink, cool canvas, hairlines)
-        ink: { DEFAULT: '#0d253d', secondary: '#273951', mute: '#64748d' },
-        canvas: { soft: '#f6f9fc' },
-        hairline: '#e3e8ee',
-        night: { DEFAULT: '#0a1426', card: '#0f1d35', raised: '#172a4b' },
+        // Milestone dashboard tokens: the CCWS website palette (warm ink and canvas, maroon brand).
+        // ink.mute is deepened from the site's #8C7F77 so 12-13px labels pass WCAG AA (5.5:1 on white).
+        ink: { DEFAULT: '#2A211C', secondary: '#594D46', mute: '#736760' },
+        canvas: { soft: '#FAF6F0' },
+        hairline: '#E8DDD0',
+        night: { DEFAULT: '#14100E', card: '#1C1715', raised: '#26201D' },
+        maroon: { DEFAULT: '#960330', dark: '#7A0227' },
         navy: {
           50: '#F0F4F8',
           100: '#D9E2EC',

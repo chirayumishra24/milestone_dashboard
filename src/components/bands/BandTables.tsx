@@ -7,10 +7,10 @@ import { BandCounts, atOrAbove, bandFill, formatCount, formatPct, share, totalOf
 import { EASE_OUT } from './motion';
 import { tagClass } from './styles';
 
-const th = 'px-3 pb-3 pt-1 text-xs font-medium text-ink-mute whitespace-nowrap dark:text-slate-400';
+const th = 'px-3 pb-3 pt-1 text-xs font-medium text-ink-mute whitespace-nowrap dark:text-stone-400';
 const td = 'px-3 py-3.5 tabular-nums';
-const strong = 'text-ink dark:text-slate-50';
-const mute = 'text-ink-mute dark:text-slate-400';
+const strong = 'text-ink dark:text-stone-50';
+const mute = 'text-ink-mute dark:text-stone-400';
 
 const rowsVariants: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } } };
 const rowVariants: Variants = {
@@ -56,6 +56,10 @@ interface SortState {
 }
 
 const DEFAULT_SORT: SortState = { key: 'order', dir: 'asc' };
+/** First column stays put while the band columns scroll sideways on narrow screens */
+const stickyCol =
+  'sticky left-0 z-[1] bg-white shadow-[6px_0_8px_-6px_rgba(42,33,28,0.12)] group-hover:bg-canvas-soft lg:static lg:shadow-none dark:bg-night-card dark:group-hover:bg-[#231D1A]';
+
 const SORT_KEYS: SortKey[] = ['order', 'students', 'ninety', ...SCORE_BANDS.map((band) => band.id)];
 
 const sortLabel = (key: SortKey) =>
@@ -137,8 +141,8 @@ function SortHeader({
         type="button"
         onClick={() => onSort(sortKey)}
         title={title ? `${title}. Sort by ${sortLabel(sortKey)}` : `Sort by ${sortLabel(sortKey)}`}
-        className={`group -mx-1 inline-flex touch-manipulation items-center gap-1 rounded px-1 py-0.5 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:hover:text-slate-100 ${
-          active ? 'text-ink dark:text-slate-100' : ''
+        className={`group -mx-1 inline-flex touch-manipulation items-center gap-1 rounded px-1 py-0.5 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-maroon dark:hover:text-stone-100 ${
+          active ? 'text-ink dark:text-stone-100' : ''
         }`}
       >
         {/* Icon before the label on right-aligned columns so labels line up with the numbers below */}
@@ -185,10 +189,13 @@ export function BandRowsTable({
     const ninetyPlus = atOrAbove(counts, 'b90');
     return (
       <>
-        <th scope="row" className={`${td} text-left text-[15px] ${isTotal ? 'font-semibold' : 'font-medium'} ${strong}`}>
+        <th
+          scope="row"
+          className={`${td} ${stickyCol} whitespace-nowrap text-left text-[15px] ${isTotal ? 'font-semibold' : 'font-medium'} ${strong}`}
+        >
           {label}
         </th>
-        <td className={`${td} text-right text-[15px] ${isTotal ? `font-semibold ${strong}` : 'text-ink-secondary dark:text-slate-300'}`}>
+        <td className={`${td} text-right text-[15px] ${isTotal ? `font-semibold ${strong}` : 'text-ink-secondary dark:text-stone-300'}`}>
           {formatCount(total)}
         </td>
         {SCORE_BANDS.map((band) => (
@@ -203,23 +210,26 @@ export function BandRowsTable({
   };
 
   return (
-    <div className="-mx-1 overflow-x-auto px-1">
+    <div className="relative">
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-[2] w-10 bg-gradient-to-l from-white to-transparent lg:hidden dark:from-night-card" aria-hidden="true" />
+    {/* No side padding here: it would leave a gap beside the pinned first column for scrolled cells to show through */}
+    <div className="overflow-x-auto">
       <p className="sr-only" aria-live="polite">
         Rows sorted by {sortLabel(sort.key)}, {sort.dir === 'asc' ? 'lowest' : 'highest'} first
       </p>
-      <table className="w-full min-w-[780px] table-fixed text-sm">
+      <table className="w-full min-w-[700px] table-fixed text-sm lg:min-w-[780px]">
         <caption className="sr-only">{caption}</caption>
         <colgroup>
-          <col className="w-[19%]" />
+          <col className="w-[22%] lg:w-[19%]" />
           <col className="w-[10%]" />
           {SCORE_BANDS.map((band) => (
             <col key={band.id} className="w-[11%]" />
           ))}
-          <col className="w-[16%]" />
+          <col className="w-[13%] lg:w-[16%]" />
         </colgroup>
         <thead className="border-b border-hairline dark:border-white/10">
           <tr>
-            <SortHeader sortKey="order" sort={sort} onSort={toggleSort} align="left">
+            <SortHeader sortKey="order" sort={sort} onSort={toggleSort} align="left" className={stickyCol}>
               {rowHeader}
             </SortHeader>
             <SortHeader sortKey="students" sort={sort} onSort={toggleSort} align="right">
@@ -249,12 +259,12 @@ export function BandRowsTable({
               layout={reduce ? false : 'position'}
               transition={{ layout: { duration: 0.45, ease: EASE_OUT } }}
               variants={rowVariants}
-              className="transition-colors hover:bg-canvas-soft dark:hover:bg-white/[0.03]"
+              className="group transition-colors hover:bg-canvas-soft dark:hover:bg-white/[0.03]"
             >
               {cells(
                 <span className="inline-flex items-center gap-2">
                   {row.label}
-                  {row.classId === leaderId && <span className={tagClass}>Top 90+</span>}
+                  {row.classId === leaderId && <span className={`${tagClass} whitespace-nowrap`}>Top 90+</span>}
                 </span>,
                 row.counts,
               )}
@@ -262,69 +272,82 @@ export function BandRowsTable({
           ))}
         </RevealBody>
         {footer && (
-          <tfoot className="border-t border-[#c9d3df] bg-canvas-soft/70 dark:border-white/15 dark:bg-white/[0.03]">
+          <tfoot className="border-t border-[#DCCFBF] bg-canvas-soft/70 dark:border-white/15 dark:bg-white/[0.03]">
             <tr>{cells(footer.label, footer.counts, true)}</tr>
           </tfoot>
         )}
       </table>
+    </div>
     </div>
   );
 }
 
 /**
  * One group's score bands as rows: students, share, and the running "at or above" total
- * (that band plus every band above it, computed from the sheet's single bands).
+ * (that band plus every band above it). On phones it uses the short band labels and stacks
+ * the "at or above" share under its count, so all four columns fit without sideways scrolling.
  */
 export function DetailedBreakdownTable({ counts, caption }: { counts: BandCounts; caption: string }) {
   const total = totalOf(counts);
+  const cell = 'px-2 py-3 tabular-nums sm:px-3 sm:py-3.5';
+  const head = 'px-2 pb-3 pt-1 text-xs font-medium text-ink-mute whitespace-nowrap sm:px-3 dark:text-stone-400';
   return (
-    <div className="-mx-1 overflow-x-auto px-1">
-      <table className="w-full min-w-[440px] table-fixed text-sm">
-        <caption className="sr-only">{caption}</caption>
-        <colgroup>
-          <col className="w-[40%]" />
-          <col className="w-[18%]" />
-          <col className="w-[16%]" />
-          <col className="w-[26%]" />
-        </colgroup>
-        <thead className="border-b border-hairline dark:border-white/10">
-          <tr>
-            <th scope="col" className={`${th} text-left`}>Score band</th>
-            <th scope="col" className={`${th} text-right`}>Students</th>
-            <th scope="col" className={`${th} text-right`}>Share</th>
-            <th scope="col" className={`${th} text-right`}>At or above</th>
-          </tr>
-        </thead>
-        <RevealBody className="divide-y divide-hairline/70 dark:divide-white/[0.05]">
-          {SCORE_BANDS.map((band) => {
-            const cumulative = atOrAbove(counts, band.id);
-            return (
-              <motion.tr key={band.id} variants={rowVariants}>
-                <th scope="row" className={`${td} text-left text-[15px] font-medium ${strong}`}>
-                  <span className="flex items-center gap-2.5">
-                    <Swatch bandId={band.id} size="h-3 w-3" />
-                    {band.description}
-                  </span>
-                </th>
-                <td className={`${td} text-right text-[15px] font-semibold ${strong}`}>{formatCount(counts[band.id])}</td>
-                <td className={`${td} text-right text-[13px] ${mute}`}>{formatPct(counts[band.id], total)}</td>
-                <td className={`${td} text-right`}>
-                  <span className={`text-[15px] font-semibold ${strong}`}>{formatCount(cumulative)}</span>
-                  <span className={`ml-1.5 text-xs ${mute}`}>({formatPct(cumulative, total)})</span>
-                </td>
-              </motion.tr>
-            );
-          })}
-        </RevealBody>
-        <tfoot className="border-t border-[#c9d3df] bg-canvas-soft/70 dark:border-white/15 dark:bg-white/[0.03]">
-          <tr>
-            <th scope="row" className={`${td} text-left text-[15px] font-semibold ${strong}`}>Total</th>
-            <td className={`${td} text-right text-[15px] font-semibold ${strong}`}>{formatCount(total)}</td>
-            <td className={`${td} text-right text-[13px] ${mute}`}>100%</td>
-            <td className={td} />
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+    <table className="w-full table-fixed text-sm">
+      <caption className="sr-only">{caption}</caption>
+      <colgroup>
+        <col className="w-[30%] sm:w-[40%]" />
+        <col className="w-[22%] sm:w-[18%]" />
+        <col className="w-[20%] sm:w-[16%]" />
+        <col className="w-[28%] sm:w-[26%]" />
+      </colgroup>
+      <thead className="border-b border-hairline dark:border-white/10">
+        <tr>
+          <th scope="col" className={`${head} text-left`}>
+            <span className="sm:hidden">Band</span>
+            <span className="hidden sm:inline">Score band</span>
+          </th>
+          <th scope="col" className={`${head} text-right`}>Students</th>
+          <th scope="col" className={`${head} text-right`}>Share</th>
+          <th scope="col" className={`${head} text-right`}>
+            <span className="sm:hidden">At/above</span>
+            <span className="hidden sm:inline">At or above</span>
+          </th>
+        </tr>
+      </thead>
+      <RevealBody className="divide-y divide-hairline/70 dark:divide-white/[0.05]">
+        {SCORE_BANDS.map((band) => {
+          const cumulative = atOrAbove(counts, band.id);
+          return (
+            <motion.tr key={band.id} variants={rowVariants}>
+              <th scope="row" className={`${cell} text-left text-[15px] font-medium ${strong}`}>
+                <span className="flex items-center gap-2 sm:gap-2.5">
+                  <Swatch bandId={band.id} size="h-3 w-3" />
+                  <span className="sm:hidden" aria-hidden="true">{band.label}</span>
+                  <span className="sr-only sm:not-sr-only">{band.description}</span>
+                </span>
+              </th>
+              <td className={`${cell} text-right text-[15px] font-semibold ${strong}`}>{formatCount(counts[band.id])}</td>
+              <td className={`${cell} text-right text-[13px] ${mute}`}>{formatPct(counts[band.id], total)}</td>
+              <td className={`${cell} text-right`}>
+                <span className={`text-[15px] font-semibold ${strong}`}>{formatCount(cumulative)}</span>
+                <span className={`block text-xs sm:ml-1.5 sm:inline ${mute}`}>
+                  <span className="hidden sm:inline">(</span>
+                  {formatPct(cumulative, total)}
+                  <span className="hidden sm:inline">)</span>
+                </span>
+              </td>
+            </motion.tr>
+          );
+        })}
+      </RevealBody>
+      <tfoot className="border-t border-[#DCCFBF] bg-canvas-soft/70 dark:border-white/15 dark:bg-white/[0.03]">
+        <tr>
+          <th scope="row" className={`${cell} text-left text-[15px] font-semibold ${strong}`}>Total</th>
+          <td className={`${cell} text-right text-[15px] font-semibold ${strong}`}>{formatCount(total)}</td>
+          <td className={`${cell} text-right text-[13px] ${mute}`}>100%</td>
+          <td className={cell} />
+        </tr>
+      </tfoot>
+    </table>
   );
 }

@@ -45,6 +45,19 @@ const viewCounts = (group: ActualGroup, view: ViewId): BandCounts | undefined =>
 
 const viewInfo = (view: ViewId) => (view === 'overall' ? OVERALL : { ...examById(view), title: examById(view).label });
 
+/** True below the sm breakpoint (640px); false on the server and until mounted */
+function useIsNarrow() {
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 639px)');
+    const update = () => setNarrow(query.matches);
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+  return narrow;
+}
+
 /** Keeps a choice in the URL (?exam=preMid, ?subject=maths) so a view can be shared */
 function useUrlParam<T extends string>(param: string, options: readonly T[], fallback: T): [T, (value: T) => void] {
   const [value, setValue] = useState<T>(fallback);
@@ -73,6 +86,8 @@ function PillToggle<T extends string>({
   label,
   layoutId,
   size = 'sm',
+  stretch = false,
+  wrap = false,
 }: {
   options: { id: T; label: string; title?: string }[];
   value: T;
@@ -80,13 +95,20 @@ function PillToggle<T extends string>({
   label: string;
   layoutId: string;
   size?: 'sm' | 'md';
+  /** Fill the width with equal segments */
+  stretch?: boolean;
+  /** Wrap onto several rows on phones instead of scrolling sideways */
+  wrap?: boolean;
 }) {
   const reduce = useReducedMotion();
+  const layout = wrap
+    ? 'flex flex-wrap gap-1 rounded-2xl sm:inline-flex sm:gap-0 sm:rounded-full'
+    : `${stretch ? 'flex w-full' : 'inline-flex'} overflow-x-auto rounded-full [scrollbar-width:none]`;
   return (
     <div
       role="group"
       aria-label={label}
-      className="print-hide inline-flex max-w-full overflow-x-auto rounded-full border border-hairline bg-white/90 p-1 shadow-[0_1px_3px_rgba(0,55,112,0.06)] [scrollbar-width:none] dark:border-white/10 dark:bg-white/5"
+      className={`print-hide max-w-full border border-hairline bg-white/90 p-1 shadow-[0_1px_3px_rgba(42,33,28,0.06)] dark:border-white/10 dark:bg-white/5 ${layout}`}
     >
       {options.map((option) => {
         const active = option.id === value;
@@ -97,15 +119,15 @@ function PillToggle<T extends string>({
             aria-pressed={active}
             title={option.title}
             onClick={() => onChange(option.id)}
-            className={`relative isolate flex-shrink-0 touch-manipulation whitespace-nowrap rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+            className={`relative isolate flex-shrink-0 touch-manipulation whitespace-nowrap rounded-full font-medium transition-colors ${stretch ? 'flex-1' : ''} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-maroon ${
               size === 'sm' ? 'px-3.5 py-1 text-[13px]' : 'px-4 py-1.5 text-sm'
-            } ${active ? 'text-white dark:text-ink' : 'text-ink-mute hover:text-ink dark:text-slate-400 dark:hover:text-slate-50'}`}
+            } ${active ? 'text-white dark:text-ink' : 'text-ink-mute hover:text-ink dark:text-stone-400 dark:hover:text-stone-50'}`}
           >
             {active && (
               <motion.span
                 layoutId={layoutId}
                 transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
-                className="absolute inset-0 -z-10 rounded-full bg-ink dark:bg-slate-100"
+                className="absolute inset-0 -z-10 rounded-full bg-ink dark:bg-stone-100"
                 aria-hidden="true"
               />
             )}
@@ -121,7 +143,7 @@ function SectionHeading({ id, title, description, icon }: { id: string; title: s
   return (
     <Reveal className="mb-6">
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#1c5cab]/[0.08] text-[#1c5cab] dark:bg-white/10 dark:text-blue-200">
+        <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-maroon/[0.07] text-maroon dark:bg-[#E895A9]/15 dark:text-[#F5C9D3]">
           {icon}
         </div>
         <div>
@@ -140,16 +162,16 @@ type StatTone = 'default' | 'accent' | 'warn';
 const STAT_TONES: Record<StatTone, { bar: string; icon: string; tint?: string }> = {
   default: {
     bar: 'bg-gradient-to-r from-hairline to-transparent dark:from-white/10',
-    icon: 'bg-ink/[0.05] text-ink-mute dark:bg-white/10 dark:text-slate-300',
+    icon: 'bg-ink/[0.05] text-ink-mute dark:bg-white/10 dark:text-stone-300',
   },
   accent: {
-    bar: 'bg-gradient-to-r from-[#1c5cab] via-[#1c5cab]/60 to-transparent dark:from-blue-300 dark:via-blue-300/50',
-    icon: 'bg-[#1c5cab]/[0.08] text-[#1c5cab] dark:bg-blue-300/15 dark:text-blue-200',
+    bar: 'bg-gradient-to-r from-maroon via-maroon/60 to-transparent dark:from-[#E895A9] dark:via-[#E895A9]/50',
+    icon: 'bg-maroon/[0.08] text-maroon dark:bg-[#E895A9]/15 dark:text-[#F5C9D3]',
   },
   warn: {
-    bar: 'bg-gradient-to-r from-[#d9480f] via-[#d9480f]/60 to-transparent dark:from-orange-300 dark:via-orange-300/50',
-    icon: 'bg-orange-50 text-[#c2410c] dark:bg-orange-400/15 dark:text-orange-200',
-    tint: 'bg-gradient-to-b from-orange-50/80 to-transparent dark:from-orange-400/[0.06]',
+    bar: 'bg-gradient-to-r from-[#9E4722] via-[#9E4722]/60 to-transparent dark:from-[#E7B695] dark:via-[#E7B695]/50',
+    icon: 'bg-[#F8EBE3] text-[#9E4722] dark:bg-[#E7B695]/15 dark:text-[#E7B695]',
+    tint: 'bg-gradient-to-b from-[#F8EBE3]/80 to-transparent dark:from-[#E7B695]/[0.06]',
   },
 };
 
@@ -200,10 +222,10 @@ function ChangeChip({ delta, from, to }: { delta: number; from: string; to: stri
     <p
       className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium ${
         level
-          ? 'bg-ink/[0.05] text-ink-secondary dark:bg-white/10 dark:text-slate-300'
+          ? 'bg-ink/[0.05] text-ink-secondary dark:bg-white/10 dark:text-stone-300'
           : up
             ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-300'
-            : 'bg-orange-50 text-[#b4380b] dark:bg-orange-400/10 dark:text-orange-200'
+            : 'bg-[#F8EBE3] text-[#9E4722] dark:bg-[#E7B695]/10 dark:text-[#E7B695]'
       }`}
     >
       {!level && <Icon className="h-4 w-4" aria-hidden="true" />}
@@ -215,20 +237,21 @@ function ChangeChip({ delta, from, to }: { delta: number; from: string; to: stri
 /** The two-card block: column chart beside the detailed breakdown table */
 function BandPanel({ counts, groupLabel, chartKey, caption }: { counts: BandCounts; groupLabel: string; chartKey: string; caption: string }) {
   const total = totalOf(counts);
+  const narrow = useIsNarrow();
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-      <Reveal className={`${cardClass} print-avoid-break flex flex-col p-6 lg:col-span-5`}>
+      <Reveal className={`${cardClass} print-avoid-break flex flex-col p-5 sm:p-6 lg:col-span-5`}>
         <div className="mb-6 flex items-baseline justify-between gap-3">
           <h3 className={cardTitleClass}>Students per Band</h3>
           <p className={`${cardSubtitleClass} tabular-nums`}>{formatCount(total)} students</p>
         </div>
         <div className="mt-auto">
           {/* Keyed so the columns grow in again when the exam or subject changes */}
-          <BandColumnChart key={chartKey} counts={counts} total={total} groupLabel={groupLabel} height={300} showShare />
+          <BandColumnChart key={chartKey} counts={counts} total={total} groupLabel={groupLabel} height={narrow ? 240 : 300} showShare />
         </div>
       </Reveal>
-      <Reveal delay={0.1} className={`${cardClass} print-avoid-break p-6 lg:col-span-7`}>
-        <div className="mb-4">
+      <Reveal delay={0.1} className={`${cardClass} print-avoid-break p-4 sm:p-6 lg:col-span-7`}>
+        <div className="mb-4 px-1 sm:px-0">
           <h3 className={cardTitleClass}>Detailed Breakdown</h3>
           <p className={cardSubtitleClass}>&ldquo;At or above&rdquo; counts every student in that band or higher</p>
         </div>
@@ -291,6 +314,7 @@ export default function Class9Dashboard({
       onChange={setView}
       label="Select examination"
       layoutId={`exam-toggle-${placement}`}
+      stretch={placement === 'row'}
     />
   );
 
@@ -298,6 +322,7 @@ export default function Class9Dashboard({
     <DashboardFrame
       title="Milestone Results"
       subtitle={`${data.school} · Class IX`}
+      shortSubtitle={`Class IX · ${data.school.split(' ').map((word) => word[0]).join('')}`}
       fontClassName={fontClassName}
       controls={examToggle}
       csv={csv}
@@ -307,12 +332,12 @@ export default function Class9Dashboard({
         Milestone results, Class IX, {data.school}, {examInfo.label}, academic year {data.academicYear}
       </h1>
 
-      <main id="main" tabIndex={-1} className="mx-auto max-w-[1320px] space-y-16 px-4 pb-12 outline-none sm:px-6 lg:px-10">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-[1320px] space-y-12 px-4 pb-12 outline-none sm:space-y-16 sm:px-6 lg:px-10">
         {/* ────────── Headline ────────── */}
-        <section aria-label="Headline figures" className="print-avoid-break grid gap-10 pt-10 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16 lg:pt-16">
+        <section aria-label="Headline figures" className="print-avoid-break grid gap-8 pt-8 sm:gap-10 sm:pt-10 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16 lg:pt-16">
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full border border-hairline/80 bg-white/70 px-3 py-1 text-sm font-medium backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
-              <Calendar className="h-3.5 w-3.5 text-[#1c5cab] dark:text-blue-200" aria-hidden="true" />
+            <p className="inline-flex items-start gap-2 rounded-xl border border-hairline/80 bg-white/70 px-3 py-1.5 text-[13px] font-medium backdrop-blur-sm sm:items-center sm:rounded-full sm:py-1 sm:text-sm dark:border-white/10 dark:bg-white/5">
+              <Calendar className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-maroon sm:mt-0 dark:text-[#F5C9D3]" aria-hidden="true" />
               <span className={textSecondary}>
                 {isOverall ? 'Overall · average of Pre-Mid Term & Mid Term' : examInfo.label} ·{' '}
                 {isClassIX ? `AY ${data.academicYear}` : 'this cohort in Class VIII'}
@@ -399,10 +424,10 @@ export default function Class9Dashboard({
           ) : (
             <div className="space-y-5">
               {subjectView !== view && (
-                <Reveal className="flex items-start gap-3 rounded-xl border border-[#c9dbf5] bg-[#eef4fd] p-4 text-sm text-ink-secondary dark:border-blue-400/20 dark:bg-blue-400/10 dark:text-slate-200">
-                  <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#1c5cab] dark:text-blue-200" aria-hidden="true" />
+                <Reveal className="flex items-start gap-3 rounded-xl border border-[#F2D3DC] bg-[#FBF2F4] p-4 text-sm text-ink-secondary dark:border-[#E895A9]/20 dark:bg-[#E895A9]/10 dark:text-stone-200">
+                  <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-maroon dark:text-[#F5C9D3]" aria-hidden="true" />
                   <p className="text-pretty">
-                    <span className="font-semibold text-ink dark:text-slate-50">Subject figures below are from the {viewInfo(subjectView).label}.</span>{' '}
+                    <span className="font-semibold text-ink dark:text-stone-50">Subject figures below are from the {viewInfo(subjectView).label}.</span>{' '}
                     The sheet does not have subject-wise figures for {isOverall ? 'the Class IX exams' : `the ${examInfo.label}`} yet. This
                     section switches over once they are added.
                   </p>
@@ -417,6 +442,7 @@ export default function Class9Dashboard({
                   label="Select subject"
                   layoutId="subject-toggle"
                   size="md"
+                  wrap
                 />
               </Reveal>
 

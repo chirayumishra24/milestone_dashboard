@@ -22,24 +22,25 @@ export interface ScoreBand {
   /** Longer label for tooltips, legends and screen readers */
   description: string;
   /**
-   * Validated ordinal blue ramp (dataviz validator, ordinal mode). Light mode: darker = higher
-   * score. Dark mode: brighter = higher score.
+   * CCWS maroon ramp, validated with the dataviz ordinal check. Light mode: darker = higher score
+   * (the site's lightest step #ECC2CC is deepened to #E3A6B4 to clear 2:1 on white). Dark mode:
+   * brighter = higher score.
    */
   fill: { light: string; dark: string };
   /** Text colour for labels drawn inside a fill of this band */
   ink: { light: string; dark: string };
 }
 
-const INK_ON_DARK = '#f8fafc';
-const INK_ON_LIGHT = '#0b1b33';
+const INK_ON_DARK = '#FFFFFF';
+const INK_ON_LIGHT = '#2A211C';
 
 /** Highest band first. Order drives every chart bar and table column. */
 export const SCORE_BANDS: ScoreBand[] = [
-  { id: 'b95', label: '95+', description: '95% and above', fill: { light: '#0d366b', dark: '#9ec5f4' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
-  { id: 'b90', label: '90-94', description: '90% to 94.9%', fill: { light: '#1c5cab', dark: '#6da7ec' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
-  { id: 'b80', label: '80-89', description: '80% to 89.9%', fill: { light: '#2a78d6', dark: '#3987e5' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
-  { id: 'b70', label: '70-79', description: '70% to 79.9%', fill: { light: '#5598e7', dark: '#256abf' }, ink: { light: INK_ON_LIGHT, dark: INK_ON_DARK } },
-  { id: 'below70', label: '<70', description: 'Below 70%', fill: { light: '#86b6ef', dark: '#184f95' }, ink: { light: INK_ON_LIGHT, dark: INK_ON_DARK } },
+  { id: 'b95', label: '95+', description: '95% and above', fill: { light: '#6A0222', dark: '#F5C9D3' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
+  { id: 'b90', label: '90-94', description: '90% to 94.9%', fill: { light: '#960330', dark: '#E895A9' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
+  { id: 'b80', label: '80-89', description: '80% to 89.9%', fill: { light: '#BA3C5D', dark: '#D06580' }, ink: { light: INK_ON_DARK, dark: INK_ON_LIGHT } },
+  { id: 'b70', label: '70-79', description: '70% to 79.9%', fill: { light: '#D87F95', dark: '#B03C5B' }, ink: { light: INK_ON_LIGHT, dark: INK_ON_DARK } },
+  { id: 'below70', label: '<70', description: 'Below 70%', fill: { light: '#E3A6B4', dark: '#8C2542' }, ink: { light: INK_ON_LIGHT, dark: INK_ON_DARK } },
 ];
 
 /** The sheet's single bands, highest first, and the chart band each one rolls up into */
